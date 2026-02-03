@@ -3,33 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مجتمع أجر | Ajar Respect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0f0a1e; color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        .comm-box { background: #1a142d; padding: 20px; border-radius: 15px; width: 100%; max-width: 500px; border: 1px solid #a37cf0; box-shadow: 0 0 15px rgba(163, 124, 240, 0.2); }
-        textarea { width: 100%; height: 100px; border-radius: 10px; background: #0f0a1e; color: white; border: 1px solid #332a4d; padding: 10px; box-sizing: border-box; margin-bottom: 15px; }
-        button { width: 100%; padding: 12px; background: #a37cf0; border: none; color: white; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        #list { width: 100%; max-width: 500px; margin-top: 20px; }
-        .post { background: #1a142d; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-right: 4px solid #a37cf0; }
+        :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma; margin: 0; padding: 20px; text-align: center; }
+        .back-link { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; }
+        
+        .comment-input-area { background: var(--card); border: 1px solid var(--accent); border-radius: 20px; padding: 25px; max-width: 600px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        textarea { width: 100%; background: #0b0716; border: 1px solid #332a4d; color: white; padding: 15px; border-radius: 12px; resize: none; font-size: 16px; box-sizing: border-box; }
+        .post-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .post-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .comment-text { font-size: 1.1em; line-height: 1.6; margin-bottom: 15px; }
+        
+        /* تحسين شكل العين واللايك */
+        .comment-footer { display: flex; gap: 20px; border-top: 1px solid #332a4d; padding-top: 12px; }
+        .stat-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8b83a3; transition: 0.3s; cursor: default; }
+        .stat-item.like-btn { cursor: pointer; color: var(--accent); }
+        .stat-item.like-btn:hover { color: #ff4757; }
+        .stat-item i { font-size: 16px; } /* حجم الأيقونة */
     </style>
 </head>
 <body>
-    <a href="index.html" style="color: #a37cf0; text-decoration: none; margin-bottom: 20px;">← العودة للرئيسية</a>
-    <div class="comm-box">
-        <h3 style="text-align: center; color: #a37cf0;">مجتمع أجر - شاركنا خاطر تذكرة</h3>
-        <textarea id="msg" placeholder="اكتب ذكرى أو دعاء هنا..."></textarea>
-        <button onclick="addPost()">نشر الآن</button>
+    <a href="index.html" class="back-link">← العودة للرئيسية</a>
+    <h1 style="color: var(--accent);">مجتمع أجر ريسبكت ✨</h1>
+
+    <div class="comment-input-area">
+        <textarea id="commentText" rows="3" placeholder="اكتب خاطرة أو نصيحة دينية ليراها الجميع..."></textarea>
+        <button class="post-btn" onclick="addComment()">نشر الآن</button>
     </div>
-    <div id="list"></div>
+
+    <div id="commentsList"></div>
+
     <script>
-        function addPost() {
-            const txt = document.getElementById('msg').value;
-            if(txt) {
-                const d = document.createElement('div');
-                d.className = 'post';
-                d.innerText = txt;
-                document.getElementById('list').prepend(d);
-                document.getElementById('msg').value = "";
-            }
+        window.onload = loadComments;
+
+        function addComment() {
+            const text = document.getElementById('commentText').value;
+            if(!text.trim()) return;
+
+            const comment = {
+                id: Date.now(),
+                content: text,
+                likes: 0,
+                views: Math.floor(Math.random() * 10) + 1 // تبدأ بمشاهدات بسيطة
+            };
+
+            let comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
+            comments.unshift(comment);
+            localStorage.setItem('my_comments', JSON.stringify(comments));
+            
+            document.getElementById('commentText').value = "";
+            loadComments();
+        }
+
+        function loadComments() {
+            const container = document.getElementById('commentsList');
+            const comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
+            
+            container.innerHTML = comments.map(c => `
+                <div class="comment-card">
+                    <div class="comment-text">${c.content}</div>
+                    <div class="comment-footer">
+                        <div class="stat-item">
+                            <i class="fa-regular fa-eye"></i> <span>${c.views} مشاهدة</span>
+                        </div>
+                        <div class="stat-item like-btn" onclick="doLike(${c.id})">
+                            <i class="fa-regular fa-heart"></i> <span id="l-${c.id}">${c.likes} أعجبني</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function doLike(id) {
+            let comments = JSON.parse(localStorage.getItem('my_comments'));
+            const idx = comments.findIndex(c => c.id === id);
+            comments[idx].likes += 1;
+            localStorage.setItem('my_comments', JSON.stringify(comments));
+            loadComments();
         }
     </script>
 </body>
