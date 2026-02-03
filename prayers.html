@@ -1,0 +1,20 @@
+<script>
+    // جلب IP المستخدم لتحديد مدينته تلقائياً
+    fetch('https://ipapi.co/json/')
+    .then(res => res.json())
+    .then(loc => {
+        fetch(`https://api.aladhan.com/v1/timingsByCity?city=${loc.city}&country=${loc.country_name}`)
+        .then(res => res.json())
+        .then(data => {
+            const t = data.data.timings;
+            document.getElementById('city-name').innerText = `أوقات الصلاة في ${loc.city}`;
+            document.getElementById('times-list').innerHTML = `
+                <p>الفجر: ${t.Fajr}</p>
+                <p>الظهر: ${t.Dhuhr}</p>
+                <p>العصر: ${t.Asr}</p>
+                <p>المغرب: ${t.Maghrib}</p>
+                <p>العشاء: ${t.Isha}</p>
+            `;
+        });
+    });
+</script>
