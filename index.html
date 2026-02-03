@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajar Respect | أجر ريسبكت</title>
+    <style>
+        :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma; margin: 0; text-align: center; }
+        header { padding: 60px 20px; background: linear-gradient(180deg, #1a142d 0%, #0f0a1e 100%); border-bottom: 3px solid var(--accent); }
+        .logo { font-size: 50px; font-weight: bold; color: var(--accent); text-shadow: 0 0 20px rgba(163, 124, 240, 0.4); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 40px; max-width: 1200px; margin: auto; }
+        .box { background: var(--card); padding: 35px; border-radius: 20px; border: 1px solid #332a4d; transition: 0.4s; text-decoration: none; color: white; display: block; }
+        .box:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(163, 124, 240, 0.2); }
+        .stats-bar { background: #1a142d; padding: 15px; margin-top: 20px; font-size: 14px; color: #a37cf0; border-top: 1px solid #332a4d; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">AJAR RESPECT</div>
+        <p>موسوعة الأجر والذكر - طريقك للجنة</p>
+    </header>
+
+    <div class="grid">
+        <a href="quran.html" class="box"><h2>📖 الختمة والتفسير</h2><p>القرآن كاملاً مع التفسير إيه إيه</p></a>
+        <a href="azkar.html" class="box"><h2>🤲 الأذكار الإسلامية</h2><p>جميع الأذكار بضغطة واحدة</p></a>
+        <a href="hadith.html" class="box"><h2>📜 الأحاديث الشريفة</h2><p>السنة النبوية كاملة</p></a>
+        <a href="stories.html" class="box"><h2>✨ قصص الأنبياء</h2><p>موسوعة الأنبياء من آدم إلى محمد ﷺ</p></a>
+        <a href="prayers.html" class="box"><h2>🕌 أوقات الصلاة</h2><p>مواقيت دقيقة لكل دول العالم</p></a>
+        <a href="tasbih.html" class="box"><h2>📿 المسبحة الذكية</h2><p>عداد تسبيح تفاعلي وسلس</p></a>
+        <a href="qa.html" class="box"><h2>❓ سؤال وجواب</h2><p>أسئلة دينية وثقافية</p></a>
+        <a href="community.html" class="box"><h2>💬 مجتمع أجر</h2><p>اكتب تعليقاً أو خاطرة دينية</p></a>
+    </div>
+
+    <div class="stats-bar">
+        إحصائيات الموقع: زوار اليوم: <span id="v-count">1,402</span> | إجمالي التسبيحات: <span id="t-count">45,902</span>
+    </div>
+</body>
+</html>
