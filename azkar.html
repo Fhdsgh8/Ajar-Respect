@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background: #0f0a1e; color: white; text-align: center; padding: 20px; }
+        .btn { background: #1a142d; border: 1px solid #a37cf0; color: white; padding: 20px; margin: 10px; width: 250px; border-radius: 15px; cursor: pointer; }
+        #display { background: #1a142d; padding: 40px; border-radius: 20px; margin-top: 20px; font-size: 24px; border: 2px solid #a37cf0; }
+    </style>
+</head>
+<body>
+    <h1>حصن المسلم</h1>
+    <button class="btn" onclick="showA('m')">أذكار الصباح</button>
+    <button class="btn" onclick="showA('e')">أذكار المساء</button>
+    <button class="btn" onclick="showA('s')">أذكار النوم</button>
+    
+    <div id="display">اختر نوع الذكر ليظهر هنا</div>
+
+    <script>
+        const az = {
+            m: ["أصبحنا وأصبح الملك لله والحمد لله", "رضيت بالله رباً وبالإسلام ديناً"],
+            e: ["أمسينا وأمسى الملك لله والحمد لله", "اللهم بك أمسينا وبك أصبحنا"],
+            s: ["باسمك ربي وضعت جنبي وبك أرفعه", "اللهم قني عذابك يوم تبعث عبادك"]
+        };
+        function showA(type) {
+            let text = az[type].join("<br><hr><br>");
+            document.getElementById('display').innerHTML = text;
+        }
+    </script>
+</body>
+</html>
