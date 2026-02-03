@@ -2,29 +2,45 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <title>جميع الأذكار | Ajar Respect</title>
     <style>
-        body { background: #0f0a1e; color: white; text-align: center; padding: 20px; }
-        .btn { background: #1a142d; border: 1px solid #a37cf0; color: white; padding: 20px; margin: 10px; width: 250px; border-radius: 15px; cursor: pointer; }
-        #display { background: #1a142d; padding: 40px; border-radius: 20px; margin-top: 20px; font-size: 24px; border: 2px solid #a37cf0; }
+        body { background: #0f0a1e; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .nav { color: #a37cf0; text-decoration: none; display: block; margin-bottom: 20px; }
+        select { width: 90%; padding: 15px; background: #1a142d; color: white; border: 1px solid #a37cf0; border-radius: 10px; font-size: 18px; margin-bottom: 20px; }
+        .zekr-card { background: #1a142d; padding: 25px; margin: 10px auto; border-radius: 15px; border-right: 5px solid #a37cf0; max-width: 700px; line-height: 1.8; text-align: justify; }
+        .count { color: #a37cf0; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>حصن المسلم</h1>
-    <button class="btn" onclick="showA('m')">أذكار الصباح</button>
-    <button class="btn" onclick="showA('e')">أذكار المساء</button>
-    <button class="btn" onclick="showA('s')">أذكار النوم</button>
-    
-    <div id="display">اختر نوع الذكر ليظهر هنا</div>
+    <a href="index.html" class="nav">← العودة للرئيسية</a>
+    <h1>موسوعة الأذكار الكاملة</h1>
+    <select id="categorySelect" onchange="loadAzkar()">
+        <option value="">جاري تحميل التصنيفات...</option>
+    </select>
+    <div id="azkarList">اختر تصنيفاً لعرض الأذكار...</div>
 
     <script>
-        const az = {
-            m: ["أصبحنا وأصبح الملك لله والحمد لله", "رضيت بالله رباً وبالإسلام ديناً"],
-            e: ["أمسينا وأمسى الملك لله والحمد لله", "اللهم بك أمسينا وبك أصبحنا"],
-            s: ["باسمك ربي وضعت جنبي وبك أرفعه", "اللهم قني عذابك يوم تبعث عبادك"]
-        };
-        function showA(type) {
-            let text = az[type].join("<br><hr><br>");
-            document.getElementById('display').innerHTML = text;
+        // جلب جميع تصنيفات الأذكار من قاعدة بيانات مفتوحة
+        fetch('https://raw.githubusercontent.com/nawafalqari/azkar-api/56df51279ab6eb86dc3579ffc007d439592a85b1/azkar.json')
+        .then(res => res.json())
+        .then(data => {
+            window.fullData = data;
+            const select = document.getElementById('categorySelect');
+            select.innerHTML = '<option value="">-- اختر نوع الذكر (الصباح، المساء، السفر، إلخ) --</option>';
+            Object.keys(data).forEach(cat => {
+                select.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        });
+
+        function loadAzkar() {
+            const cat = document.getElementById('categorySelect').value;
+            const list = document.getElementById('azkarList');
+            list.innerHTML = "";
+            if(window.fullData[cat]) {
+                window.fullData[cat].forEach(z => {
+                    list.innerHTML += `<div class="zekr-card">${z.zekr}<br><span class="count">التكرار: ${z.count}</span></div>`;
+                });
+            }
         }
     </script>
 </body>
