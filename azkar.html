@@ -2,46 +2,99 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>جميع الأذكار | Ajar Respect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة الأذكار - Ajar Respect</title>
     <style>
-        body { background: #0f0a1e; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        .nav { color: #a37cf0; text-decoration: none; display: block; margin-bottom: 20px; }
-        select { width: 90%; padding: 15px; background: #1a142d; color: white; border: 1px solid #a37cf0; border-radius: 10px; font-size: 18px; margin-bottom: 20px; }
-        .zekr-card { background: #1a142d; padding: 25px; margin: 10px auto; border-radius: 15px; border-right: 5px solid #a37cf0; max-width: 700px; line-height: 1.8; text-align: justify; }
-        .count { color: #a37cf0; font-weight: bold; }
+        :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; --text: #ffffff; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .header { margin-bottom: 30px; }
+        .back-link { color: var(--accent); text-decoration: none; font-size: 0.9em; display: block; margin-bottom: 10px; }
+        .category-select { background: var(--card); color: white; border: 1px solid var(--accent); padding: 10px; border-radius: 10px; width: 90%; max-width: 400px; margin-bottom: 20px; font-size: 1.1em; }
+        .azkar-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .zekr-card { background: var(--card); padding: 20px; border-radius: 15px; width: 100%; max-width: 600px; border-right: 5px solid var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.3); animation: fadeIn 0.5s; position: relative; }
+        .zekr-text { font-size: 1.2em; line-height: 1.6; margin-bottom: 15px; }
+        .zekr-count { background: var(--accent); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; display: inline-block; cursor: pointer; user-select: none; }
+        .zekr-count.done { background: #4caf50; opacity: 0.6; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <a href="index.html" class="nav">← العودة للرئيسية</a>
-    <h1>موسوعة الأذكار الكاملة</h1>
-    <select id="categorySelect" onchange="loadAzkar()">
-        <option value="">جاري تحميل التصنيفات...</option>
+    <div class="header">
+        <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        <h1 style="color: var(--accent);">موسوعة الأذكار الكاملة</h1>
+    </div>
+
+    <select class="category-select" id="catPicker" onchange="renderAzkar()">
+        <option value="morning">أذكار الصباح</option>
+        <option value="evening">أذكار المساء</option>
+        <option value="sleep">أذكار النوم</option>
+        <option value="afterPrayer">أذكار بعد الصلاة</option>
+        <option value="waking">أذكار الاستيقاظ</option>
     </select>
-    <div id="azkarList">اختر تصنيفاً لعرض الأذكار...</div>
+
+    <div class="azkar-container" id="azkarList"></div>
 
     <script>
-        // جلب جميع تصنيفات الأذكار من قاعدة بيانات مفتوحة
-        fetch('https://raw.githubusercontent.com/nawafalqari/azkar-api/56df51279ab6eb86dc3579ffc007d439592a85b1/azkar.json')
-        .then(res => res.json())
-        .then(data => {
-            window.fullData = data;
-            const select = document.getElementById('categorySelect');
-            select.innerHTML = '<option value="">-- اختر نوع الذكر (الصباح، المساء، السفر، إلخ) --</option>';
-            Object.keys(data).forEach(cat => {
-                select.innerHTML += `<option value="${cat}">${cat}</option>`;
-            });
-        });
+        const db = {
+            morning: [
+                {t: "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له..", c: 1},
+                {t: "اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت وإليك النشور.", c: 1},
+                {t: "أعوذ بالله من الشيطان الرجيم (آية الكرسي)", c: 1},
+                {t: "اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك...", c: 1},
+                {t: "يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين.", c: 1},
+                {t: "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم.", c: 3},
+                {t: "رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً.", c: 3},
+                {t: "سبحان الله وبحمده: عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته.", c: 3}
+            ],
+            evening: [
+                {t: "أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له..", c: 1},
+                {t: "اللهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت وإليك المصير.", c: 1},
+                {t: "أعوذ بكلمات الله التامات من شر ما خلق.", c: 3},
+                {t: "اللهم إني أسألك العفو والعافية في الدنيا والآخرة...", c: 1}
+            ],
+            sleep: [
+                {t: "باسمك ربي وضعت جنبي، وبك أرفعه، فإن أمسكت نفسي فارحمها...", c: 1},
+                {t: "اللهم قني عذابك يوم تبعث عبادك.", c: 3},
+                {t: "باسمك اللهم أموت وأحيا.", c: 1},
+                {t: "قراءة سورة الإخلاص والمعوذتين.", c: 3}
+            ],
+            afterPrayer: [
+                {t: "أستغفر الله (ثلاثاً)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.", c: 1},
+                {t: "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير.", c: 1},
+                {t: "سبحان الله (33)، الحمد لله (33)، الله أكبر (33).", c: 1}
+            ]
+        };
 
-        function loadAzkar() {
-            const cat = document.getElementById('categorySelect').value;
-            const list = document.getElementById('azkarList');
-            list.innerHTML = "";
-            if(window.fullData[cat]) {
-                window.fullData[cat].forEach(z => {
-                    list.innerHTML += `<div class="zekr-card">${z.zekr}<br><span class="count">التكرار: ${z.count}</span></div>`;
-                });
+        function renderAzkar() {
+            const cat = document.getElementById('catPicker').value;
+            const container = document.getElementById('azkarList');
+            container.innerHTML = '';
+            
+            db[cat].forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'zekr-card';
+                card.innerHTML = `
+                    <div class="zekr-text">${item.t}</div>
+                    <div class="zekr-count" id="count-${cat}-${index}" onclick="reduceCount('${cat}', ${index})">
+                        التكرار المطلوب: ${item.c}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function reduceCount(cat, idx) {
+            const el = document.getElementById(`count-${cat}-${idx}`);
+            let current = parseInt(el.innerText.replace(/[^0-9]/g, ''));
+            if (current > 1) {
+                el.innerText = `التكرار المتبقي: ${current - 1}`;
+            } else {
+                el.innerText = `تمت القراءة ✓`;
+                el.classList.add('done');
             }
         }
+
+        window.onload = renderAzkar;
     </script>
 </body>
 </html>
