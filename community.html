@@ -3,105 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مجتمع أجر | Ajar Respect</title>
+    <title>زاد المسلم | Ajar Respect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; --text: #ffffff; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma; margin: 0; padding: 20px; text-align: center; }
-        .back-link { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; }
-        .comment-input-area { background: var(--card); border: 1px solid var(--accent); border-radius: 20px; padding: 25px; max-width: 600px; margin: 20px auto; }
-        textarea { width: 100%; background: #0b0716; border: 1px solid #332a4d; color: white; padding: 15px; border-radius: 12px; resize: none; font-size: 16px; box-sizing: border-box; }
-        .post-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .back-link { color: var(--accent); text-decoration: none; display: block; margin-bottom: 30px; font-weight: bold; }
         
-        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); position: relative; }
-        .delete-btn { position: absolute; top: 15px; left: 15px; color: #ff4757; cursor: pointer; font-size: 14px; opacity: 0.7; }
-        .delete-btn:hover { opacity: 1; }
-        
-        .comment-footer { display: flex; gap: 20px; border-top: 1px solid #332a4d; padding-top: 12px; margin-top: 10px; }
-        .stat-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8b83a3; }
-        .like-btn { cursor: pointer; transition: 0.3s; }
-        .like-btn.active { color: #ff4757 !important; pointer-events: none; }
+        .search-box { margin-bottom: 30px; }
+        input#searchInput { width: 90%; max-width: 500px; padding: 15px; border-radius: 25px; border: 1px solid var(--accent); background: var(--card); color: white; outline: none; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: auto; }
+        .info-card { background: var(--card); border-radius: 20px; padding: 25px; text-align: right; border-bottom: 4px solid var(--accent); transition: 0.3s; line-height: 1.6; }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(163, 124, 240, 0.2); }
+        .info-card h3 { color: var(--accent); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        .category { font-size: 12px; background: #332a4d; padding: 4px 10px; border-radius: 10px; color: #ccc; }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-link">← العودة للرئيسية</a>
-    <h1 style="color: var(--accent);">مجتمع أجر ريسبكت ✨</h1>
+    <h1 style="color: var(--accent);">✨ زاد المسلم والمعلومات الدينية</h1>
+    <p>موسوعة مبسطة للأحكام، السنن، والفضائل</p>
 
-    <div class="comment-input-area">
-        <textarea id="commentText" rows="3" placeholder="اكتب خاطرة دينية..."></textarea>
-        <button class="post-btn" onclick="addComment()">نشر الآن</button>
+    <div class="search-box">
+        <input type="text" id="searchInput" onkeyup="filterInfo()" placeholder="ابحث عن معلومة (مثلاً: الصلاة، الصيام، الصدقة)...">
     </div>
 
-    <div id="commentsList"></div>
+    <div class="info-grid" id="infoGrid">
+        </div>
 
     <script>
-        window.onload = loadComments;
+        const data = [
+            { title: "فضل صلاة الفجر", content: "من صلى الفجر في جماعة فكأنما قام الليل كله، وهي في ذمة الله وحفظه.", cat: "عبادات" },
+            { title: "آداب الدعاء", content: "استقبال القبلة، ورفع اليدين، والبدء بحمد الله والثناء عليه ثم الصلاة على النبي ﷺ.", cat: "آداب" },
+            { title: "السنن الرواتب", content: "وهي 12 ركعة في اليوم: 2 قبل الفجر، 4 قبل الظهر و2 بعدها، 2 بعد المغرب، و2 بعد العشاء.", cat: "صلاة" },
+            { title: "أحب الكلام إلى الله", content: "سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر. لا يضرك بأيهن بدأت.", cat: "أذكار" },
+            { title: "فضل الاستغفار", content: "الاستغفار سبب في سعة الرزق، ونزول المطر، والقوة في البدن، وراحة البال.", cat: "فضائل" },
+            { title: "بر الوالدين", content: "جعل الله رضاه من رضاهما، وبرهما سبب في دخول الجنة وطول العمر.", cat: "أخلاق" }
+        ];
 
-        function addComment() {
-            const text = document.getElementById('commentText').value;
-            if(!text.trim()) return;
-
-            const comment = {
-                id: "c" + Date.now(),
-                content: text,
-                likes: 0,
-                views: 1,
-                isMyOwn: true // علامة لتمييز تعليقاتي لأتمكن من حذفها
-            };
-
-            let comments = JSON.parse(localStorage.getItem('community_posts') || "[]");
-            comments.unshift(comment);
-            localStorage.setItem('community_posts', JSON.stringify(comments));
-            document.getElementById('commentText').value = "";
-            loadComments();
-        }
-
-        function loadComments() {
-            const container = document.getElementById('commentsList');
-            const comments = JSON.parse(localStorage.getItem('community_posts') || "[]");
-            const myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
-            
-            container.innerHTML = comments.map(c => {
-                const isLiked = myLikes.includes(c.id);
-                return `
-                <div class="comment-card">
-                    ${c.isMyOwn ? `<span class="delete-btn" onclick="deleteComment('${c.id}')"><i class="fa-solid fa-trash"></i> حذف</span>` : ''}
-                    <div class="comment-text">${c.content}</div>
-                    <div class="comment-footer">
-                        <div class="stat-item"><i class="fa-solid fa-eye"></i> <span>${c.views}</span></div>
-                        <div class="stat-item like-btn ${isLiked ? 'active' : ''}" onclick="doLike('${c.id}')">
-                            <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                            <span>${c.likes}</span>
-                        </div>
-                    </div>
+        function displayInfo() {
+            const grid = document.getElementById('infoGrid');
+            grid.innerHTML = data.map(item => `
+                <div class="info-card">
+                    <span class="category">${item.cat}</span>
+                    <h3><i class="fa-solid fa-star-and-crescent"></i> ${item.title}</h3>
+                    <p>${item.content}</p>
                 </div>
-            `}).join('');
+            `).join('');
         }
 
-        function doLike(id) {
-            let myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
-            if (myLikes.includes(id)) return; // منع التكرار نهائياً
-
-            let comments = JSON.parse(localStorage.getItem('community_posts'));
-            const idx = comments.findIndex(c => c.id === id);
-            
-            if (idx !== -1) {
-                comments[idx].likes += 1;
-                myLikes.push(id);
-                localStorage.setItem('community_posts', JSON.stringify(comments));
-                localStorage.setItem('my_likes', JSON.stringify(myLikes));
-                loadComments();
+        function filterInfo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('info-card');
+            for (let card of cards) {
+                if (card.innerText.toLowerCase().includes(input)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
             }
         }
 
-        function deleteComment(id) {
-            if(confirm("هل أنت متأكد من حذف هذا التعليق؟")) {
-                let comments = JSON.parse(localStorage.getItem('community_posts'));
-                comments = comments.filter(c => c.id !== id);
-                localStorage.setItem('community_posts', JSON.stringify(comments));
-                loadComments();
-            }
-        }
+        window.onload = displayInfo;
     </script>
 </body>
 </html>
