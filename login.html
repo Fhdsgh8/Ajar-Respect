@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | Ajar Respect</title>
+    <style>
+        :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        
+        .login-card { background: var(--card); padding: 40px; border-radius: 25px; border: 1px solid var(--accent); width: 100%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); text-align: center; }
+        .logo { font-size: 30px; font-weight: bold; color: var(--accent); margin-bottom: 20px; }
+        
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #0b0716; border: 1px solid #332a4d; border-radius: 10px; color: white; font-size: 16px; box-sizing: border-box; }
+        input:focus { border-color: var(--accent); outline: none; }
+        
+        .btn { width: 100%; padding: 12px; background: var(--accent); border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 16px; }
+        .toggle-link { margin-top: 15px; display: block; color: #8b83a3; text-decoration: none; font-size: 14px; }
+        .toggle-link span { color: var(--accent); cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card" id="authCard">
+        <div class="logo">AJAR RESPECT</div>
+        <h2 id="authTitle">تسجيل الدخول</h2>
+        
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        
+        <button class="btn" onclick="handleAuth()" id="authBtn">دخول</button>
+        
+        <a class="toggle-link" id="toggleAuth">ليس لديك حساب؟ <span onclick="switchMode()">أنشئ حساباً الآن</span></a>
+    </div>
+
+    <script>
+        let isLogin = true;
+
+        function switchMode() {
+            isLogin = !isLogin;
+            document.getElementById('authTitle').innerText = isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد";
+            document.getElementById('authBtn').innerText = isLogin ? "دخول" : "تسجيل";
+            document.getElementById('toggleAuth').innerHTML = isLogin ? 
+                `ليس لديك حساب؟ <span onclick="switchMode()">أنشئ حساباً الآن</span>` : 
+                `لديك حساب بالفعل؟ <span onclick="switchMode()">سجل دخولك</span>`;
+        }
+
+        function handleAuth() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            if(!email || !pass) {
+                alert("يرجى ملء كافة البيانات");
+                return;
+            }
+
+            // محاكاة تسجيل الدخول لحين ربط Firebase
+            localStorage.setItem('user_logged_in', 'true');
+            localStorage.setItem('user_email', email);
+            
+            alert(isLogin ? "تم تسجيل الدخول بنجاح" : "تم إنشاء الحساب بنجاح");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
