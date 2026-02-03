@@ -6,63 +6,74 @@
     <title>موسوعة الأنبياء | Ajar Respect</title>
     <style>
         :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; }
-        body { background: var(--bg); color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .nav-link { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; font-weight: bold; }
-        select { width: 95%; padding: 15px; background: var(--card); color: white; border: 1px solid var(--accent); border-radius: 12px; font-size: 18px; cursor: pointer; }
-        #story-box { background: var(--card); margin-top: 30px; padding: 30px; border-radius: 20px; line-height: 2; text-align: justify; max-width: 800px; margin-inline: auto; border: 1px solid #332a4d; min-height: 300px; font-size: 1.1rem; }
-        h1 { color: var(--accent); }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma; margin: 0; padding: 20px; line-height: 1.8; }
+        .nav-back { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; text-align: center; }
+        .container { max-width: 900px; margin: auto; }
+        select { width: 100%; padding: 15px; background: var(--card); color: white; border: 1px solid var(--accent); border-radius: 12px; font-size: 18px; cursor: pointer; margin-bottom: 20px; }
+        .story-display { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid #332a4d; text-align: justify; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-height: 400px; }
+        h2 { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 10px; margin-top: 0; }
+        .highlight { color: var(--accent); font-weight: bold; }
+        hr { border: 0; border-top: 1px solid #332a4d; margin: 20px 0; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="nav-link">← العودة للرئيسية</a>
-    <h1>✨ موسوعة قصص الأنبياء كاملة</h1>
-    <select id="prophetSelect" onchange="loadStory()">
-        <option value="">-- اختر نبي الله (25 نبي) --</option>
-        <option value="adam">آدم عليه السلام</option>
-        <option value="idris">إدريس عليه السلام</option>
-        <option value="noah">نوح عليه السلام</option>
-        <option value="hood">هود عليه السلام</option>
-        <option value="saleh">صالح عليه السلام</option>
-        <option value="ibrahim">إبراهيم عليه السلام</option>
-        <option value="lot">لوط عليه السلام</option>
-        <option value="ismail">إسماعيل عليه السلام</option>
-        <option value="ishaq">إسحاق عليه السلام</option>
-        <option value="yaqoub">يعقوب عليه السلام</option>
-        <option value="youssef">يوسف عليه السلام</option>
-        <option value="ayoub">أيوب عليه السلام</option>
-        <option value="shuaib">شعيب عليه السلام</option>
-        <option value="moussa">موسى عليه السلام</option>
-        <option value="haroun">هارون عليه السلام</option>
-        <option value="dhulkifl">ذو الكفل عليه السلام</option>
-        <option value="dawood">داوود عليه السلام</option>
-        <option value="sulaiman">سليمان عليه السلام</option>
-        <option value="ilyas">إلياس عليه السلام</option>
-        <option value="elyasa">اليسع عليه السلام</option>
-        <option value="younis">يونس عليه السلام</option>
-        <option value="zakaria">زكريا عليه السلام</option>
-        <option value="yahya">يحيى عليه السلام</option>
-        <option value="issa">عيسى عليه السلام</option>
-        <option value="mohammad">محمد ﷺ</option>
-    </select>
+    <div class="container">
+        <a href="index.html" class="nav-back">← العودة للرئيسية</a>
+        <h1 style="text-align: center; color: var(--accent);">موسوعة قصص الأنبياء المفصلة</h1>
+        
+        <select id="prophetSelect" onchange="updateStory()">
+            <option value="">-- اختر نبي الله لتفاصيل قصته --</option>
+            <option value="adam">آدم عليه السلام (أبو البشر)</option>
+            <option value="noah">نوح عليه السلام (شيخ المرسلين)</option>
+            <option value="ibrahim">إبراهيم عليه السلام (خليل الله)</option>
+            <option value="yousef">يوسف عليه السلام (أحسن القصص)</option>
+            <option value="moussa">موسى عليه السلام (كليم الله)</option>
+            <option value="mohammad">محمد ﷺ (سيد الخلق)</option>
+        </select>
 
-    <div id="story-box">اختر اسم النبي لتظهر قصته كاملة من المصادر الموثوقة...</div>
+        <div id="storyContent" class="story-display">
+            <p style="text-align: center; color: #888;">يرجى اختيار نبي من القائمة لقراءة قصته كاملة بالتفصيل...</p>
+        </div>
+    </div>
 
     <script>
         const stories = {
-            adam: "قصة آدم عليه السلام: أول البشر، خلقه الله من طين وأمر الملائكة بالسجود له، ثم أسكنه الجنة مع حواء، حتى أغواهما الشيطان فأكلا من الشجرة وهبطا للأرض ليبدأ الاستخلاف...",
-            noah: "قصة نوح عليه السلام: شيخ المرسلين، دعا قومه 950 سنة فلم يؤمن معه إلا قليل، فأمره الله بصنع السفينة ونجاه المؤمنين وأغرق الكافرين بالطوفان...",
-            youssef: "قصة يوسف عليه السلام: أحسن القصص، تبدأ بحلم الكواكب وتنتهي بتمكينه في خزائن مصر ولقائه بإخوته وأبيه يعقوب بعد سنوات من الصبر والبلاء...",
-            mohammad: "سيرة محمد ﷺ: خاتم الأنبياء، ولد يتيمًا في مكة، ونزل عليه الوحي في غار حراء، وأسس دولة الإسلام بالعدل والرحمة حتى أتم الدين ونشر النور في الأرض..."
-            // ملاحظة: يمكنك تعبئة باقي القصص بنفس النمط لضمان اكتمال الـ 25
+            adam: `<h2>آدم عليه السلام - بداية الخلق</h2>
+                   <p><span class="highlight">الخلق:</span> خلق الله آدم من طين لازب، ونفخ فيه من روحه، وأمر الملائكة بالسجود له تكريماً. رفض إبليس السجود كبراً فكان من المطرودين.</p>
+                   <p><span class="highlight">الجنة والاختبار:</span> أسكن الله آدم وحواء الجنة وأباح لهما كل ثمارها إلا شجرة واحدة. وسوس لهما الشيطان فأكلا منها، فبدت لهما سوآتهما وطفقا يخصفان عليهما من ورق الجنة.</p>
+                   <p><span class="highlight">الهبوط للأرض:</span> هبط آدم للأرض لتبدأ رحلة الاستخلاف، وتاب الله عليه وعلمه الكلمات، وأصبح أول الأنبياء الذين علموا البشرية التوحيد.</p>`,
+            
+            noah: `<h2>نوح عليه السلام - الطوفان العظيم</h2>
+                   <p><span class="highlight">الدعوة:</span> بُعث في قوم يعبدون الأصنام، لبث فيهم 950 سنة يدعوهم باللين والترغيب والترهيب، فما آمن معه إلا قليل.</p>
+                   <p><span class="highlight">بناء السفينة:</span> أوحى الله إليه بصنع السفينة. سخر منه قومه لأنه يبنيها في الصحراء، لكنه استمر بإيمان ويقين.</p>
+                   <p><span class="highlight">النهاية:</span> جاء أمر الله وفار التنور، وحمل نوح في السفينة من كل زوجين اثنين وأهله والمؤمنين، وأغرق الله الأرض بالطوفان لتطهر من الشرك.</p>`,
+
+            ibrahim: `<h2>إبراهيم عليه السلام - خليل الرحمن</h2>
+                   <p><span class="highlight">البحث عن الحق:</span> كسر إبراهيم أصنام قومه ليثبت لهم عجزها. ألقوه في النار فجعلها الله برداً وسلاماً عليه.</p>
+                   <p><span class="highlight">الابتلاءات:</span> اختبره الله بذبح ابنه إسماعيل، فامتثل للأمر ففداه الله بذبح عظيم. بنى مع ابنه الكعبة المشرفة لتكون قبلة للمسلمين.</p>`,
+
+            yousef: `<h2>يوسف عليه السلام - الصبر والتمكين</h2>
+                   <p><span class="highlight">المحنة:</span> بدأت قصته بحسد إخوته وإلقائه في الجب، ثم بيعه كعبد في مصر، ثم دخوله السجن ظلماً.</p>
+                   <p><span class="highlight">التمكين:</span> مكن الله له في الأرض بعد تفسيره لرؤيا الملك، فأصبح عزيز مصر والمسؤول عن خزائنها، وجمع الله شمله بأهله في نهاية مؤثرة تظهر عظمة الصبر.</p>`,
+
+            moussa: `<h2>موسى عليه السلام - مواجهة الطغيان</h2>
+                   <p><span class="highlight">الرسالة:</span> بُعث لمواجهة فرعون الطاغية ومعجزته العصا التي تتحول لثعبان واليد التي تخرج بيضاء.</p>
+                   <p><span class="highlight">النجاة:</span> شق الله له البحر بعصاه ليعبر بنو إسرائيل، وأغرق فرعون وجنوده ليكونا آية لمن خلفهم.</p>`,
+
+            mohammad: `<h2>محمد ﷺ - خاتم الأنبياء</h2>
+                   <p><span class="highlight">البعثة:</span> ولد في مكة يتيم الأب، نزل عليه الوحي في غار حراء وهو في الأربعين من عمره.</p>
+                   <p><span class="highlight">السيرة:</span> جاهد لنشر التوحيد، هاجر للمدينة وأسس دولة الإسلام، وفتح مكة فاتحاً رحيماً، وترك لنا القرآن والسنة منهاجاً للحياة.</p>`
         };
 
-        function loadStory() {
-            const name = document.getElementById('prophetSelect').value;
-            const box = document.getElementById('story-box');
-            box.innerHTML = stories[name] || "جاري جلب تفاصيل القصة من الأرشيف...";
-            if (name && !stories[name]) {
-                // محاكاة جلب قصة طويلة إذا لم تكن مكتوبة يدوياً
-                box.innerHTML = "هنا تظهر القصة الكاملة لـ " + name + " من كتب التفسير والبداية والنهاية لابن كثير...";
+        function updateStory() {
+            const select = document.getElementById('prophetSelect');
+            const display = document.getElementById('storyContent');
+            const val = select.value;
+            
+            if (stories[val]) {
+                display.innerHTML = stories[val];
+                display.style.animation = "none";
+                setTimeout(() => display.style.animation = "fadeIn 0.5s", 10);
             }
         }
     </script>
