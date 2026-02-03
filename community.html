@@ -9,23 +9,18 @@
         :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; --text: #ffffff; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma; margin: 0; padding: 20px; text-align: center; }
         .back-link { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; }
-        
-        .comment-input-area { background: var(--card); border: 1px solid var(--accent); border-radius: 20px; padding: 25px; max-width: 600px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .comment-input-area { background: var(--card); border: 1px solid var(--accent); border-radius: 20px; padding: 25px; max-width: 600px; margin: 20px auto; }
         textarea { width: 100%; background: #0b0716; border: 1px solid #332a4d; color: white; padding: 15px; border-radius: 12px; resize: none; font-size: 16px; box-sizing: border-box; }
-        .post-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
-        .post-btn:hover { opacity: 0.8; transform: scale(1.05); }
-
-        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .comment-text { font-size: 1.1em; line-height: 1.6; margin-bottom: 15px; }
+        .post-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         
-        /* تحسين شكل العين واللايك */
-        .comment-footer { display: flex; gap: 20px; border-top: 1px solid #332a4d; padding-top: 12px; }
-        .stat-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8b83a3; transition: 0.3s; cursor: default; }
-        .stat-item.like-btn { cursor: pointer; color: var(--accent); }
-        .stat-item.like-btn:hover { color: #ff4757; }
-        .stat-item i { font-size: 16px; } /* حجم الأيقونة */
+        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); }
+        .comment-footer { display: flex; gap: 20px; border-top: 1px solid #332a4d; padding-top: 12px; margin-top: 10px; }
+        .stat-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8b83a3; }
+        
+        /* زر اللايك عند تفعيله */
+        .like-btn { cursor: pointer; transition: 0.3s; }
+        .like-btn.active { color: #ff4757 !important; font-weight: bold; }
+        .like-btn.disabled { cursor: default; pointer-events: none; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -33,7 +28,7 @@
     <h1 style="color: var(--accent);">مجتمع أجر ريسبكت ✨</h1>
 
     <div class="comment-input-area">
-        <textarea id="commentText" rows="3" placeholder="اكتب خاطرة أو نصيحة دينية ليراها الجميع..."></textarea>
+        <textarea id="commentText" rows="3" placeholder="اكتب خاطرة دينية..."></textarea>
         <button class="post-btn" onclick="addComment()">نشر الآن</button>
     </div>
 
@@ -50,13 +45,13 @@
                 id: Date.now(),
                 content: text,
                 likes: 0,
-                views: Math.floor(Math.random() * 10) + 1 // تبدأ بمشاهدات بسيطة
+                views: 1, // تبدأ بمشاهدة واحدة حقيقية (أنت)
+                likedByMe: false
             };
 
             let comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
             comments.unshift(comment);
             localStorage.setItem('my_comments', JSON.stringify(comments));
-            
             document.getElementById('commentText').value = "";
             loadComments();
         }
@@ -64,28 +59,45 @@
         function loadComments() {
             const container = document.getElementById('commentsList');
             const comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
+            // نظام تتبع اللايكات لكل مستخدم
+            const myLikes = JSON.parse(localStorage.getItem('user_liked_posts') || "[]");
             
-            container.innerHTML = comments.map(c => `
+            container.innerHTML = comments.map(c => {
+                const isLiked = myLikes.includes(c.id);
+                return `
                 <div class="comment-card">
                     <div class="comment-text">${c.content}</div>
                     <div class="comment-footer">
                         <div class="stat-item">
-                            <i class="fa-regular fa-eye"></i> <span>${c.views} مشاهدة</span>
+                            <i class="fa-solid fa-eye"></i>
+                            <span>${c.views} مشاهدة</span>
                         </div>
-                        <div class="stat-item like-btn" onclick="doLike(${c.id})">
-                            <i class="fa-regular fa-heart"></i> <span id="l-${c.id}">${c.likes} أعجبني</span>
+                        <div class="stat-item like-btn ${isLiked ? 'active disabled' : ''}" onclick="doLike(${c.id})">
+                            <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                            <span>${c.likes} ${isLiked ? 'أعجبتك' : 'أعجبني'}</span>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function doLike(id) {
+            let myLikes = JSON.parse(localStorage.getItem('user_liked_posts') || "[]");
+            
+            // التأكد أن المستخدم لم يضغط لايك من قبل
+            if (myLikes.includes(id)) return;
+
             let comments = JSON.parse(localStorage.getItem('my_comments'));
             const idx = comments.findIndex(c => c.id === id);
-            comments[idx].likes += 1;
-            localStorage.setItem('my_comments', JSON.stringify(comments));
-            loadComments();
+            
+            if (idx !== -1) {
+                comments[idx].likes += 1;
+                myLikes.push(id); // تسجيل أن هذا المستخدم ضغط لايك
+                
+                localStorage.setItem('my_comments', JSON.stringify(comments));
+                localStorage.setItem('user_liked_posts', JSON.stringify(myLikes));
+                loadComments();
+            }
         }
     </script>
 </body>
