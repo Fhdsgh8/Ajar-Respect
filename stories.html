@@ -1,0 +1,19 @@
+<select id="prophetSelect" onchange="showStory()" style="padding:15px; width:80%; margin:20px;">
+    <option value="">اختر نبياً...</option>
+    <option value="adam">آدم عليه السلام</option>
+    <option value="noah">نوح عليه السلام</option>
+    <option value="ibrahim">إبراهيم عليه السلام</option>
+</select>
+<div id="storyContent" style="padding:20px; background:#1a142d; border-radius:10px; margin:10px;"></div>
+
+<script>
+    const stories = {
+        adam: "هنا قصة آدم عليه السلام بالتفصيل...",
+        noah: "هنا قصة نوح عليه السلام والسفينة...",
+        ibrahim: "هنا قصة خليل الله إبراهيم..."
+    };
+    function showStory() {
+        const p = document.getElementById('prophetSelect').value;
+        document.getElementById('storyContent').innerText = stories[p] || "اختر من القائمة لعرض القصة";
+    }
+</script>
