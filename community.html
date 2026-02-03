@@ -13,14 +13,14 @@
         textarea { width: 100%; background: #0b0716; border: 1px solid #332a4d; color: white; padding: 15px; border-radius: 12px; resize: none; font-size: 16px; box-sizing: border-box; }
         .post-btn { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         
-        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); }
+        .comment-card { background: var(--card); border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 600px; text-align: right; border-right: 4px solid var(--accent); position: relative; }
+        .delete-btn { position: absolute; top: 15px; left: 15px; color: #ff4757; cursor: pointer; font-size: 14px; opacity: 0.7; }
+        .delete-btn:hover { opacity: 1; }
+        
         .comment-footer { display: flex; gap: 20px; border-top: 1px solid #332a4d; padding-top: 12px; margin-top: 10px; }
         .stat-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #8b83a3; }
-        
-        /* زر اللايك عند تفعيله */
         .like-btn { cursor: pointer; transition: 0.3s; }
-        .like-btn.active { color: #ff4757 !important; font-weight: bold; }
-        .like-btn.disabled { cursor: default; pointer-events: none; opacity: 0.8; }
+        .like-btn.active { color: #ff4757 !important; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -42,39 +42,36 @@
             if(!text.trim()) return;
 
             const comment = {
-                id: Date.now(),
+                id: "c" + Date.now(),
                 content: text,
                 likes: 0,
-                views: 1, // تبدأ بمشاهدة واحدة حقيقية (أنت)
-                likedByMe: false
+                views: 1,
+                isMyOwn: true // علامة لتمييز تعليقاتي لأتمكن من حذفها
             };
 
-            let comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
+            let comments = JSON.parse(localStorage.getItem('community_posts') || "[]");
             comments.unshift(comment);
-            localStorage.setItem('my_comments', JSON.stringify(comments));
+            localStorage.setItem('community_posts', JSON.stringify(comments));
             document.getElementById('commentText').value = "";
             loadComments();
         }
 
         function loadComments() {
             const container = document.getElementById('commentsList');
-            const comments = JSON.parse(localStorage.getItem('my_comments') || "[]");
-            // نظام تتبع اللايكات لكل مستخدم
-            const myLikes = JSON.parse(localStorage.getItem('user_liked_posts') || "[]");
+            const comments = JSON.parse(localStorage.getItem('community_posts') || "[]");
+            const myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
             
             container.innerHTML = comments.map(c => {
                 const isLiked = myLikes.includes(c.id);
                 return `
                 <div class="comment-card">
+                    ${c.isMyOwn ? `<span class="delete-btn" onclick="deleteComment('${c.id}')"><i class="fa-solid fa-trash"></i> حذف</span>` : ''}
                     <div class="comment-text">${c.content}</div>
                     <div class="comment-footer">
-                        <div class="stat-item">
-                            <i class="fa-solid fa-eye"></i>
-                            <span>${c.views} مشاهدة</span>
-                        </div>
-                        <div class="stat-item like-btn ${isLiked ? 'active disabled' : ''}" onclick="doLike(${c.id})">
+                        <div class="stat-item"><i class="fa-solid fa-eye"></i> <span>${c.views}</span></div>
+                        <div class="stat-item like-btn ${isLiked ? 'active' : ''}" onclick="doLike('${c.id}')">
                             <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                            <span>${c.likes} ${isLiked ? 'أعجبتك' : 'أعجبني'}</span>
+                            <span>${c.likes}</span>
                         </div>
                     </div>
                 </div>
@@ -82,20 +79,26 @@
         }
 
         function doLike(id) {
-            let myLikes = JSON.parse(localStorage.getItem('user_liked_posts') || "[]");
-            
-            // التأكد أن المستخدم لم يضغط لايك من قبل
-            if (myLikes.includes(id)) return;
+            let myLikes = JSON.parse(localStorage.getItem('my_likes') || "[]");
+            if (myLikes.includes(id)) return; // منع التكرار نهائياً
 
-            let comments = JSON.parse(localStorage.getItem('my_comments'));
+            let comments = JSON.parse(localStorage.getItem('community_posts'));
             const idx = comments.findIndex(c => c.id === id);
             
             if (idx !== -1) {
                 comments[idx].likes += 1;
-                myLikes.push(id); // تسجيل أن هذا المستخدم ضغط لايك
-                
-                localStorage.setItem('my_comments', JSON.stringify(comments));
-                localStorage.setItem('user_liked_posts', JSON.stringify(myLikes));
+                myLikes.push(id);
+                localStorage.setItem('community_posts', JSON.stringify(comments));
+                localStorage.setItem('my_likes', JSON.stringify(myLikes));
+                loadComments();
+            }
+        }
+
+        function deleteComment(id) {
+            if(confirm("هل أنت متأكد من حذف هذا التعليق؟")) {
+                let comments = JSON.parse(localStorage.getItem('community_posts'));
+                comments = comments.filter(c => c.id !== id);
+                localStorage.setItem('community_posts', JSON.stringify(comments));
                 loadComments();
             }
         }
