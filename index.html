@@ -8,51 +8,63 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #0b071a; --card: rgba(26, 20, 45, 0.95); --accent: #a37cf0; --gold: #D4AF37; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; background-image: radial-gradient(circle at top right, #1e1042, transparent); }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; background-image: radial-gradient(circle at top right, #1e1042, transparent); }
         
-        /* نظام الصفحات */
-        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
+        /* نظام التنقل */
+        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* الهيدر */
         header { text-align: center; padding: 30px; }
-        .logo { font-size: 3rem; color: var(--gold); font-family: 'Amiri'; font-weight: 900; }
+        .logo { font-size: 3rem; color: var(--gold); font-family: 'Amiri'; font-weight: 900; text-shadow: 0 0 15px rgba(212,175,55,0.3); }
 
-        /* البطاقة العلوية */
-        .status-box { background: var(--card); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 25px; max-width: 600px; margin: 0 auto 30px; text-align: center; }
-        #p-timer { font-size: 3.2rem; font-weight: 900; color: var(--gold); display: block; }
+        /* صندوق الحالة العلوي */
+        .status-box { background: var(--card); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 25px; max-width: 600px; margin: 0 auto 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #p-timer { font-size: 3.5rem; font-weight: 900; color: var(--gold); display: block; }
 
         /* الشبكة الرئيسية */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
-        .card { background: var(--card); border-radius: 25px; padding: 30px 15px; text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); background: rgba(163, 124, 240, 0.15); }
-        .card i { font-size: 2.5rem; margin-bottom: 15px; display: block; color: var(--gold); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; }
+        .card { background: var(--card); border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-7px); border-color: var(--gold); background: rgba(163, 124, 240, 0.1); }
+        .card i { font-size: 2.2rem; margin-bottom: 12px; display: block; color: var(--gold); }
+
+        /* زر إحسان الخاص */
+        .ehsan-card { background: linear-gradient(135deg, #1d976c, #93f9b9) !important; color: #000 !important; font-weight: bold; border: none !important; }
+        .ehsan-card i { color: #000 !important; }
+
+        /* المواقيت والمدخلات */
+        .input-group { margin: 20px 0; }
+        input { width: 45%; padding: 12px; border-radius: 12px; border: 1px solid var(--gold); background: #0b071a; color: white; margin: 5px; text-align: center; font-family: 'Cairo'; }
+        .btn-action { background: var(--gold); color: #000; border: none; padding: 12px 30px; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
+        .btn-action:active { transform: scale(0.95); }
 
         /* المسبحة */
-        .sebha-btn { width: 220px; height: 220px; border-radius: 50%; border: 10px solid var(--gold); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 900; cursor: pointer; background: #1a142d; }
+        .sebha-btn { width: 220px; height: 220px; border-radius: 50%; border: 12px solid var(--gold); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 900; cursor: pointer; background: radial-gradient(circle, #1a142d, #0b071a); box-shadow: 0 0 30px rgba(212,175,55,0.1); }
 
-        /* إدخالات المواقيت */
-        .input-group { margin-bottom: 20px; text-align: center; }
-        input { width: 45%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); background: #0b071a; color: white; margin: 5px; text-align: center; }
-        .btn-action { background: var(--gold); color: #000; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 5px; }
+        /* القائمة والمعلومات */
+        .info-card { background: var(--card); padding: 20px; border-radius: 15px; border-right: 5px solid var(--gold); margin-bottom: 15px; line-height: 1.8; text-align: right; }
+        .back-btn { background: var(--gold); color: #000; border: none; padding: 10px 25px; border-radius: 12px; cursor: pointer; margin-bottom: 25px; font-weight: bold; }
 
-        .back-btn { background: var(--gold); color: #000; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; font-weight: 900; }
-        .info-item { background: var(--card); padding: 20px; border-radius: 15px; border-right: 5px solid var(--gold); margin-bottom: 15px; text-align: right; }
-        .opt-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--accent); border-radius: 15px; cursor: pointer; }
-        .opt-btn.correct { background: #2ecc71 !important; }
-        .opt-btn.wrong { background: #e74c3c !important; }
+        /* التحديات الصارمة */
+        .opt-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--accent); border-radius: 15px; cursor: pointer; font-size: 1.1rem; text-align: center; }
+        .opt-btn.correct { background: #2ecc71 !important; border-color: #fff; }
+        .opt-btn.wrong { background: #e74c3c !important; border-color: #fff; }
+        .disabled { pointer-events: none; opacity: 0.7; }
     </style>
 </head>
 <body>
 
 <div id="home-page" class="page active">
     <header><h1 class="logo">أجر ريسبكت</h1></header>
+    
     <div class="status-box">
-        <div id="prayer-label" style="color:var(--gold)">حدد مدينتك لعرض الوقت</div>
+        <div id="prayer-label" style="color:var(--gold); font-weight:bold;">جاري تحميل المواقيت...</div>
         <span id="p-timer">00:00:00</span>
-        <div id="hijri-date" style="margin-top:10px; font-family:'Amiri'"></div>
+        <div id="hijri-date" style="margin-top:10px; font-family:'Amiri'; opacity:0.8"></div>
     </div>
+
     <div class="grid">
         <div class="card" onclick="openPage('quran-page')"><i class="fas fa-book-quran"></i><h3>القرآن</h3></div>
         <div class="card" onclick="openPage('sebha-page')"><i class="fas fa-fingerprint"></i><h3>المسبحة</h3></div>
@@ -62,50 +74,51 @@
         <div class="card" onclick="openPage('quiz-page')"><i class="fas fa-trophy"></i><h3>التحديات</h3></div>
         <div class="card" onclick="openPage('hadith-page')"><i class="fas fa-scroll"></i><h3>الأحاديث</h3></div>
         <div class="card" onclick="openPage('stories-page')"><i class="fas fa-mosque"></i><h3>القصص</h3></div>
+        <div class="card ehsan-card" onclick="window.open('https://ehsan.sa/', '_blank')"><i class="fas fa-heart-pulse"></i><h3>منصة إحسان</h3></div>
     </div>
 </div>
 
 <div id="times-page" class="page">
     <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <div class="status-box" style="max-width: 500px;">
-        <h3>🌍 إعدادات الموقع</h3>
+    <div class="status-box" style="max-width: 550px;">
+        <h2 style="margin-bottom:15px; color:var(--gold)">🕌 مواقيت الصلاة</h2>
         <div class="input-group">
             <input type="text" id="cityIn" placeholder="المدينة (مثلاً: Riyadh)">
             <input type="text" id="countryIn" placeholder="الدولة (مثلاً: Saudi Arabia)">
-            <button class="btn-action" onclick="getPrayerTimes()">عرض الأوقات</button>
+            <button class="btn-action" onclick="getPrayerTimes()">عرض الأوقات وتحديث العد</button>
         </div>
-        <div id="times-list"></div>
+        <div id="times-list" style="margin-top:20px;"></div>
     </div>
 </div>
 
 <div id="quran-page" class="page">
     <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <iframe src="https://quran.com/ar" style="width:100%; height:80vh; border-radius:20px; border:5px solid var(--card);"></iframe>
+    <iframe src="https://quran.com/ar" style="width:100%; height:85vh; border-radius:25px; border:6px solid var(--card);"></iframe>
 </div>
 
 <div id="sebha-page" class="page">
     <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
     <div style="text-align:center">
-        <h2 id="sebha-txt" style="color:var(--gold); font-family:'Amiri'">سبحان الله</h2>
+        <h2 id="sebha-txt" style="color:var(--gold); font-size:2rem; font-family:'Amiri'">سبحان الله</h2>
         <div class="sebha-btn" onclick="sebhaClick()">0</div>
-        <button onclick="sebhaReset()" style="background:none; border:1px solid #fff; color:#fff; padding:10px 30px; border-radius:15px;">تصفير</button>
+        <button onclick="sebhaReset()" style="background:none; border:1px solid #fff; color:#fff; padding:10px 30px; border-radius:15px;">تصفير العداد</button>
     </div>
 </div>
 
 <div id="zad-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div id="zad-list"></div></div>
 <div id="azkar-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div id="azkar-list"></div></div>
-<div id="quiz-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div id="q-area" class="status-box"><h2 id="q-text"></h2><div id="q-opts"></div></div></div>
-<div id="hadith-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div class="status-box"><p id="h-txt" style="line-height:2">جاري التحميل...</p><button onclick="fetchHadith()" class="btn-action">حديث آخر</button></div></div>
+<div id="quiz-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div class="status-box" style="max-width:600px;"><h2 id="q-text" style="margin-bottom:20px;"></h2><div id="q-opts"></div></div></div>
+<div id="hadith-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div class="status-box" style="max-width:800px;"><p id="h-txt" style="line-height:2.2; font-family:'Amiri'; font-size:1.3rem;"></p><button onclick="fetchHadith()" class="btn-action">حديث آخر</button></div></div>
 <div id="stories-page" class="page">
     <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <select id="s-select" onchange="showStory()" style="width:100%; padding:15px; background:var(--card); color:white; border-radius:10px; margin-bottom:20px;">
+    <select id="s-select" onchange="showStory()" style="width:100%; padding:15px; background:var(--card); color:white; border-radius:12px; border:1px solid var(--gold); margin-bottom:20px;">
         <option value="adam">آدم عليه السلام</option>
         <option value="noah">نوح عليه السلام</option>
         <option value="ibrahim">إبراهيم عليه السلام</option>
         <option value="moussa">موسى عليه السلام</option>
         <option value="mohammad">محمد ﷺ</option>
     </select>
-    <div id="s-content" class="info-item"></div>
+    <div id="s-content" class="info-card" style="font-family:'Amiri'; font-size:1.2rem;"></div>
 </div>
 
 <script>
@@ -120,11 +133,18 @@
 
     // المسبحة
     let sCount = 0;
-    function sebhaClick() { sCount++; document.querySelector('.sebha-btn').innerText = sCount; if(sCount % 33 === 0) navigator.vibrate(100); }
+    const sLabels = ["سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله"];
+    function sebhaClick() { 
+        sCount++; document.querySelector('.sebha-btn').innerText = sCount; 
+        if(sCount % 33 === 0) {
+            navigator.vibrate(100);
+            document.getElementById('sebha-txt').innerText = sLabels[Math.floor(Math.random()*sLabels.length)];
+        }
+    }
     function sebhaReset() { sCount = 0; document.querySelector('.sebha-btn').innerText = 0; }
 
-    // مواقيت الصلاة (تفاعلية)
-    let prayerTimes = {};
+    // مواقيت الصلاة (بالمدن والدول)
+    let pTimes = {};
     async function getPrayerTimes() {
         const city = document.getElementById('cityIn').value || 'Riyadh';
         const country = document.getElementById('countryIn').value || 'Saudi Arabia';
@@ -132,57 +152,71 @@
             const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=4`);
             const d = await res.json();
             if(d.code === 200) {
-                prayerTimes = d.data.timings;
-                renderTimes(city);
-            } else { alert("تأكد من كتابة المدينة بالإنجليزية"); }
-        } catch(e) { console.log(e); }
-    }
-
-    function renderTimes(city) {
-        const list = document.getElementById('times-list'); list.innerHTML = "";
-        const map = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
-        for(let k in map) {
-            list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #444"><span>${map[k]}</span><span style="color:var(--gold)">${prayerTimes[k]}</span></div>`;
-        }
-        document.getElementById('prayer-label').innerText = `مواقيت الصلاة في ${city}`;
+                pTimes = d.data.timings;
+                const list = document.getElementById('times-list'); list.innerHTML = "";
+                const map = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
+                for(let k in map) {
+                    list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #333; font-size:1.2rem;"><span>${map[k]}</span><span style="color:var(--gold)">${pTimes[k]}</span></div>`;
+                }
+                document.getElementById('prayer-label').innerText = `مواقيت الصلاة في ${city}`;
+            } else { alert("يرجى كتابة اسم المدينة والدولة بالإنجليزية بشكل صحيح"); }
+        } catch(e) { console.log("Error fetching times"); }
     }
 
     function updateTimer() {
-        if(!prayerTimes.Fajr) return;
+        if(!pTimes.Fajr) return;
         const now = new Date();
         const map = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
         let next = null;
         for(let k in map) {
-            let [h, m] = prayerTimes[k].split(':');
+            let [h, m] = pTimes[k].split(':');
             let t = new Date(); t.setHours(h, m, 0);
             if(t > now) { next = {n: map[k], t: t}; break; }
         }
-        if(!next) { let [h,m] = prayerTimes.Fajr.split(':'); next={n:"الفجر", t:new Date(now.getTime()+86400000)}; next.t.setHours(h,m,0); }
+        if(!next) { 
+            let [h, m] = pTimes.Fajr.split(':');
+            next = {n:"الفجر", t: new Date(now.getTime()+86400000)}; next.t.setHours(h,m,0);
+        }
         const diff = next.t - now;
         const hh = Math.floor(diff/3600000); const mm = Math.floor((diff%3600000)/60000); const ss = Math.floor((diff%60000)/1000);
         document.getElementById('p-timer').innerText = `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`;
+        document.getElementById('prayer-label').innerText = "الصلاة القادمة: " + next.n;
     }
     setInterval(updateTimer, 1000);
 
-    // زاد والأذكار (150 و 200)
+    // زاد المسلم (150)
     function renderZad() {
         const c = document.getElementById('zad-list'); c.innerHTML = "";
-        for(let i=1; i<=150; i++) c.innerHTML += `<div class="info-item"><h3>معلومة #${i}</h3><p>صلاة الضحى صلاة الأوابين ووقتها من بعد الشروق.</p></div>`;
+        for(let i=1; i<=150; i++) {
+            c.innerHTML += `<div class="info-card"><h3>معلومة #${i}</h3><p>أحب الأعمال إلى الله أدومها وإن قل.</p></div>`;
+        }
     }
+
+    // الأذكار (200)
     function renderAzkar() {
         const c = document.getElementById('azkar-list'); c.innerHTML = "";
-        for(let i=1; i<=200; i++) c.innerHTML += `<div class="info-item" style="display:flex; justify-content:space-between"><span>ذكر #${i}: سبحان الله وبحمده</span><button onclick="this.innerText-- > 1 ? null : this.innerText='✓'" style="background:var(--gold); border:none; padding:5px 15px; border-radius:20px;">33</button></div>`;
+        for(let i=1; i<=200; i++) {
+            c.innerHTML += `<div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>ذكر #${i}: لا إله إلا الله وحده لا شريك له</span>
+                <button onclick="this.innerText-- > 1 ? null : this.innerText='✓'" style="background:var(--gold); border:none; padding:8px 20px; border-radius:20px; font-weight:bold; cursor:pointer;">33</button>
+            </div>`;
+        }
     }
 
     // التحديات الصارمة
     let qIdx = 0;
-    const quizD = [{q:"كم عدد أركان الإسلام؟", o:["4","5","6"], c:1}, {q:"من هو أبو الأنبياء؟", o:["آدم","نوح","إبراهيم"], c:2}];
+    const quizD = [
+        {q:"من هو خاتم الأنبياء والمرسلين؟", o:["عيسى عليه السلام","موسى عليه السلام","محمد ﷺ"], c:2},
+        {q:"كم عدد أجزاء القرآن الكريم؟", o:["30 جزء","25 جزء","60 جزء"], c:0},
+        {q:"ما هو الركن الثاني من أركان الإسلام؟", o:["الصوم","الصلاة","الزكاة"], c:1}
+    ];
     function loadQuiz() {
         const q = quizD[qIdx]; document.getElementById('q-text').innerText = q.q;
         const opts = document.getElementById('q-opts'); opts.innerHTML = "";
         q.o.forEach((o, i) => {
             const b = document.createElement('button'); b.className="opt-btn"; b.innerText = o;
             b.onclick = () => {
+                document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.add('disabled'));
                 if(i===q.c) b.classList.add('correct'); else b.classList.add('wrong');
                 setTimeout(() => { qIdx = (qIdx+1)%quizD.length; loadQuiz(); }, 1200);
             };
@@ -190,12 +224,24 @@
         });
     }
 
-    // أحاديث وقصص
+    // أحاديث (صحيح البخاري)
     async function fetchHadith() {
-        const r = await fetch('https://api.hadith.gading.dev/books/bukhari/'+(Math.floor(Math.random()*100)+1));
-        const d = await r.json(); document.getElementById('h-txt').innerText = d.data.contents.arab;
+        document.getElementById('h-txt').innerText = "جاري جلب حديث شريف...";
+        try {
+            const r = await fetch('https://api.hadith.gading.dev/books/bukhari/' + (Math.floor(Math.random()*100)+1));
+            const d = await r.json();
+            document.getElementById('h-txt').innerText = d.data.contents.arab;
+        } catch(e) { document.getElementById('h-txt').innerText = "أستغفر الله العظيم وأتوب إليه (حدث خطأ في جلب الحديث)."; }
     }
-    const stories = {adam:"خلق الله آدم من طين..", noah:"صنع نوح السفينة..", mohammad:"سيرة النبي خاتم المرسلين.."};
+
+    // القصص
+    const stories = {
+        adam: "خلق الله آدم من طين ونفخ فيه من روحه وعلمه الأسماء كلها...",
+        noah: "بنى نوح عليه السلام السفينة لينجو المؤمنون من الطوفان العظيم...",
+        ibrahim: "خليل الله إبراهيم الذي حطم الأصنام وألقي في النار فكانت برداً وسلاماً...",
+        moussa: "كليم الله موسى الذي شق له الله البحر ليهرب من بطش فرعون...",
+        mohammad: "سيد الخلق وخاتم المرسلين، ولد في مكة المكرمة ونزل عليه الوحي في غار حراء..."
+    };
     function showStory() { document.getElementById('s-content').innerText = stories[document.getElementById('s-select').value]; }
 
     window.onload = () => {
