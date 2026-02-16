@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajar Respect Pro | أجر ريسبكت الفاخر</title>
+    <title>Ajar Respect Ultimate Pro | أجر ريسبكت الملكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #D4AF37;
-            --deep-purple: #0f0524;
-            --accent-purple: #6366f1;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --dark-gold: #996515;
+            --bg-deep: #070214;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --neon-glow: rgba(212, 175, 55, 0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: default;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
 
         body {
-            background-color: var(--deep-purple);
+            background-color: var(--bg-deep);
             font-family: 'Cairo', sans-serif;
             color: white;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1e1042 0%, #0f0524 100%);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1e1042 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #0f0524 0%, transparent 40%);
             min-height: 100vh;
         }
 
@@ -39,257 +36,218 @@
             z-index: -1;
         }
 
-        /* Header Section */
-        header {
-            height: 60vh;
+        /* 1. آية اليوم - تصميم ملكي علوي */
+        .top-ayah-section {
+            padding: 40px 20px;
+            text-align: center;
+            perspective: 1000px;
+        }
+
+        .ayah-frame {
+            display: inline-block;
+            background: linear-gradient(145deg, rgba(20,10,40,0.9), rgba(40,20,80,0.4));
+            border: 2px solid var(--gold);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 15px var(--neon-glow);
+            max-width: 900px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+
+        .ayah-text {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            line-height: 1.6;
+            color: #fff;
+            text-shadow: 0 0 10px var(--gold);
+        }
+
+        /* 2. عداد الصلاة القادم - تصميم سينمائي */
+        .prayer-timer-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .timer-circle {
+            display: inline-block;
+            border: 3px solid var(--gold);
+            padding: 20px 40px;
+            border-radius: 100px;
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+        }
+
+        .timer-label { font-size: 0.9rem; color: var(--gold); letter-spacing: 2px; }
+        .timer-clock { font-size: 3rem; font-weight: 900; font-family: 'monospace'; }
+
+        /* 3. شبكة الخيارات السداسية الفخمة */
+        .main-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .hexa-card {
+            width: 260px;
+            height: 300px;
+            background: var(--card-bg);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            transition: all 0.4s ease;
             position: relative;
-        }
-
-        .hero-title {
-            font-size: 5rem;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #fff 30%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
-            margin-bottom: 10px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            opacity: 0.8;
-        }
-
-        /* Ayah of the Day */
-        .ayah-box {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 800px;
-            margin: -100px auto 50px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 10;
-        }
-
-        .ayah-text {
-            font-family: 'Amiri', serif;
-            font-size: 1.8rem;
+            text-decoration: none;
             color: #fff;
+            border: 1px solid var(--gold);
+        }
+
+        .hexa-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 40px var(--neon-glow);
+        }
+
+        .hexa-card i {
+            font-size: 3.5rem;
+            color: var(--gold);
             margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--gold));
         }
 
-        /* Grid System */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
+        .hexa-card h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
+        .hexa-card p { font-size: 0.8rem; opacity: 0.6; padding: 0 25px; }
+
+        /* تمييز زر الموسوعة وزر الصدقة */
+        .encyclopedia-card { border: 2px solid #a37cf0; }
+        .encyclopedia-card i { color: #a37cf0; filter: drop-shadow(0 0 10px #a37cf0); }
+
+        .charity-card { border: 2px solid #4ade80; animation: pulse 2s infinite; }
+        .charity-card i { color: #4ade80; filter: drop-shadow(0 0 10px #4ade80); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
         }
 
-        .premium-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: white;
-        }
-
-        .premium-card:hover {
-            transform: translateY(-15px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--gold);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-
-        .premium-card i {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #fff, var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .premium-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 12px;
-        }
-
-        .premium-card p {
-            font-size: 0.95rem;
-            opacity: 0.7;
-            line-height: 1.6;
-        }
-
-        .card-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--gold);
-            color: black;
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        /* Modern Footer */
         footer {
-            padding: 60px 20px;
+            padding: 50px;
             text-align: center;
-            background: rgba(0,0,0,0.3);
-            margin-top: 100px;
+            background: rgba(0,0,0,0.4);
+            margin-top: 50px;
         }
 
-        .social-links i {
-            font-size: 1.5rem;
-            margin: 0 15px;
+        .social-icons i {
+            font-size: 1.8rem;
+            margin: 0 20px;
             color: var(--gold);
             transition: 0.3s;
         }
 
-        .social-links i:hover {
-            transform: scale(1.3);
-            text-shadow: 0 0 15px var(--gold);
-        }
-
-        /* Floating Nav */
-        .nav-float {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 10px 30px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            z-index: 1000;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-float a {
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .nav-float a:hover { color: var(--gold); }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 3rem; }
-            .ayah-box { margin: -50px 20px 30px; }
-        }
+        .social-icons i:hover { transform: scale(1.3); text-shadow: 0 0 20px var(--gold); }
     </style>
 </head>
 <body>
 
 <div id="particles-js"></div>
 
-<nav class="nav-float">
-    <a href="#">الرئيسية</a>
-    <a href="#">المكتبة</a>
-    <a href="#">عن المشروع</a>
-    <a href="#">اتصل بنا</a>
-</nav>
-
-<header>
-    <div class="hero-subtitle">Mawsu'at Al-Ajar</div>
-    <h1 class="hero-title">أجر ريسبكت</h1>
-    <p>بوابة الهداية الرقمية - الجيل الثالث</p>
-</header>
-
-<div class="ayah-box">
-    <div class="card-badge">آية اليوم</div>
-    <p class="ayah-text">"وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ"</p>
-    <p style="color: var(--gold);">[سورة الطلاق: 2-3]</p>
+<div class="top-ayah-section">
+    <div class="ayah-frame">
+        <p class="ayah-text">"وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا"</p>
+        <p style="color: var(--gold); margin-top: 10px;">[سورة الطور: 48]</p>
+    </div>
 </div>
 
-<div class="grid-container">
-    <a href="#" class="premium-card">
+<div class="prayer-timer-section">
+    <div class="timer-circle">
+        <div class="timer-label">الوقت المتبقي لصلاة العصر</div>
+        <div class="timer-clock" id="countdown">02:45:12</div>
+    </div>
+</div>
+
+<div class="main-grid">
+    <a href="#" class="hexa-card">
         <i class="fas fa-quran"></i>
         <h3>مصحف التلاوة</h3>
-        <p>استمع وتدبر القرآن الكريم بأصوات أشهر القراء مع عرض تفاعلي للآيات.</p>
+        <p>ختمات صوتية ومرئية لأشهر القراء</p>
     </a>
 
-    <a href="#" class="premium-card">
+    <a href="encyclopedia.html" class="hexa-card encyclopedia-card">
+        <i class="fas fa-book-atlas"></i>
+        <h3 style="color: #a37cf0;">زاد المسلم</h3>
+        <p>موسوعة شاملة تضم 150 معلومة دينية وسنة نبوية</p>
+    </a>
+
+    <a href="#" class="hexa-card">
+        <i class="fas fa-kaaba"></i>
+        <h3>اتجاه القبلة</h3>
+        <p>تحديد دقيق عبر الأقمار الصناعية</p>
+    </a>
+
+    <a href="https://ehsan.sa/donation" target="_blank" class="hexa-card charity-card">
+        <i class="fas fa-hand-holding-heart"></i>
+        <h3 style="color: #4ade80;">صدقة جارية</h3>
+        <p>ساهم في الخير عبر منصة إحسان الرسمية</p>
+    </a>
+
+    <a href="#" class="hexa-card">
         <i class="fas fa-moon"></i>
-        <h3>حصن المسلم</h3>
-        <p>موسوعة الأذكار الذكية التي تذكرك بالله في كل وقت وحين.</p>
+        <h3>أذكار اليوم</h3>
+        <p>أذكار الصباح والمساء بتنبيهات ذكية</p>
     </a>
 
-    <a href="#" class="premium-card">
-        <i class="fas fa-compass"></i>
-        <h3>القبلة والصلوات</h3>
-        <p>تحديد دقيق لاتجاه القبلة ومواقيت الصلاة باستخدام الذكاء الاصطناعي.</p>
-    </a>
-
-    <a href="#" class="premium-card">
-        <i class="fas fa-gem"></i>
-        <h3>الكنوز النبوية</h3>
-        <p>أحاديث مختارة بعناية لتكون مرجعك في الأخلاق والمعاملات.</p>
-    </a>
-
-    <a href="#" class="premium-card">
-        <i class="fas fa-star"></i>
-        <h3>مجتمع الذاكرين</h3>
-        <p>شارك في تحديات التسبيح العالمية ونافس في فعل الخيرات.</p>
-    </a>
-
-    <a href="#" class="premium-card">
-        <i class="fas fa-heart"></i>
-        <h3>صدقة جارية</h3>
-        <p>ساهم في نشر العلم النافع واكسب الأجر المستمر بإذن الله.</p>
+    <a href="#" class="hexa-card">
+        <i class="fas fa-bead"></i>
+        <h3>المسبحة الملكية</h3>
+        <p>عداد تسبيح ذهبي مع حفظ الإنجازات</p>
     </a>
 </div>
 
 <footer>
-    <div class="social-links">
+    <div class="social-icons">
         <i class="fab fa-twitter"></i>
         <i class="fab fa-instagram"></i>
         <i class="fab fa-youtube"></i>
     </div>
-    <p style="margin-top: 20px; opacity: 0.6;">تم التطوير ليكون صدقة جارية لجميع المسلمين</p>
-    <p style="color: var(--gold); margin-top: 10px;">2026 © Ajar Respect Pro</p>
+    <p style="margin-top: 25px; font-weight: 300; opacity: 0.7;">أجر ريسبكت - مشروع صدقة جارية إلكترونية</p>
+    <p style="color: var(--gold); margin-top: 10px; font-weight: 900;">2026 © AJAR RESPECT ULTIMATE</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    // تهيئة النجوم في الخلفية
     particlesJS('particles-js', {
         "particles": {
-            "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+            "number": { "value": 120 },
             "color": { "value": "#D4AF37" },
             "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": true },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 150, "color": "#D4AF37", "opacity": 0.2, "width": 1 },
-            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }
+            "opacity": { "value": 0.5 },
+            "size": { "value": 2 },
+            "line_linked": { "enable": true, "distance": 150, "color": "#D4AF37", "opacity": 0.1, "width": 1 },
+            "move": { "enable": true, "speed": 1 }
         }
     });
+
+    // منطق العداد التنازلي البسيط
+    function updateTimer() {
+        const now = new Date();
+        const countdown = document.getElementById('countdown');
+        // هنا يمكنك إضافة منطق حقيقي لمواقيت الصلاة
+        countdown.innerHTML = now.toLocaleTimeString('en-GB');
+    }
+    setInterval(updateTimer, 1000);
 </script>
 
 </body>
