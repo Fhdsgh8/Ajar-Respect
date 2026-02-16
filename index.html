@@ -3,221 +3,524 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أجر ريسبكت | التطبيق المتكامل</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <title>Ajar Respect | أجر ريسبكت</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #D4AF37;
-            --bg-deep: #0f0b1e;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border-gold: rgba(212, 175, 55, 0.3);
+            --glass: rgba(255, 255, 255, 0.12);
+            --glass-hover: rgba(255, 255, 255, 0.2);
+            --border: rgba(255, 255, 255, 0.25);
+            --purple-main: #6b21a8;
+            --purple-light: #a855f7;
+            --purple-glow: #c084fc;
+            --purple-dark: #3b0764;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-deep);
-            background-image: radial-gradient(circle at top right, #1a103d, #0f0b1e);
-            color: white;
+            background: linear-gradient(180deg, #1a0a33 0%, #2d1548 30%, #4a1972 60%, #2d1548 80%, #1a0a33 100%);
             min-height: 100vh;
-            margin: 0;
+            color: white;
             overflow-x: hidden;
-        }
-
-        /* الهيدر والعداد */
-        header { text-align: center; padding: 30px 20px; }
-        .timer-card {
-            background: var(--glass);
-            border: 1px solid var(--border-gold);
-            border-radius: 25px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto 30px;
-            backdrop-filter: blur(10px);
-        }
-        #p-label { color: var(--gold); font-size: 1.1rem; font-weight: bold; }
-        #p-clock { font-size: 3rem; font-weight: 900; display: block; margin: 5px 0; font-family: monospace; }
-        #p-hijri { font-family: 'Amiri', serif; font-size: 1.3rem; color: #ddd; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
-
-        /* الشبكة الرئيسية */
-        .main-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .nav-item {
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 25px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .nav-item:hover { border-color: var(--gold); transform: translateY(-5px); background: rgba(212, 175, 55, 0.05); }
-        .nav-item i { font-size: 2.2rem; margin-bottom: 10px; display: block; }
-
-        /* الواجهات الداخلية */
-        .sub-view {
-            display: none;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-deep);
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .view-header {
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid var(--gold);
-            padding-bottom: 15px; margin-bottom: 20px;
-        }
-        .back-btn {
-            background: var(--gold); color: #000; border: none;
-            padding: 8px 20px; border-radius: 50px; font-weight: bold; cursor: pointer;
-        }
-
-        /* بطاقات المحتوى (مثل الصور التي أرسلتها) */
-        .content-card {
-            background: var(--glass);
-            border: 1px solid var(--border-gold);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
             position: relative;
         }
-        .content-card h4 { color: var(--gold); margin-bottom: 10px; font-family: 'Amiri', serif; font-size: 1.4rem; }
-        .content-card p { line-height: 1.7; opacity: 0.9; }
 
-        /* المسبحة */
-        .tasbih-box { text-align: center; margin-top: 50px; }
-        .t-circle {
-            width: 220px; height: 220px; border-radius: 50%;
-            border: 8px solid var(--gold);
-            margin: 0 auto 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.1s;
+        .rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
         }
-        .t-circle:active { transform: scale(0.95); }
-        #t-count { font-size: 4rem; font-weight: 900; color: var(--gold); }
 
-        /* أوقات الصلاة */
-        .time-row {
-            display: flex; justify-content: space-between; padding: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .rain {
+            position: absolute;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.6), transparent);
+            animation: fall linear infinite;
+            opacity: 0.7;
         }
-        .time-row span:last-child { color: var(--gold); font-weight: bold; }
-    </style>
-</head>
-<body>
 
-<div id="home">
-    <header>
-        <h1 style="background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem;">أجر ريسبكت</h1>
-    </header>
-
-    <div class="timer-card">
-        <div id="p-label">جاري تحميل المواقيت...</div>
-        <span id="p-clock">00:00:00</span>
-        <div id="p-hijri">التاريخ الهجري</div>
-    </div>
-
-    <div class="main-grid">
-        <div class="nav-item" onclick="openV('v-quran')"><i class="fas fa-book-quran" style="color: #fbbf24;"></i><h3>القرآن</h3></div>
-        <div class="nav-item" onclick="openV('v-times')"><i class="fas fa-clock" style="color: #60a5fa;"></i><h3>المواقيت</h3></div>
-        <div class="nav-item" onclick="openV('v-tasbih')"><i class="fas fa-fingerprint" style="color: #34d399;"></i><h3>المسبحة</h3></div>
-        <div class="nav-item" onclick="openV('v-stories')"><i class="fas fa-mosque" style="color: #fcd34d;"></i><h3>القصص</h3></div>
-        <div class="nav-item" onclick="openV('v-hadith')"><i class="fas fa-scroll" style="color: #fb7185;"></i><h3>الأحاديث</h3></div>
-        <div class="nav-item" onclick="openV('v-challenge')"><i class="fas fa-trophy" style="color: #f87171;"></i><h3>تحديات</h3></div>
-        <div class="nav-item" onclick="openV('v-zad')"><i class="fas fa-book-atlas" style="color: #a37cf0;"></i><h3>زاد المسلم</h3></div>
-    </div>
-</div>
-
-<div id="v-times" class="sub-view">
-    <div class="view-header"><h2>مواقيت الصلاة</h2><button class="back-btn" onclick="closeV()">عودة</button></div>
-    <div class="content-card" id="times-list">
-        </div>
-</div>
-
-<div id="v-tasbih" class="sub-view">
-    <div class="view-header"><h2>المسبحة الذكية</h2><button class="back-btn" onclick="closeV()">عودة</button></div>
-    <div class="tasbih-box">
-        <div class="t-circle" onclick="doCount()">
-            <span id="t-count">0</span>
-            <p>اضغط للتسبيح</p>
-        </div>
-        <button onclick="resetCount()" style="background:none; border:1px solid #444; color:#666; padding:10px; border-radius:10px;">إعادة</button>
-    </div>
-</div>
-
-<div id="v-challenge" class="sub-view">
-    <div class="view-header"><h2>تحديات دينية</h2><button class="back-btn" onclick="closeV()">عودة</button></div>
-    <div class="content-card"><h4>تحدي اليوم</h4><p>قم بقراءة سورة الكهف اليوم وشارك الأجر مع أصدقائك.</p></div>
-    <div class="content-box" style="text-align: center; padding: 20px;">
-        <button style="background: var(--gold); border:none; padding:15px; border-radius:15px; font-weight:bold;">ابدأ التحدي الجديد</button>
-    </div>
-</div>
-
-<div id="v-hadith" class="sub-view">
-    <div class="view-header"><h2>الأحاديث الشريفة</h2><button class="back-btn" onclick="closeV()">عودة</button></div>
-    <div id="hadith-content">
-        <div class="content-card"><h4>حديث نبوي</h4><p>"من يرد الله به خيراً يفقهه في الدين"</p></div>
-    </div>
-</div>
-
-<script>
-    // 1. التاريخ والوقت
-    function initApp() {
-        const now = new Date();
-        document.getElementById('p-hijri').innerText = now.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric'});
-        updatePrayerTimer();
-        setInterval(updatePrayerTimer, 1000);
-    }
-
-    const prayerData = [
-        {n:"الفجر", t:"04:52"}, {n:"الظهر", t:"12:12"}, {n:"العصر", t:"15:32"}, {n:"المغرب", t:"18:02"}, {n:"العشاء", t:"19:32"}
-    ];
-
-    function updatePrayerTimer() {
-        const now = new Date();
-        let target = null;
-        for(let p of prayerData) {
-            let pt = new Date(); let [h,m] = p.t.split(':'); pt.setHours(h,m,0);
-            if(pt > now) { target = {n:p.n, t:pt}; break; }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
-        if(!target) {
-            let pt = new Date(); let [h,m] = prayerData[0].t.split(':'); pt.setDate(pt.getDate()+1); pt.setHours(h,m,0);
-            target = {n:prayerData[0].n, t:pt};
+
+        .rain:nth-child(1) { left: 5%; animation-duration: 1.2s; animation-delay: 0s; }
+        .rain:nth-child(2) { left: 10%; animation-duration: 1.5s; animation-delay: 0.3s; }
+        .rain:nth-child(3) { left: 15%; animation-duration: 1.1s; animation-delay: 0.6s; }
+        .rain:nth-child(4) { left: 20%; animation-duration: 1.4s; animation-delay: 0.2s; }
+        .rain:nth-child(5) { left: 25%; animation-duration: 1.3s; animation-delay: 0.5s; }
+        .rain:nth-child(6) { left: 30%; animation-duration: 1.6s; animation-delay: 0.1s; }
+        .rain:nth-child(7) { left: 35%; animation-duration: 1.2s; animation-delay: 0.4s; }
+        .rain:nth-child(8) { left: 40%; animation-duration: 1.5s; animation-delay: 0.7s; }
+        .rain:nth-child(9) { left: 45%; animation-duration: 1.3s; animation-delay: 0.2s; }
+        .rain:nth-child(10) { left: 50%; animation-duration: 1.4s; animation-delay: 0.5s; }
+        .rain:nth-child(11) { left: 55%; animation-duration: 1.1s; animation-delay: 0.3s; }
+        .rain:nth-child(12) { left: 60%; animation-duration: 1.6s; animation-delay: 0.6s; }
+        .rain:nth-child(13) { left: 65%; animation-duration: 1.2s; animation-delay: 0.1s; }
+        .rain:nth-child(14) { left: 70%; animation-duration: 1.5s; animation-delay: 0.4s; }
+        .rain:nth-child(15) { left: 75%; animation-duration: 1.3s; animation-delay: 0.7s; }
+        .rain:nth-child(16) { left: 80%; animation-duration: 1.4s; animation-delay: 0.2s; }
+        .rain:nth-child(17) { left: 85%; animation-duration: 1.1s; animation-delay: 0.5s; }
+        .rain:nth-child(18) { left: 90%; animation-duration: 1.6s; animation-delay: 0.3s; }
+        .rain:nth-child(19) { left: 95%; animation-duration: 1.2s; animation-delay: 0.6s; }
+        .rain:nth-child(20) { left: 8%; animation-duration: 1.5s; animation-delay: 0.8s; }
+        .rain:nth-child(21) { left: 13%; animation-duration: 1.3s; animation-delay: 0.4s; }
+        .rain:nth-child(22) { left: 18%; animation-duration: 1.4s; animation-delay: 0.9s; }
+        .rain:nth-child(23) { left: 23%; animation-duration: 1.2s; animation-delay: 0.3s; }
+        .rain:nth-child(24) { left: 28%; animation-duration: 1.6s; animation-delay: 0.7s; }
+        .rain:nth-child(25) { left: 33%; animation-duration: 1.1s; animation-delay: 0.5s; }
+        .rain:nth-child(26) { left: 38%; animation-duration: 1.5s; animation-delay: 0.2s; }
+        .rain:nth-child(27) { left: 43%; animation-duration: 1.3s; animation-delay: 0.6s; }
+        .rain:nth-child(28) { left: 48%; animation-duration: 1.4s; animation-delay: 0.1s; }
+        .rain:nth-child(29) { left: 53%; animation-duration: 1.2s; animation-delay: 0.8s; }
+        .rain:nth-child(30) { left: 58%; animation-duration: 1.6s; animation-delay: 0.4s; }
+        .rain:nth-child(31) { left: 63%; animation-duration: 1.1s; animation-delay: 0.9s; }
+        .rain:nth-child(32) { left: 68%; animation-duration: 1.5s; animation-delay: 0.3s; }
+        .rain:nth-child(33) { left: 73%; animation-duration: 1.3s; animation-delay: 0.7s; }
+        .rain:nth-child(34) { left: 78%; animation-duration: 1.4s; animation-delay: 0.5s; }
+        .rain:nth-child(35) { left: 83%; animation-duration: 1.2s; animation-delay: 0.2s; }
+        .rain:nth-child(36) { left: 88%; animation-duration: 1.6s; animation-delay: 0.6s; }
+        .rain:nth-child(37) { left: 93%; animation-duration: 1.1s; animation-delay: 0.1s; }
+        .rain:nth-child(38) { left: 7%; animation-duration: 1.5s; animation-delay: 0.9s; }
+        .rain:nth-child(39) { left: 12%; animation-duration: 1.3s; animation-delay: 0.4s; }
+        .rain:nth-child(40) { left: 17%; animation-duration: 1.4s; animation-delay: 0.8s; }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.1), transparent 50%),
+                        radial-gradient(ellipse at bottom, rgba(107, 33, 168, 0.15), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
-        const diff = target.t - now;
-        const hh = Math.floor(diff/3600000); const mm = Math.floor((diff%3600000)/60000); const ss = Math.floor((diff%60000)/1000);
-        document.getElementById('p-label').innerText = `المتبقي لـ ${target.n}`;
-        document.getElementById('p-clock').innerText = `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`;
-    }
 
-    // 2. التحكم بالواجهات
-    function openV(id) {
-        document.querySelectorAll('.sub-view').forEach(v => v.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
-        if(id === 'v-times') renderTimes();
-    }
-    function closeV() { document.querySelectorAll('.sub-view').forEach(v => v.style.display = 'none'); }
+        header {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            padding: 50px 30px;
+            margin: 0 auto;
+            max-width: 95%;
+            position: relative;
+            z-index: 10;
+            box-shadow: 
+                0 15px 50px rgba(168, 85, 247, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -2px 10px rgba(168, 85, 247, 0.1);
+            margin-top: 20px;
+        }
 
-    function renderTimes() {
-        let h = '';
-        prayerData.forEach(p => h += `<div class="time-row"><span>${p.n}</span><span>${p.t}</span></div>`);
-        document.getElementById('times-list').innerHTML = h;
-    }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 0 0 40px 40px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(192, 132, 252, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
 
-    // 3. المسبحة
-    let cnt = localStorage.getItem('cnt') || 0;
-    document.getElementById('t-count').innerText = cnt;
-    function doCount() { cnt++; document.getElementById('t-count').innerText = cnt; localStorage.setItem('cnt', cnt); if(navigator.vibrate) navigator.vibrate(40); }
-    function resetCount() { cnt=0; document.getElementById('t-count').innerText=0; localStorage.setItem('cnt',0); }
+        header h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #e9d5ff 30%, #c084fc 60%, #ffffff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textFlow 5s ease infinite;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.6));
+            text-transform: uppercase;
+        }
 
-    window.onload = initApp;
-</script>
-</body>
-</html>
+        @keyframes textFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        header p {
+            color: #e9d5ff;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .prayer-timer-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(168, 85, 247, 0.25),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 10px rgba(168, 85, 247, 0.15);
+        }
+
+        .prayer-timer-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .prayer-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .prayer-item {
+            padding: 18px 15px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            min-width: 110px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .prayer-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .prayer-item:hover::before {
+            opacity: 1;
+        }
+
+        .prayer-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--purple-light);
+            box-shadow: 
+                0 15px 40px rgba(168, 85, 247, 0.4),
+                inset 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        .prayer-item.active {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(107, 33, 168, 0.6) 100%);
+            border-color: var(--purple-glow);
+            box-shadow: 
+                0 0 50px rgba(168, 85, 247, 0.8),
+                0 10px 30px rgba(107, 33, 168, 0.5),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            animation: activeGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes activeGlow {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(168, 85, 247, 0.7), 0 10px 30px rgba(107, 33, 168, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(168, 85, 247, 0.9), 0 10px 40px rgba(107, 33, 168, 0.7);
+            }
+        }
+
+        .prayer-item .time {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .next-prayer-info {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc, #e9d5ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+        }
+
+        #prayerCountdown {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 
+                0 0 30px rgba(168, 85, 247, 1),
+                0 5px 15px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 50px auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(168, 85, 247, 0.15), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(192, 132, 252, 0.1), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(168, 85, 247, 0.2), transparent 30%);
+            animation: rotate 6s linear infinite;
+            opacity: 0;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-20px) scale(1.05);
+            border-color: var(--purple-light);
+            box-shadow: 
+                0 30px 80px rgba(168, 85, 247, 0.6),
+                0 0 0 3px rgba(168, 85, 247, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4),
+                inset 0 0 50px rgba(168, 85, 247, 0.15);
+        }
+
+        .card i {
+            font-size: 70px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 50%, #e9d5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 5px 25px rgba(168, 85, 247, 0.7));
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card:hover i {
+            transform: scale(1.3) rotate(15deg);
+            filter: drop-shadow(0 10px 40px rgba(168, 85, 247, 1));
+        }
+
+        .card h2 {
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            font-weight: 800;
+            color: #f3e8ff;
+        }
+
+        .card p {
+            position: relative;
+            z-index: 1;
+            color: #e9d5ff;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            padding: 45px;
+            text-align: center;
+            margin: 50px auto 40px;
+            max-width: 900px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 10;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(168, 85, 247, 0.25),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 10px rgba(168, 85, 247, 0.15);
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--purple-light), var(--purple-glow), var(--purple-light), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+            border-radius: 30px 30px 0 0;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .stats-section > div {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f3e8ff;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .stats-section > div:last-child {
+            margin-bottom: 0;
+        }
+
+        .counter {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c084fc 0%, #e9d5ff 25%, #ffffff 50%, #e9d5ff 75%, #c084fc 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-top: 12px;
+            animation: counterFlow 4s ease infinite;
+            filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8));
+        }
+
+        @keyframes counterFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        #tasbih-ui {
+            display: none;
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 5, 36, 0.98), rgba(59, 7, 100, 0.96));
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; backdrop-filter: blur(0); }
+            to { opacity: 1; backdrop-filter: blur(50px); }
+        }
+
+        #tasbih-ui::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.2), transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(192, 132, 252, 0.2), transparent 50%);
+            animation: pulseBackground 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseBackground {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .tasbih-circle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) padding-box,
+                linear-gradient(135deg, #a855f7 0%, #c084fc 25%, #e9d5ff 50%, #c084fc 75%, #a855f7 100%) border-box;
+            background-size: 100% 100%, 400% 400%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5rem;
+            font-weight: 900;
+            cursor: pointer;
+            margin-bottom: 40px;
+            transition: all 0.
