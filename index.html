@@ -3,222 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajar Respect Pro | أجر ريسبكت الملكي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <title>Ajar Respect Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-purple: #7c3aed;
-            --gold: #D4AF37;
-            --bg-dark: #1a0b2e;
+            --primary: #7c3aed;
+            --accent: #D4AF37;
+            --bg: #0a0514;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass: rgba(255, 255, 255, 0.03);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%);
+            background-color: var(--bg);
             color: white;
             min-height: 100vh;
-            margin: 0;
-            padding-bottom: 50px;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, #1e1042, transparent),
+                              radial-gradient(circle at bottom left, #120826, transparent);
         }
+
+        /* الصفحة الرئيسية */
+        #main-page { padding: 20px; transition: 0.5s; }
+
+        header { text-align: center; padding: 40px 0; }
+        header h1 { font-weight: 900; font-size: 2.5rem; letter-spacing: 2px; text-shadow: 0 0 20px var(--primary); }
 
         /* آية اليوم */
-        .top-ayah-box {
-            max-width: 800px;
-            margin: 30px auto;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--gold);
+        .daily-ayah {
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
             border-radius: 20px;
-            padding: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
             text-align: center;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
-        .ayah-content { font-family: 'Amiri', serif; font-size: 1.8rem; line-height: 1.6; }
+        .daily-ayah p { font-family: 'Amiri', serif; font-size: 1.6rem; line-height: 1.6; margin-bottom: 10px; }
+        .daily-ayah span { color: var(--accent); font-size: 0.9rem; }
 
-        /* العداد الذكي المتغير */
+        /* عداد الصلاة */
         .prayer-timer {
             text-align: center;
             margin-bottom: 40px;
-        }
-        .timer-display {
-            display: inline-block;
-            background: rgba(124, 58, 237, 0.1);
-            border: 2px solid var(--primary-purple);
-            padding: 20px 50px;
-            border-radius: 50px;
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
-        }
-        .timer-label { font-size: 1rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; }
-        .timer-time { font-size: 3rem; font-weight: 900; font-family: 'monospace'; letter-spacing: 2px; }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.1), transparent);
             padding: 20px;
+            border-radius: 100px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
         }
-        .card {
-            background: rgba(26, 11, 46, 0.7);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+        #prayer-name { color: var(--accent); font-weight: bold; font-size: 1.1rem; }
+        #timer-clock { font-size: 2.8rem; font-weight: 900; font-family: monospace; display: block; }
+
+        /* شبكة الخيارات */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 15px;
             border-radius: 25px;
-            padding: 35px;
             text-align: center;
-            text-decoration: none;
-            color: white;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        .card i { font-size: 50px; margin-bottom: 20px; }
-        .counter-num { font-size: 3rem; font-weight: 900; color: var(--gold); display: block; }
+        .menu-item:active { transform: scale(0.95); background: rgba(124, 58, 237, 0.2); }
+        .menu-item i { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .menu-item h3 { font-size: 1rem; font-weight: 700; }
 
-        /* زاد المسلم */
-        .zad-section {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 30px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 30px;
-            border: 1px solid var(--primary-purple);
+        /* واجهات الأقسام (مخفية افتراضياً) */
+        .sub-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
         }
-        #searchInput {
-            width: 100%; padding: 15px; border-radius: 30px; border: 1px solid var(--primary-purple);
-            background: transparent; color: white; margin-bottom: 20px;
-        }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; max-height: 400px; overflow-y: auto; }
-        .info-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-right: 3px solid var(--primary-purple); }
 
-        footer { text-align: center; padding: 40px; opacity: 0.6; }
+        .back-btn {
+            position: sticky;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-family: 'Cairo';
+            font-weight: bold;
+            z-index: 101;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        /* واجهة المسبحة */
+        .tasbih-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .tasbih-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.3);
+            cursor: pointer;
+        }
+        .tasbih-circle:active { transform: scale(0.98); }
+        #tasbih-count { font-size: 4rem; font-weight: 900; color: var(--accent); }
+
+        /* واجهة زاد المسلم */
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            background: var(--glass);
+            color: white;
+            margin: 20px 0;
+            font-family: 'Cairo';
+        }
+        .zad-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .info-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border-right: 5px solid var(--primary);
+        }
+
+        footer { text-align: center; padding: 40px 0; opacity: 0.5; font-size: 0.8rem; }
+
     </style>
 </head>
 <body>
 
-<header style="text-align:center; padding: 50px 20px;">
-    <h1 style="font-size: 3rem; font-weight: 900;">✨ أجر ريسبكت ✨</h1>
-</header>
+    <div id="main-page">
+        <header>
+            <h1>أجر ريسبكت</h1>
+        </header>
 
-<div class="top-ayah-box">
-    <div class="ayah-content" id="dailyAyah">"فَاصْبِرْ صَبْرًا جَمِيلًا"</div>
-    <div id="ayahRef" style="color: var(--gold); margin-top: 10px;">[سورة المعارج: 5]</div>
-</div>
+        <div class="daily-ayah">
+            <p id="ayah-text">"فَاصْبِرْ صَبْرًا جَمِيلًا"</p>
+            <span id="ayah-ref">[سورة المعارج: 5]</span>
+        </div>
 
-<div class="prayer-timer">
-    <div class="timer-display">
-        <div class="timer-label" id="prayerName">جاري حساب الصلاة القادمة...</div>
-        <div class="timer-time" id="countdown">00:00:00</div>
+        <div class="prayer-timer">
+            <span id="prayer-name">جاري الحساب...</span>
+            <span id="timer-clock">00:00:00</span>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item" onclick="showPage('page-quran')">
+                <i class="fas fa-book-quran" style="color: #fbbf24;"></i>
+                <h3>القرآن الكريم</h3>
+            </div>
+            <div class="menu-item" onclick="showPage('page-tasbih')">
+                <i class="fas fa-dharmachakra" style="color: #34d399;"></i>
+                <h3>المسبحة</h3>
+            </div>
+            <div class="menu-item" onclick="showPage('page-zad')">
+                <i class="fas fa-book-atlas" style="color: #a37cf0;"></i>
+                <h3>زاد المسلم</h3>
+            </div>
+            <div class="menu-item" onclick="showPage('page-azkar')">
+                <i class="fas fa-hands-praying" style="color: #c084fc;"></i>
+                <h3>الأذكار</h3>
+            </div>
+            <div class="menu-item" onclick="window.open('https://ehsan.sa/donation', '_blank')">
+                <i class="fas fa-hand-holding-heart" style="color: #4ade80;"></i>
+                <h3>صدقة جارية</h3>
+            </div>
+            <div class="menu-item" onclick="showPage('page-stories')">
+                <i class="fas fa-mosque" style="color: #fcd34d;"></i>
+                <h3>قصص الأنبياء</h3>
+            </div>
+        </div>
+
+        <footer>صنع لوجه الله تعالى © 2026</footer>
     </div>
-</div>
 
-<div class="container">
-    <a href="#" class="card"><i class="fas fa-book-quran" style="color: #fbbf24;"></i><h2>الختمة والتفسير</h2></a>
-    <a href="#" class="card"><i class="fas fa-hands-praying" style="color: #c084fc;"></i><h2>الأذكار</h2></a>
-    
-    <div class="card" style="cursor: pointer;" onclick="incrementTasbih()">
-        <i class="fas fa-dharmachakra" style="color: #34d399;"></i>
-        <h2>المسبحة الذكية</h2>
-        <span class="counter-num" id="tasbihVal">0</span>
-        <p>اضغط للتسبيح</p>
+    <div id="page-tasbih" class="sub-page">
+        <button class="back-btn" onclick="hidePage()">العودة للرئيسية</button>
+        <div class="tasbih-container">
+            <h2 style="margin-bottom: 30px;">المسبحة الذكية</h2>
+            <div class="tasbih-circle" onclick="incrementTasbih()">
+                <span id="tasbih-count">0</span>
+                <p>اضغط للتسبيح</p>
+            </div>
+            <button onclick="resetTasbih()" style="margin-top: 30px; background: none; border: 1px solid gray; color: gray; padding: 5px 15px; border-radius: 10px;">تصفير</button>
+        </div>
     </div>
 
-    <a href="#" class="card"><i class="fas fa-mosque" style="color: #fcd34d;"></i><h2>قصص الأنبياء</h2></a>
-    <a href="#" class="card"><i class="fas fa-clock" style="color: #60a5fa;"></i><h2>أوقات الصلاة</h2></a>
-    <a href="https://ehsan.sa/donation" target="_blank" class="card" style="border-color: #4ade80;">
-        <i class="fas fa-hand-holding-heart" style="color: #4ade80;"></i>
-        <h2>صدقة جارية</h2>
-    </a>
-</div>
+    <div id="page-zad" class="sub-page">
+        <button class="back-btn" onclick="hidePage()">العودة للرئيسية</button>
+        <h2 style="margin-top: 50px;">زاد المسلم (150 معلومة)</h2>
+        <input type="text" class="search-box" id="zadSearch" placeholder="ابحث في الموسوعة..." onkeyup="searchZad()">
+        <div class="zad-grid" id="zad-content">
+            </div>
+    </div>
 
-<div class="zad-section">
-    <h2 style="text-align: center; color: var(--primary-purple);">📚 زاد المسلم (150 معلومة)</h2>
-    <input type="text" id="searchInput" placeholder="ابحث في الموسوعة..." onkeyup="searchZad()">
-    <div class="info-grid" id="zadGrid"></div>
-</div>
+    <div id="page-quran" class="sub-page">
+        <button class="back-btn" onclick="hidePage()">العودة للرئيسية</button>
+        <h2 style="margin-top: 60px; text-align: center;">القرآن الكريم</h2>
+        <p style="text-align: center; margin-top: 20px; opacity: 0.6;">جاري العمل على توفير المصحف كاملاً...</p>
+    </div>
 
-<footer><p>صنع لوجه الله تعالى © 2026</p></footer>
+    <div id="page-azkar" class="sub-page">
+        <button class="back-btn" onclick="hidePage()">العودة للرئيسية</button>
+        <h2 style="margin-top: 60px; text-align: center;">الأذكار</h2>
+        <p style="text-align: center; margin-top: 20px; opacity: 0.6;">جاري العمل على إضافة جميع الأذكار...</p>
+    </div>
 
-<script>
-    // 1. منطق مواقيت الصلاة التلقائي
-    const prayerTimes = [
-        { name: "صلاة الفجر", time: "04:50" },
-        { name: "صلاة الظهر", time: "12:20" },
-        { name: "صلاة العصر", time: "15:40" },
-        { name: "صلاة المغرب", time: "18:10" },
-        { name: "صلاة العشاء", time: "19:40" }
-    ];
+    <div id="page-stories" class="sub-page">
+        <button class="back-btn" onclick="hidePage()">العودة للرئيسية</button>
+        <h2 style="margin-top: 60px; text-align: center;">قصص الأنبياء</h2>
+        <p style="text-align: center; margin-top: 20px; opacity: 0.6;">جاري العمل على جمع القصص...</p>
+    </div>
 
-    function updateCountdown() {
-        const now = new Date();
-        let nextPrayer = null;
+    <script>
+        // 1. نظام التنقل بين الصفحات
+        function showPage(pageId) {
+            document.getElementById('main-page').style.display = 'none';
+            document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+            const target = document.getElementById(pageId);
+            target.style.display = 'flex';
+            window.scrollTo(0, 0);
+        }
 
-        for (let prayer of prayerTimes) {
-            let pTime = new Date();
-            let [h, m] = prayer.time.split(':');
-            pTime.setHours(h, m, 0);
+        function hidePage() {
+            document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+            document.getElementById('main-page').style.display = 'block';
+        }
 
-            if (pTime > now) {
-                nextPrayer = { name: prayer.name, time: pTime };
-                break;
+        // 2. نظام مواقيت الصلاة التلقائي
+        const prayerTimes = [
+            { name: "صلاة الفجر", time: "04:50" },
+            { name: "صلاة الظهر", time: "12:20" },
+            { name: "صلاة العصر", time: "15:40" },
+            { name: "صلاة المغرب", time: "18:10" },
+            { name: "صلاة العشاء", time: "19:40" }
+        ];
+
+        function updateTimer() {
+            const now = new Date();
+            let next = null;
+
+            for (let p of prayerTimes) {
+                let pt = new Date();
+                let [h, m] = p.time.split(':');
+                pt.setHours(h, m, 0);
+                if (pt > now) { next = { n: p.name, t: pt }; break; }
+            }
+
+            if (!next) {
+                let pt = new Date();
+                let [h, m] = prayerTimes[0].time.split(':');
+                pt.setDate(pt.getDate() + 1);
+                pt.setHours(h, m, 0);
+                next = { n: prayerTimes[0].name, t: pt };
+            }
+
+            const diff = next.t - now;
+            const hrs = Math.floor(diff / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+
+            document.getElementById('prayer-name').innerText = `المتبقي لـ ${next.n}`;
+            document.getElementById('timer-clock').innerText = 
+                `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // 3. نظام المسبحة
+        let count = parseInt(localStorage.getItem('myCount')) || 0;
+        document.getElementById('tasbih-count').innerText = count;
+
+        function incrementTasbih() {
+            count++;
+            document.getElementById('tasbih-count').innerText = count;
+            localStorage.setItem('myCount', count);
+            if (navigator.vibrate) navigator.vibrate(50); // اهتزاز بسيط
+        }
+
+        function resetTasbih() {
+            if(confirm('هل تريد تصفير المسبحة؟')) {
+                count = 0;
+                document.getElementById('tasbih-count').innerText = 0;
+                localStorage.setItem('myCount', 0);
             }
         }
 
-        // إذا انتهت كل صلوات اليوم، الصلاة القادمة هي فجر الغد
-        if (!nextPrayer) {
-            let pTime = new Date();
-            let [h, m] = prayerTimes[0].time.split(':');
-            pTime.setDate(pTime.getDate() + 1);
-            pTime.setHours(h, m, 0);
-            nextPrayer = { name: prayerTimes[0].name, time: pTime };
+        // 4. آية اليوم المتغيرة
+        const ayahs = [
+            { q: "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا", r: "الطور: 48" },
+            { q: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", r: "الرعد: 28" },
+            { q: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", r: "الشرح: 6" },
+            { q: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا", r: "الطلاق: 2" }
+        ];
+        
+        function setDailyAyah() {
+            const index = new Date().getDate() % ayahs.length;
+            document.getElementById('ayah-text').innerText = `"${ayahs[index].q}"`;
+            document.getElementById('ayah-ref').innerText = `[سورة ${ayahs[index].r}]`;
         }
 
-        const diff = nextPrayer.time - now;
-        const hours = Math.floor(diff / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const seconds = Math.floor((diff % 60000) / 1000);
-
-        document.getElementById('prayerName').innerText = `المتبقي لـ ${nextPrayer.name}`;
-        document.getElementById('countdown').innerText = 
-            `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-    }
-
-    // 2. المسبحة الذكية
-    let count = parseInt(localStorage.getItem('tasbihCount')) || 0;
-    document.getElementById('tasbihVal').innerText = count;
-    function incrementTasbih() {
-        count++;
-        document.getElementById('tasbihVal').innerText = count;
-        localStorage.setItem('tasbihCount', count);
-    }
-
-    // 3. آية اليوم المتغيرة
-    const ayahs = [
-        { q: "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا", r: "الطور: 48" },
-        { q: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", r: "الرعد: 28" },
-        { q: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", r: "الشرح: 6" }
-    ];
-    function setAyah() {
-        const d = new Date().getDate();
-        const a = ayahs[d % ayahs.length];
-        document.getElementById('dailyAyah').innerText = `"${a.q}"`;
-        document.getElementById('ayahRef').innerText = `[سورة ${a.r}]`;
-    }
-
-    // 4. زاد المسلم
-    function setupZad() {
-        const grid = document.getElementById('zadGrid');
-        let html = '';
-        for(let i=1; i<=150; i++) {
-            html += `<div class="info-card"><h4>معلومة دينية #${i}</h4><p>محتوى تعليمي وسنة نبوية رقم ${i} تضاف لموسوعتك.</p></div>`;
+        // 5. توليد محتوى زاد المسلم
+        function setupZad() {
+            const container = document.getElementById('zad-content');
+            let html = '';
+            for(let i=1; i<=150; i++) {
+                html += `
+                <div class="info-card">
+                    <h4 style="color:var(--accent); margin-bottom:5px;">معلومة دينية #${i}</h4>
+                    <p style="font-size:0.9rem; opacity:0.8;">هذا النص يمثل معلومة دينية أو سنة نبوية سيتم تحديثها بالكامل لاحقاً في موسوعة زاد المسلم رقم ${i}.</p>
+                </div>`;
+            }
+            container.innerHTML = html;
         }
-        grid.innerHTML = html;
-    }
 
-    window.onload = () => {
-        setAyah();
-        setupZad();
-        setInterval(updateCountdown, 1000);
-    };
-</script>
+        function searchZad() {
+            let val = document.getElementById('zadSearch').value.toLowerCase();
+            document.querySelectorAll('.info-card').forEach(card => {
+                card.style.display = card.innerText.toLowerCase().includes(val) ? 'block' : 'none';
+            });
+        }
+
+        // التشغيل الابتدائي
+        window.onload = () => {
+            setInterval(updateTimer, 1000);
+            setDailyAyah();
+            setupZad();
+        };
+    </script>
 </body>
 </html>
