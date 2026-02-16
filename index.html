@@ -3,1405 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أجر ريسبكت | رمضان 1447 - الموسوعة الإسلامية الخارقة</title>
-    
-    <!-- Font Awesome 6 -->
+    <title>أجر ريسبكت | Ajar Respect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #6c5ce7;
-            --secondary: #a37cf0;
-            --accent: #D4AF37;
-            --gold: #D4AF37;
-            --dark-bg: #0a0618;
-            --darker-bg: #050210;
-            --card-bg: rgba(20, 15, 35, 0.95);
-            --card-border: rgba(212, 175, 55, 0.15);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.8);
-            --gradient-1: linear-gradient(135deg, #6c5ce7, #a37cf0);
-            --gradient-2: linear-gradient(135deg, #D4AF37, #f1c40f);
-            --gradient-3: linear-gradient(135deg, #0a0618, #1a1035);
-            --ramadan-gold: #ffd700;
-            --ramadan-blue: #1e2b4f;
-            --ramadan-purple: #4a2c5f;
-            --shadow-1: 0 20px 40px rgba(0, 0, 0, 0.4);
-            --shadow-2: 0 10px 30px rgba(212, 175, 55, 0.2);
-            --shadow-3: 0 15px 35px rgba(108, 92, 231, 0.3);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --bg: #060412; --card: rgba(23, 18, 46, 0.9);
+            --gold: #D4AF37; --accent: #6c5ce7; --text: #ffffff;
         }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Cairo', 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #0a0618 0%, #1a1035 50%, #2d1b4a 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text);
+            overflow-x: hidden; min-height: 100vh;
         }
 
-        /* عناصر رمضانية متحركة */
-        .ramadan-decoration {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            pointer-events: none;
-            z-index: 1;
-            height: 100vh;
+        /* واجهة رمضانية متحركة */
+        .ramadan-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a103d 0%, #060412 100%);
+            z-index: -1;
         }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--d) infinite;
+        }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
         .fanoos {
-            position: absolute;
-            font-size: 3rem;
-            color: rgba(212, 175, 55, 0.1);
-            animation: float 6s ease-in-out infinite;
+            position: fixed; top: -20px; font-size: 2rem; color: var(--gold);
+            animation: swing 3s ease-in-out infinite alternate; transform-origin: top center;
+            opacity: 0.4; z-index: 0;
         }
-
-        .fanoos-1 { top: 10%; right: 5%; animation-delay: 0s; }
-        .fanoos-2 { bottom: 15%; left: 5%; animation-delay: 2s; }
-        .fanoos-3 { top: 30%; left: 10%; animation-delay: 1s; }
-        .fanoos-4 { bottom: 20%; right: 10%; animation-delay: 3s; }
-
-        .hilal {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 5rem;
-            color: rgba(212, 175, 55, 0.15);
-            animation: hilalGlow 3s ease-in-out infinite;
-        }
-
-        .masjid {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".1" fill="%23D4AF37"></path></svg>') repeat-x bottom;
-            background-size: 1200px 100px;
-            animation: moveMasjid 30s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes hilalGlow {
-            0%, 100% { opacity: 0.15; transform: translateX(-50%) scale(1); }
-            50% { opacity: 0.25; transform: translateX(-50%) scale(1.1); }
-        }
-
-        @keyframes moveMasjid {
-            0% { background-position: 0 bottom; }
-            100% { background-position: 1200px bottom; }
-        }
+        @keyframes swing { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
 
         /* نظام الصفحات */
-        .page {
-            display: none;
-            min-height: 100vh;
-            padding: 20px;
-            animation: pageEnter 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-            position: relative;
-            z-index: 10;
-        }
+        .page { display: none; padding: 20px; max-width: 1200px; margin: auto; animation: slideUp 0.5s ease; }
+        .page.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .page.active {
-            display: block;
+        /* الهيدر الرئيسي */
+        .main-header {
+            text-align: center; padding: 40px 20px; position: relative;
         }
-
-        @keyframes pageEnter {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-                filter: blur(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
+        .logo { font-family: 'Amiri', serif; font-size: 3.5rem; color: var(--gold); text-shadow: 0 0 20px rgba(212,175,55,0.5); }
+        
+        /* صندوق آية اليوم */
+        .aya-box {
+            background: var(--card); border: 1px solid var(--gold); border-radius: 20px;
+            padding: 25px; margin: 20px auto; max-width: 800px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        .aya-text { font-family: 'Amiri', serif; font-size: 1.6rem; color: #fff; margin-bottom: 10px; }
+        .tafseer-text { font-size: 0.9rem; color: var(--gold); opacity: 0.8; }
 
-        /* الهيدر مع العداد */
-        .prayer-header {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
+        /* عداد الصلاة */
+        .prayer-box {
+            background: linear-gradient(135deg, #1a103d, #2d1b4a);
+            border-radius: 50px; padding: 20px 40px; margin: 20px auto;
+            max-width: 600px; display: flex; justify-content: space-between; align-items: center;
             border: 2px solid var(--gold);
-            border-radius: 50px;
-            padding: 20px 30px;
-            margin: 20px auto 30px;
-            max-width: 700px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
-            box-shadow: var(--shadow-2);
-            position: relative;
-            z-index: 20;
-            animation: headerPulse 3s ease-in-out infinite;
         }
+        #p-timer { font-size: 2.5rem; font-weight: 900; color: var(--gold); font-family: monospace; }
 
-        @keyframes headerPulse {
-            0%, 100% { border-color: var(--gold); }
-            50% { border-color: #fff; }
-        }
-
-        .prayer-info {
-            text-align: center;
-            flex: 1;
-        }
-
-        .next-prayer-label {
-            font-size: 1.2rem;
-            color: var(--gold);
-            margin-bottom: 5px;
-        }
-
-        #next-prayer-name {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #fff;
-        }
-
-        #prayer-timer {
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: var(--gradient-2);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-            font-family: 'Amiri', monospace;
-        }
-
-        .hijri-date {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-
-        .sadaqa-btn {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
-            white-space: nowrap;
-        }
-
-        .sadaqa-btn:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.6);
-        }
-
-        .sadaqa-btn i {
-            font-size: 1.5rem;
-        }
-
-        /* الشبكة الرئيسية */
+        /* الشبكة */
         .super-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
-            position: relative;
-            z-index: 20;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px; margin-top: 30px;
         }
-
-        .super-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 35px 20px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid var(--card-border);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+        .card {
+            background: var(--card); border-radius: 20px; padding: 25px 10px;
+            text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05);
         }
-
-        .super-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-1);
-            opacity: 0;
-            z-index: -1;
-            transition: var(--transition);
-        }
-
-        .super-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%);
-            opacity: 0;
-            transition: var(--transition);
-            transform: scale(0);
-        }
-
-        .super-card:hover {
-            transform: translateY(-15px) scale(1.05);
-            border-color: var(--gold);
-            box-shadow: var(--shadow-3);
-        }
-
-        .super-card:hover::before {
-            opacity: 0.2;
-        }
-
-        .super-card:hover::after {
-            opacity: 1;
-            transform: scale(1);
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% { transform: scale(0); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-
-        .super-card i {
-            font-size: 3.5rem;
-            background: var(--gradient-2);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
-            display: inline-block;
-            transition: var(--transition);
-        }
-
-        .super-card:hover i {
-            transform: scale(1.2) rotate(360deg);
-        }
-
-        .super-card h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        /* باقي الأنماط */
-        .back-btn {
-            background: var(--gradient-2);
-            color: #000;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 900;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-2);
-            transition: var(--transition);
-            position: relative;
-            z-index: 20;
-        }
-
-        .back-btn:hover {
-            transform: translateX(-10px);
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4);
-        }
+        .card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 0 20px rgba(108, 92, 231, 0.3); }
+        .card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; display: block; }
+        .card.special { background: linear-gradient(45deg, #1d976c, #11998e); border: none; }
 
         /* المسبحة */
-        .sebha-container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        #sebha-txt {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 30px;
-            font-family: 'Amiri';
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-        }
-
-        .sebha-btn {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: var(--gradient-3);
-            border: 8px solid var(--gold);
-            margin: 30px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: var(--shadow-1), 0 0 80px rgba(212, 175, 55, 0.3);
-            transition: var(--transition);
-            color: var(--gold);
-        }
-
-        .sebha-btn:hover {
-            transform: scale(1.1);
-            border-color: #fff;
-        }
-
-        .reset-btn {
-            background: none;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 15px 45px;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .reset-btn:hover {
-            background: var(--gold);
-            color: #000;
-            transform: scale(1.1);
-        }
-
-        /* المواقيت */
-        .input-group {
-            margin: 30px 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .super-input {
-            width: 45%;
-            min-width: 200px;
-            padding: 15px 20px;
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-            background: rgba(0,0,0,0.3);
-            color: white;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .super-input:focus {
-            outline: none;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-action {
-            background: var(--gradient-1);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .btn-action:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.5);
-        }
-
-        .times-list {
-            margin-top: 30px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .time-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 25px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .time-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .time-item span:last-child {
-            color: var(--gold);
-            font-weight: bold;
-        }
-
-        /* الأذكار */
-        .zekr-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 25px;
-            margin-bottom: 15px;
-            border-right: 5px solid var(--gold);
-            position: relative;
-            animation: fadeIn 0.5s;
-        }
-
-        .counter {
-            background: var(--gold);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 30px;
-            float: left;
-            cursor: pointer;
-            border: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .counter:hover {
-            transform: scale(1.1);
-        }
-
-        .counter.done {
-            background: #27ae60;
-            color: white;
-        }
-
-        /* زاد المسلم */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .info-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 25px;
-            border-top: 5px solid var(--gold);
-            transition: var(--transition);
-        }
-
-        .info-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-2);
-        }
-
-        .info-card h3 {
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-
-        .info-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
+        .sebha-circle {
+            width: 250px; height: 250px; border-radius: 50%; border: 8px solid var(--gold);
+            margin: 40px auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 4rem; font-weight: 900; cursor: pointer; background: var(--card);
+            box-shadow: 0 0 50px rgba(212,175,55,0.2);
         }
 
         /* التحديات */
         .opt-btn {
-            display: block;
-            width: 100%;
-            padding: 20px;
-            margin: 15px 0;
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border: 2px solid var(--secondary);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: var(--transition);
+            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--accent); border-radius: 15px; color: white; cursor: pointer;
+            font-size: 1.1rem; transition: 0.2s;
         }
+        .opt-btn.correct { background: #27ae60 !important; }
+        .opt-btn.wrong { background: #e74c3c !important; }
 
-        .opt-btn:hover:not(:disabled) {
-            transform: translateX(-10px);
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .opt-btn.correct {
-            background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
-        }
-
-        .opt-btn.wrong {
-            background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
-        }
-
-        .opt-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* القصص */
-        #s-select {
-            width: 100%;
-            padding: 20px;
-            background: var(--card-bg);
-            color: white;
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .story-display {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 25px;
-            line-height: 2;
-            text-align: justify;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        /* القرآن */
-        .quran-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .lang-btn {
-            background: var(--card-bg);
-            color: white;
-            border: 2px solid var(--gold);
-            padding: 10px 30px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .lang-btn.active {
-            background: var(--gold);
-            color: #000;
-        }
-
-        .quran-iframe {
-            width: 100%;
-            height: 80vh;
-            border: 3px solid var(--gold);
-            border-radius: 30px;
-        }
-
-        /* تصميم متجاوب */
-        @media (max-width: 768px) {
-            .prayer-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            #prayer-timer {
-                font-size: 2.5rem;
-            }
-            
-            .super-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .sebha-btn {
-                width: 200px;
-                height: 200px;
-                font-size: 4rem;
-            }
-        }
+        /* أزرار العودة والمدخلات */
+        .back-btn { background: var(--gold); color: #000; border: none; padding: 10px 25px; border-radius: 12px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+        input, select { width: 100%; padding: 15px; border-radius: 12px; background: #1a103d; border: 1px solid var(--gold); color: white; margin-bottom: 15px; }
     </style>
 </head>
 <body>
-    <!-- عناصر رمضانية -->
-    <div class="ramadan-decoration">
-        <div class="hilal">🌙</div>
-        <div class="fanoos fanoos-1">🏮</div>
-        <div class="fanoos fanoos-2">🏮</div>
-        <div class="fanoos fanoos-3">🏮</div>
-        <div class="fanoos fanoos-4">🏮</div>
-        <div class="masjid"></div>
+
+<div class="ramadan-bg" id="stars"></div>
+<i class="fas fa-lantern fanoos" style="left: 10%"></i>
+<i class="fas fa-lantern fanoos" style="right: 10%"></i>
+
+<div id="home" class="page active">
+    <header class="main-header">
+        <h1 class="logo">أجر ريسبكت</h1>
+        <p style="color: var(--gold); letter-spacing: 2px;">AJAR RESPECT</p>
+    </header>
+
+    <div class="aya-box">
+        <div style="font-size: 0.8rem; color: var(--gold); margin-bottom: 10px;">✨ آية اليوم والتفسير</div>
+        <div id="aya-content" class="aya-text">جاري التحميل...</div>
+        <div id="tafseer-content" class="tafseer-text"></div>
     </div>
 
-    <!-- الصفحة الرئيسية -->
-    <div id="home-page" class="page active">
-        <!-- رأس الصفحة مع العداد وزر الصدقة -->
-        <div class="prayer-header">
-            <div class="prayer-info">
-                <div class="next-prayer-label">الصلاة القادمة</div>
-                <div id="next-prayer-name">الفجر</div>
-                <div id="prayer-timer">00:00:00</div>
-                <div id="hijri-date-header" class="hijri-date">٢٨ شعبان، ١٤٤٧ هـ</div>
-            </div>
-            <button class="sadaqa-btn" onclick="window.open('https://ehsan.sa', '_blank')">
-                <i class="fas fa-hand-holding-heart"></i>
-                <span>صدقة</span>
-            </button>
+    <div class="prayer-box">
+        <div>
+            <div id="p-name" style="font-size: 1.2rem;">الصلاة القادمة</div>
+            <div id="hijri-date" style="font-size: 0.9rem; opacity: 0.7;"></div>
         </div>
-
-        <div class="super-grid">
-            <div class="super-card" onclick="openPage('quran-page')">
-                <i class="fas fa-book-quran"></i>
-                <h3>القرآن</h3>
-            </div>
-            <div class="super-card" onclick="openPage('sebha-page')">
-                <i class="fas fa-fingerprint"></i>
-                <h3>المسبحة</h3>
-            </div>
-            <div class="super-card" onclick="openPage('times-page')">
-                <i class="fas fa-clock"></i>
-                <h3>المواقيت</h3>
-            </div>
-            <div class="super-card" onclick="openPage('zad-page')">
-                <i class="fas fa-lightbulb"></i>
-                <h3>زاد المسلم</h3>
-            </div>
-            <div class="super-card" onclick="openPage('azkar-page')">
-                <i class="fas fa-hands-praying"></i>
-                <h3>الأذكار</h3>
-            </div>
-            <div class="super-card" onclick="openPage('quiz-page')">
-                <i class="fas fa-trophy"></i>
-                <h3>التحديات</h3>
-            </div>
-            <div class="super-card" onclick="openPage('hadith-page')">
-                <i class="fas fa-scroll"></i>
-                <h3>الأحاديث</h3>
-            </div>
-            <div class="super-card" onclick="openPage('stories-page')">
-                <i class="fas fa-mosque"></i>
-                <h3>القصص</h3>
-            </div>
-        </div>
+        <div id="p-timer">00:00:00</div>
     </div>
 
-    <!-- صفحة المواقيت -->
-    <div id="times-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div class="status-box" style="max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 30px; border-radius: 30px;">
-            <h2 style="color: var(--gold); margin-bottom: 30px;">🕌 مواقيت الصلاة</h2>
-            <div class="input-group">
-                <input type="text" id="cityIn" class="super-input" placeholder="المدينة (مثال: Riyadh)" value="Riyadh">
-                <input type="text" id="countryIn" class="super-input" placeholder="الدولة (مثال: Saudi Arabia)" value="Saudi Arabia">
-                <button class="btn-action" onclick="getPrayerTimes()">
-                    <i class="fas fa-search"></i> عرض
-                </button>
-            </div>
-            <div class="input-group">
-                <button class="btn-action" onclick="getUserLocation()">
-                    <i class="fas fa-location-dot"></i> موقعي الحالي
-                </button>
-            </div>
-            <div id="times-list" class="times-list"></div>
-        </div>
+    <div class="super-grid">
+        <div class="card" onclick="openPage('quran')"><i class="fas fa-book-open"></i><h3>القرآن</h3></div>
+        <div class="card" onclick="openPage('sebha')"><i class="fas fa-fingerprint"></i><h3>المسبحة</h3></div>
+        <div class="card" onclick="openPage('times')"><i class="fas fa-clock"></i><h3>المواقيت</h3></div>
+        <div class="card" onclick="openPage('azkar')"><i class="fas fa-hands-praying"></i><h3>الأذكار</h3></div>
+        <div class="card" onclick="openPage('stories')"><i class="fas fa-mosque"></i><h3>قصص الأنبياء</h3></div>
+        <div class="card" onclick="openPage('quiz')"><i class="fas fa-trophy"></i><h3>التحديات</h3></div>
+        <div class="card" onclick="openPage('hadith')"><i class="fas fa-scroll"></i><h3>الأحاديث</h3></div>
+        <div class="card special" onclick="window.open('https://ehsan.sa/', '_blank')"><i class="fas fa-heart"></i><h3>صدقة (إحسان)</h3></div>
     </div>
+</div>
 
-    <!-- صفحة القرآن -->
-    <div id="quran-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div class="quran-controls">
-            <button class="lang-btn active" onclick="changeQuranLang('ar')">🇸🇦 العربية</button>
-            <button class="lang-btn" onclick="changeQuranLang('en')">🇺🇸 English</button>
-        </div>
-        <iframe id="quranIframe" class="quran-iframe" src="https://quran.com/ar" title="القرآن الكريم"></iframe>
+<div id="quran" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <iframe src="https://quran.com/ar" style="width:100%; height:85vh; border-radius:20px; border:2px solid var(--gold);"></iframe>
+</div>
+
+<div id="sebha" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <div style="text-align:center">
+        <h2 id="s-label" style="font-family:'Amiri'; color:var(--gold); font-size: 2rem;">سبحان الله</h2>
+        <div class="sebha-circle" onclick="countSebha()">0</div>
+        <button onclick="resetSebha()" style="background:none; border:1px solid #fff; color:white; padding:10px 30px; border-radius:10px;">تصفير العداد</button>
     </div>
+</div>
 
-    <!-- صفحة المسبحة -->
-    <div id="sebha-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div class="sebha-container">
-            <h2 id="sebha-txt">سُبْحَانَ اللَّهِ</h2>
-            <div class="sebha-btn" onclick="sebhaClick()">0</div>
-            <button class="reset-btn" onclick="sebhaReset()">
-                <i class="fas fa-rotate-right"></i> تصفير
-            </button>
-        </div>
+<div id="times" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <div class="aya-box">
+        <input type="text" id="city" placeholder="المدينة بالإنجليزي (مثلاً: Dubai)">
+        <input type="text" id="country" placeholder="الدولة بالإنجليزي (مثلاً: UAE)">
+        <button onclick="fetchPrayers()" class="back-btn" style="width:100%">تحديث المواقيت</button>
+        <div id="times-list" style="margin-top:20px"></div>
     </div>
+</div>
 
-    <!-- صفحة زاد المسلم (500 معلومة) -->
-    <div id="zad-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 style="color: var(--gold); text-align: center; margin-bottom: 30px;">📚 زاد المسلم (500 معلومة)</h2>
-            <div class="input-group">
-                <input type="text" id="zadSearch" class="super-input" placeholder="ابحث في الموسوعة..." onkeyup="searchZad()">
-            </div>
-            <div id="zad-list" class="info-grid"></div>
-        </div>
+<div id="quiz" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <div class="aya-box">
+        <h2 id="q-text"></h2>
+        <div id="q-options"></div>
     </div>
+</div>
 
-    <!-- صفحة الأذكار (1000+ ذكر) -->
-    <div id="azkar-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <h2 style="color: var(--gold); text-align: center; margin-bottom: 30px;">📿 الأذكار (1000+ ذكر)</h2>
-            <div class="input-group">
-                <input type="text" id="azkarSearch" class="super-input" placeholder="ابحث في الأذكار..." onkeyup="searchAzkar()">
-            </div>
-            <div id="azkar-list" class="azkar-container"></div>
-        </div>
+<div id="hadith" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <div class="aya-box">
+        <p id="h-content" style="font-family:'Amiri'; font-size:1.3rem; line-height:2"></p>
+        <button onclick="fetchHadith()" class="back-btn" style="margin-top:20px">حديث آخر</button>
     </div>
+</div>
 
-    <!-- صفحة التحديات (1000+ سؤال) -->
-    <div id="quiz-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div style="background: var(--card-bg); padding: 30px; border-radius: 30px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                    <span style="color: var(--gold);">السؤال: <span id="q-num">1</span>/1000</span>
-                    <span style="color: var(--gold);">النقاط: <span id="q-score">0</span></span>
-                </div>
-                <h2 id="q-text" style="margin-bottom: 30px;"></h2>
-                <div id="q-opts"></div>
-                <div id="q-feedback" style="margin-top: 20px; font-size: 1.2rem;"></div>
-            </div>
-        </div>
-    </div>
+<div id="stories" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <select id="story-select" onchange="loadStory()">
+        <option value="adam">آدم عليه السلام</option>
+        <option value="noah">نوح عليه السلام</option>
+        <option value="ibrahim">إبراهيم عليه السلام</option>
+        <option value="moussa">موسى عليه السلام</option>
+        <option value="mohammad">محمد ﷺ</option>
+    </select>
+    <div id="story-content" class="aya-box" style="text-align:right; line-height:2"></div>
+</div>
 
-    <!-- صفحة الأحاديث -->
-    <div id="hadith-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div style="background: var(--card-bg); padding: 30px; border-radius: 30px;">
-                <h2 style="color: var(--gold); margin-bottom: 30px;">📜 الأحاديث الشريفة</h2>
-                <select id="hadithBook" class="super-input" style="margin-bottom: 20px;" onchange="fetchHadith()">
-                    <option value="bukhari">صحيح البخاري</option>
-                    <option value="muslim">صحيح مسلم</option>
-                    <option value="abudawud">سنن أبي داود</option>
-                    <option value="tirmidhi">جامع الترمذي</option>
-                    <option value="nasai">سنن النسائي</option>
-                    <option value="ibnmajah">سنن ابن ماجه</option>
-                </select>
-                <div id="h-txt" style="line-height:2.2; font-size:1.3rem; margin-bottom: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 20px;">
-                    جاري تحميل الحديث...
-                </div>
-                <div id="h-info" style="color: var(--gold); margin-bottom: 20px;"></div>
-                <button onclick="fetchHadith()" class="btn-action">
-                    <i class="fas fa-random"></i> حديث آخر
-                </button>
-            </div>
-        </div>
-    </div>
+<div id="azkar" class="page">
+    <button class="back-btn" onclick="openPage('home')">← عودة</button>
+    <div id="azkar-list"></div>
+</div>
 
-    <!-- صفحة القصص (25 نبي كاملة) -->
-    <div id="stories-page" class="page">
-        <button class="back-btn" onclick="openPage('home-page')">← العودة للرئيسية</button>
-        <div style="max-width: 900px; margin: 0 auto;">
-            <h2 style="color: var(--gold); text-align: center; margin-bottom: 30px;">📖 قصص الأنبياء كاملة</h2>
-            <select id="s-select" class="super-input" onchange="showStory()">
-                <option value="adam">آدم عليه السلام</option>
-                <option value="idris">إدريس عليه السلام</option>
-                <option value="noah">نوح عليه السلام</option>
-                <option value="hud">هود عليه السلام</option>
-                <option value="salih">صالح عليه السلام</option>
-                <option value="ibrahim">إبراهيم عليه السلام</option>
-                <option value="lut">لوط عليه السلام</option>
-                <option value="ismail">إسماعيل عليه السلام</option>
-                <option value="ishaq">إسحاق عليه السلام</option>
-                <option value="yacqub">يعقوب عليه السلام</option>
-                <option value="yousef">يوسف عليه السلام</option>
-                <option value="ayoub">أيوب عليه السلام</option>
-                <option value="shuaib">شعيب عليه السلام</option>
-                <option value="moussa">موسى عليه السلام</option>
-                <option value="harun">هارون عليه السلام</option>
-                <option value="dawud">داود عليه السلام</option>
-                <option value="sulaiman">سليمان عليه السلام</option>
-                <option value="ilyas">إلياس عليه السلام</option>
-                <option value="alyasaa">اليسع عليه السلام</option>
-                <option value="dhulkifl">ذو الكفل عليه السلام</option>
-                <option value="yunus">يونس عليه السلام</option>
-                <option value="zakaria">زكريا عليه السلام</option>
-                <option value="yahya">يحيى عليه السلام</option>
-                <option value="isa">عيسى عليه السلام</option>
-                <option value="mohammad">محمد ﷺ</option>
-            </select>
-            <div id="s-content" class="story-display"></div>
-        </div>
-    </div>
+<script>
+    // --- نظام النجوم المتحركة ---
+    const starsContainer = document.getElementById('stars');
+    for(let i=0; i<100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = Math.random() * 3 + 'px';
+        star.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+        starsContainer.appendChild(star);
+    }
 
-    <script>
-        // ================ متغيرات عامة ================
-        let prayerTimes = {};
-        let sebhaCount = 0;
-        let currentQuestion = 0;
-        let quizScore = 0;
-        let answerLock = false;
+    // --- التنقل ---
+    function openPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+        if(id === 'quiz') loadQuestion();
+    }
 
-        // ================ نظام الصفحات ================
-        function openPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            
-            if (pageId === 'zad-page') renderZad();
-            if (pageId === 'azkar-page') renderAzkar();
-            if (pageId === 'quiz-page') loadQuiz();
-            if (pageId === 'hadith-page') fetchHadith();
-            if (pageId === 'stories-page') showStory();
-            
-            if (navigator.vibrate) navigator.vibrate(50);
+    // --- آية اليوم والتفسير ---
+    async function getDailyAya() {
+        try {
+            const res = await fetch('https://api.alquran.cloud/v1/aya/' + (Math.floor(Math.random() * 6236) + 1) + '/ar.jalalayn');
+            const data = await res.json();
+            document.getElementById('aya-content').innerText = data.data.text;
+            document.getElementById('tafseer-content').innerText = "سورة " + data.data.surah.name + " - آية " + data.data.numberInSurah;
+        } catch(e) { document.getElementById('aya-content').innerText = "لا إله إلا أنت سبحانك إني كنت من الظالمين"; }
+    }
+
+    // --- المواقيت والعداد ---
+    let prayers = {};
+    async function fetchPrayers() {
+        const c = document.getElementById('city').value || 'Makkah';
+        const co = document.getElementById('country').value || 'Saudi Arabia';
+        try {
+            const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${c}&country=${co}&method=4`);
+            const d = await res.json();
+            prayers = d.data.timings;
+            renderTimesList();
+        } catch(e) { console.log("Error"); }
+    }
+
+    function renderTimesList() {
+        const list = document.getElementById('times-list');
+        const names = {Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء'};
+        list.innerHTML = "";
+        for(let k in names) {
+            list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333"><span>${names[k]}</span><span style="color:var(--gold)">${prayers[k]}</span></div>`;
         }
+    }
 
-        // ================ التاريخ الهجري ================
-        function updateHijriDate() {
-            const date = new Date();
-            const hijriDate = "٢٨ شعبان، ١٤٤٧ هـ";
-            document.getElementById('hijri-date-header').innerText = hijriDate;
+    function updateTimer() {
+        if(!prayers.Fajr) return;
+        const now = new Date();
+        const names = {Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء'};
+        let next = null;
+        for(let k in names) {
+            let [h, m] = prayers[k].split(':');
+            let t = new Date(); t.setHours(h, m, 0);
+            if(t > now) { next = {n:names[k], t:t}; break; }
         }
+        if(!next) { 
+            let [h,m] = prayers.Fajr.split(':');
+            next = {n:'الفجر', t:new Date(now.getTime()+86400000)}; next.t.setHours(h,m,0);
+        }
+        const diff = next.t - now;
+        const hh = Math.floor(diff/3600000); const mm = Math.floor((diff%3600000)/60000); const ss = Math.floor((diff%60000)/1000);
+        document.getElementById('p-timer').innerText = `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`;
+        document.getElementById('p-name').innerText = "الصلاة القادمة: " + next.n;
+    }
+    setInterval(updateTimer, 1000);
 
-        // ================ العداد ================
-        function updateTimer() {
-            if (!prayerTimes.Fajr) {
-                document.getElementById('prayer-timer').innerText = '--:--:--';
-                return;
-            }
+    // --- المسبحة ---
+    let sCount = 0;
+    const sTexts = ["سبحان الله", "الحمد لله", "الله أكبر", "أستغفر الله"];
+    function countSebha() {
+        sCount++;
+        document.querySelector('.sebha-circle').innerText = sCount;
+        if(sCount % 33 === 0) {
+            navigator.vibrate(100);
+            document.getElementById('s-label').innerText = sTexts[Math.floor(Math.random()*sTexts.length)];
+        }
+    }
+    function resetSebha() { sCount = 0; document.querySelector('.sebha-circle').innerText = 0; }
 
-            const now = new Date();
-            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-            const prayerNames = {
-                Fajr: 'الفجر',
-                Dhuhr: 'الظهر',
-                Asr: 'العصر',
-                Maghrib: 'المغرب',
-                Isha: 'العشاء'
+    // --- التحديات ---
+    const questions = [
+        {q: "من هو النبي الملقب بأبي البشر؟", o: ["نوح", "آدم", "إبراهيم"], c: 1},
+        {q: "ما هي أطول سورة في القرآن؟", o: ["ال عمران", "البقرة", "النساء"], c: 1},
+        {q: "كم عدد أركان الإسلام؟", o: ["4", "5", "6"], c: 1}
+    ];
+    let qIdx = 0;
+    function loadQuestion() {
+        const q = questions[qIdx];
+        document.getElementById('q-text').innerText = q.q;
+        const optBox = document.getElementById('q-options');
+        optBox.innerHTML = "";
+        q.o.forEach((o, i) => {
+            const btn = document.createElement('button');
+            btn.className = "opt-btn";
+            btn.innerText = o;
+            btn.onclick = () => {
+                if(i === q.c) btn.classList.add('correct'); else btn.classList.add('wrong');
+                setTimeout(() => { qIdx = (qIdx+1) % questions.length; loadQuestion(); }, 1000);
             };
-            
-            let nextPrayer = null;
-            let nextTime = null;
+            optBox.appendChild(btn);
+        });
+    }
 
-            for (let prayer of prayers) {
-                let [hours, minutes] = prayerTimes[prayer].split(':');
-                let prayerDate = new Date();
-                prayerDate.setHours(parseInt(hours), parseInt(minutes), 0);
-                
-                if (prayerDate > now) {
-                    nextPrayer = prayer;
-                    nextTime = prayerDate;
-                    break;
-                }
-            }
+    // --- الأحاديث ---
+    async function fetchHadith() {
+        document.getElementById('h-content').innerText = "جاري جلب حديث شريف...";
+        const res = await fetch('https://api.hadith.gading.dev/books/bukhari/' + (Math.floor(Math.random()*50)+1));
+        const d = await res.json();
+        document.getElementById('h-content').innerText = d.data.contents.arab;
+    }
 
-            if (!nextPrayer) {
-                let [hours, minutes] = prayerTimes.Fajr.split(':');
-                nextPrayer = 'Fajr';
-                nextTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                nextTime.setHours(parseInt(hours), parseInt(minutes), 0);
-            }
+    // --- القصص ---
+    const storiesData = {
+        adam: "خلق الله آدم عليه السلام بيده وأسجد له الملائكة وعلمه الأسماء كلها...",
+        mohammad: "ولد النبي محمد ﷺ في مكة المكرمة في عام الفيل، وهو خاتم الأنبياء..."
+    };
+    function loadStory() {
+        const val = document.getElementById('story-select').value;
+        document.getElementById('story-content').innerText = storiesData[val] || "سيتم إضافة القصة كاملة قريباً.";
+    }
 
-            document.getElementById('next-prayer-name').innerText = prayerNames[nextPrayer];
-
-            const diff = nextTime - now;
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('prayer-timer').innerText = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // --- الأذكار ---
+    function renderAzkar() {
+        const list = document.getElementById('azkar-list');
+        for(let i=0; i<20; i++) {
+            list.innerHTML += `<div class="aya-box" style="display:flex; justify-content:space-between">
+                <span>لا إله إلا الله وحده لا شريك له</span>
+                <button class="back-btn" onclick="this.innerText--">100</button>
+            </div>`;
         }
+    }
 
-        setInterval(updateTimer, 1000);
-        setInterval(updateHijriDate, 1000);
-
-        // ================ مواقيت الصلاة ================
-        async function getPrayerTimes(city, country) {
-            const cityInput = document.getElementById('cityIn').value || city || 'Riyadh';
-            const countryInput = document.getElementById('countryIn').value || country || 'Saudi Arabia';
-            
-            document.getElementById('times-list').innerHTML = '<div style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin fa-3x"></i></div>';
-            
-            try {
-                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${cityInput}&country=${countryInput}&method=4`);
-                const data = await response.json();
-                
-                if (data.code === 200) {
-                    prayerTimes = data.data.timings;
-                    renderTimes(cityInput);
-                }
-            } catch (error) {
-                document.getElementById('times-list').innerHTML = '<div style="color:#e74c3c;">❌ فشل الاتصال</div>';
-            }
-        }
-
-        function renderTimes(city) {
-            const list = document.getElementById('times-list');
-            list.innerHTML = '';
-            
-            const prayerNames = {
-                Fajr: 'الفجر',
-                Sunrise: 'الشروق',
-                Dhuhr: 'الظهر',
-                Asr: 'العصر',
-                Maghrib: 'المغرب',
-                Isha: 'العشاء'
-            };
-            
-            for (let key in prayerNames) {
-                if (prayerTimes[key]) {
-                    list.innerHTML += `
-                        <div class="time-item">
-                            <span>${prayerNames[key]}</span>
-                            <span>${prayerTimes[key]}</span>
-                        </div>
-                    `;
-                }
-            }
-        }
-
-        function getUserLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async position => {
-                    try {
-                        const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
-                        const data = await response.json();
-                        
-                        document.getElementById('cityIn').value = data.city || data.locality || 'Riyadh';
-                        document.getElementById('countryIn').value = data.countryName || 'Saudi Arabia';
-                        
-                        getPrayerTimes();
-                    } catch (error) {
-                        alert('فشل تحديد الموقع');
-                    }
-                });
-            }
-        }
-
-        // ================ القرآن ================
-        function changeQuranLang(lang) {
-            document.getElementById('quranIframe').src = `https://quran.com/${lang}`;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // ================ المسبحة ================
-        const sebhaAzkar = [
-            'سُبْحَانَ اللَّهِ',
-            'الْحَمْدُ لِلَّهِ',
-            'اللَّهُ أَكْبَرُ',
-            'لا إِلَهَ إِلا اللَّهُ',
-            'أَسْتَغْفِرُ اللَّهَ',
-            'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ'
-        ];
-
-        function sebhaClick() {
-            sebhaCount++;
-            document.querySelector('.sebha-btn').innerText = sebhaCount;
-            
-            if (sebhaCount % 33 === 0) {
-                if (navigator.vibrate) navigator.vibrate(100);
-                const randomZekr = sebhaAzkar[Math.floor(Math.random() * sebhaAzkar.length)];
-                document.getElementById('sebha-txt').innerText = randomZekr;
-            }
-        }
-
-        function sebhaReset() {
-            sebhaCount = 0;
-            document.querySelector('.sebha-btn').innerText = 0;
-            document.getElementById('sebha-txt').innerText = 'سُبْحَانَ اللَّهِ';
-        }
-
-        // ================ زاد المسلم (500 معلومة) ================
-        const zadBase = [
-            { title: "فضل الصلاة على النبي", content: "من صلى علي واحدة صلى الله عليه عشراً" },
-            { title: "أحب الكلام إلى الله", content: "سبحان الله وبحمده" },
-            { title: "فضل الصدقة", content: "تطفئ الخطيئة كما يطفئ الماء النار" },
-            { title: "فضل صلاة الجماعة", content: "تفضل بصلاة الجماعة على صلاة الفرد بسبع وعشرين درجة" },
-            { title: "فضل الصيام", content: "الصوم جنة من النار" },
-            { title: "فضل قراءة القرآن", content: "اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه" },
-            { title: "فضل بر الوالدين", content: "الجنة تحت أقدام الأمهات" },
-            { title: "فضل الذكر", content: "ألا بذكر الله تطمئن القلوب" },
-            { title: "فضل الوضوء", content: "من توضأ فأحسن الوضوء خرجت خطاياه من جسده" },
-            { title: "فضل الصبر", content: "إن الله مع الصابرين" }
-        ];
-
-        const fullZadData = [];
-        for (let i = 0; i < 500; i++) {
-            let base = zadBase[i % zadBase.length];
-            fullZadData.push({
-                title: base.title + (i >= zadBase.length ? ` (${Math.floor(i/zadBase.length)+1})` : ''),
-                content: base.content,
-                id: i + 1
-            });
-        }
-
-        function renderZad() {
-            const grid = document.getElementById('zad-list');
-            if (grid) {
-                grid.innerHTML = fullZadData.map(item => `
-                    <div class="info-card">
-                        <h3><i class="fas fa-lightbulb"></i> ${item.title}</h3>
-                        <p>${item.content}</p>
-                        <span class="card-id">معلومة #${item.id}</span>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function searchZad() {
-            const term = document.getElementById('zadSearch').value.toLowerCase();
-            const filtered = fullZadData.filter(item => 
-                item.title.toLowerCase().includes(term) || 
-                item.content.toLowerCase().includes(term)
-            );
-            
-            document.getElementById('zad-list').innerHTML = filtered.map(item => `
-                <div class="info-card">
-                    <h3><i class="fas fa-lightbulb"></i> ${item.title}</h3>
-                    <p>${item.content}</p>
-                    <span class="card-id">معلومة #${item.id}</span>
-                </div>
-            `).join('');
-        }
-
-        // ================ الأذكار (1000+ ذكر) ================
-        const azkarBase = [
-            { text: "سُبْحَانَ اللَّهِ", count: 33 },
-            { text: "الْحَمْدُ لِلَّهِ", count: 33 },
-            { text: "اللَّهُ أَكْبَرُ", count: 34 },
-            { text: "لا إِلَهَ إِلا اللَّهُ", count: 100 },
-            { text: "أَسْتَغْفِرُ اللَّهَ", count: 100 },
-            { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", count: 100 },
-            { text: "سُبْحَانَ اللَّهِ الْعَظِيمِ", count: 100 },
-            { text: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ", count: 100 },
-            { text: "لا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ", count: 100 },
-            { text: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", count: 100 },
-            { text: "رَضِيتُ بِاللَّهِ رَبًّا", count: 3 },
-            { text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ", count: 1 },
-            { text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ", count: 3 },
-            { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ", count: 3 },
-            { text: "اللَّهُمَّ بِكَ أَصْبَحْنَا", count: 1 }
-        ];
-
-        const fullAzkarData = [];
-        for (let i = 0; i < 1000; i++) {
-            let base = azkarBase[i % azkarBase.length];
-            fullAzkarData.push({
-                text: base.text + (i >= azkarBase.length ? ` (${Math.floor(i/azkarBase.length)+1})` : ''),
-                count: base.count,
-                id: i + 1
-            });
-        }
-
-        function renderAzkar() {
-            const container = document.getElementById('azkar-list');
-            if (container) {
-                container.innerHTML = fullAzkarData.map((z, i) => `
-                    <div class="zekr-card" id="zekr-${i}">
-                        <button class="counter" id="cnt-${i}" onclick="countZekr(${i})">${z.count}</button>
-                        <div style="margin-right: 80px; font-size: 1.2rem;">${z.text}</div>
-                        <small style="color: #666;">ذكر #${z.id}</small>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function countZekr(id) {
-            const btn = document.getElementById('cnt-' + id);
-            let val = parseInt(btn.innerText);
-            if (val > 1) {
-                btn.innerText = val - 1;
-                if (navigator.vibrate) navigator.vibrate(20);
-            } else {
-                btn.innerText = '✓';
-                btn.classList.add('done');
-                if (navigator.vibrate) navigator.vibrate(50);
-            }
-        }
-
-        function searchAzkar() {
-            const term = document.getElementById('azkarSearch').value.toLowerCase();
-            const container = document.getElementById('azkar-list');
-            if (!container) return;
-            
-            const cards = container.getElementsByClassName('zekr-card');
-            for (let card of cards) {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(term) ? 'block' : 'none';
-            }
-        }
-
-        // ================ التحديات (1000+ سؤال) ================
-        const quizBase = [
-            { q: "كم عدد أركان الإسلام؟", o: ["3", "4", "5", "6"], c: 2 },
-            { q: "كم عدد أركان الإيمان؟", o: ["5", "6", "7", "4"], c: 1 },
-            { q: "من هو أول الأنبياء؟", o: ["نوح", "آدم", "إبراهيم", "موسى"], c: 1 },
-            { q: "من هو خاتم الأنبياء؟", o: ["عيسى", "موسى", "محمد ﷺ", "إبراهيم"], c: 2 },
-            { q: "ما هي أول سورة في القرآن؟", o: ["البقرة", "الفاتحة", "الإخلاص", "الناس"], c: 1 },
-            { q: "ما هي أطول سورة في القرآن؟", o: ["البقرة", "آل عمران", "النساء", "الأعراف"], c: 0 },
-            { q: "في أي شهر نزل القرآن؟", o: ["شوال", "رمضان", "رجب", "محرم"], c: 1 },
-            { q: "ما هي السورة التي تسمى عروس القرآن؟", o: ["يس", "الرحمن", "الدخان", "الواقعة"], c: 1 },
-            { q: "من هو الصحابي الملقب بالفاروق؟", o: ["أبو بكر", "عمر", "عثمان", "علي"], c: 1 },
-            { q: "كم سنة دامت دعوة نوح؟", o: ["500", "950", "1000", "750"], c: 1 },
-            { q: "ما هي أعظم آية في القرآن؟", o: ["آية الكرسي", "آية الدين", "آية المداينة", "آية النور"], c: 0 },
-            { q: "كم عدد أجزاء القرآن؟", o: ["20", "30", "40", "60"], c: 1 },
-            { q: "من هو النبي الذي ابتلعه الحوت؟", o: ["يوسف", "يونس", "يحيى", "يعقوب"], c: 1 },
-            { q: "أين يقع المسجد الأقصى؟", o: ["مكة", "المدينة", "القدس", "القاهرة"], c: 2 },
-            { q: "ما هي السورة التي تعدل ثلث القرآن؟", o: ["الفاتحة", "الإخلاص", "الملك", "يس"], c: 1 },
-            { q: "كم عدد سور القرآن؟", o: ["114", "120", "100", "110"], c: 0 },
-            { q: "من أول من أسلم من الرجال؟", o: ["عمر", "علي", "أبو بكر", "عثمان"], c: 2 },
-            { q: "من أول من أسلم من النساء؟", o: ["فاطمة", "عائشة", "خديجة", "مريم"], c: 2 },
-            { q: "ما هي غزوة بدر؟", o: ["غزوة", "فتح", "سرية", "بيعة"], c: 0 },
-            { q: "كم عدد أحزاب القرآن؟", o: ["60", "30", "50", "40"], c: 0 }
-        ];
-
-        const fullQuizData = [];
-        for (let i = 0; i < 1000; i++) {
-            let base = quizBase[i % quizBase.length];
-            fullQuizData.push({
-                q: base.q + (i >= quizBase.length ? ` (${Math.floor(i/quizBase.length)+1})` : ''),
-                o: [...base.o],
-                c: base.c
-            });
-        }
-
-        function loadQuiz() {
-            if (currentQuestion >= fullQuizData.length) {
-                document.getElementById('q-area').innerHTML = `
-                    <h2 style="color: var(--gold);">🎉 تهانينا!</h2>
-                    <p style="font-size: 2rem;">لقد أكملت 1000 سؤال</p>
-                    <p>نتيجتك: ${quizScore} من 1000</p>
-                    <button class="btn-action" onclick="resetQuiz()">ابدأ من جديد</button>
-                `;
-                return;
-            }
-
-            const q = fullQuizData[currentQuestion];
-            document.getElementById('q-num').innerText = currentQuestion + 1;
-            document.getElementById('q-score').innerText = quizScore;
-            document.getElementById('q-text').innerText = q.q;
-            document.getElementById('q-feedback').innerHTML = '';
-            
-            const optsDiv = document.getElementById('q-opts');
-            optsDiv.innerHTML = '';
-            answerLock = false;
-
-            q.o.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'opt-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(i, q.c);
-                optsDiv.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selected, correct) {
-            if (answerLock) return;
-            answerLock = true;
-
-            const feedback = document.getElementById('q-feedback');
-            const buttons = document.querySelectorAll('.opt-btn');
-
-            if (selected === correct) {
-                buttons[selected].classList.add('correct');
-                feedback.innerHTML = '✅ إجابة صحيحة!';
-                quizScore++;
-            } else {
-                buttons[selected].classList.add('wrong');
-                buttons[correct].classList.add('correct');
-                feedback.innerHTML = `❌ إجابة خاطئة. الإجابة الصحيحة هي: ${fullQuizData[currentQuestion].o[correct]}`;
-            }
-
-            buttons.forEach(btn => btn.disabled = true);
-
-            setTimeout(() => {
-                currentQuestion++;
-                loadQuiz();
-            }, 2000);
-        }
-
-        function resetQuiz() {
-            currentQuestion = 0;
-            quizScore = 0;
-            loadQuiz();
-        }
-
-        // ================ الأحاديث ================
-        async function fetchHadith() {
-            const book = document.getElementById('hadithBook').value;
-            const books = {
-                bukhari: { name: 'صحيح البخاري' },
-                muslim: { name: 'صحيح مسلم' },
-                abudawud: { name: 'سنن أبي داود' },
-                tirmidhi: { name: 'جامع الترمذي' },
-                nasai: { name: 'سنن النسائي' },
-                ibnmajah: { name: 'سنن ابن ماجه' }
-            };
-
-            document.getElementById('h-txt').innerText = 'جاري تحميل الحديث...';
-            document.getElementById('h-info').innerText = '';
-
-            try {
-                const rand = Math.floor(Math.random() * 300) + 1;
-                const response = await fetch(`https://api.hadith.gading.dev/books/${book}/${rand}`);
-                const data = await response.json();
-                
-                if (data.data && data.data.contents) {
-                    document.getElementById('h-txt').innerText = data.data.contents.arab;
-                    document.getElementById('h-info').innerHTML = `
-                        <i class="fas fa-book"></i> ${books[book].name} - حديث رقم: ${data.data.contents.number}
-                    `;
-                }
-            } catch (error) {
-                document.getElementById('h-txt').innerHTML = 'حدث خطأ في تحميل الحديث';
-            }
-        }
-
-        // ================ قصص الأنبياء الكاملة ================
-        const stories = {
-            adam: `
-                <h2 style="color: var(--gold);">آدم عليه السلام (أبو البشر)</h2>
-                <p><strong>• نسبه:</strong> آدم بن عبد الله، خلقه الله بيده من طين لازب، ونفخ فيه من روحه.</p>
-                <p><strong>• مولده:</strong> خلقه الله يوم الجمعة، وكان أول البشر. خلقه من تراب الأرض، فجاءت الملائكة مختلفة الألوان من تربتها.</p>
-                <p><strong>• شبابه:</strong> أسجد الله له الملائكة تكريماً له، وعلمه الأسماء كلها، وفضله بالعلم على الملائكة.</p>
-                <p><strong>• زواجه:</strong> خلق الله حواء من ضلعه لتسكن إليه، فتزوجها وأنجب منها الذرية.</p>
-                <p><strong>• قصته مع إبليس:</strong> أمر الله آدم وزوجته بأكل كل ثمار الجنة إلا شجرة واحدة. وسوس لهما إبليس فأكلا منها، فبدت لهما سوآتهما. تاب الله عليهما بعد أن أهبطا إلى الأرض.</p>
-                <p><strong>• نبوته:</strong> كان أول الأنبياء، علمه الله الأسماء كلها، وأمره بتعليم بنيه. أنزل عليه 21 صحيفة.</p>
-                <p><strong>• أبناؤه:</strong> رزق بعدة أبناء منهم: قابيل وهابيل وشيث. قتل قابيل أخاه هابيل، فرزق الله آدم بشيث الذي ورث النبوة.</p>
-                <p><strong>• مملكته:</strong> عاش في الأرض يعمرها ويعبد الله، وكان أول من أقام حدود الله في الأرض.</p>
-                <p><strong>• وفاته:</strong> عاش ألف سنة كما ورد في الأحاديث. أوصى لابنه شيث، ودفن في الهند وقيل في مكة. وكان يوم وفاته يوم جمعة.</p>
-                <p><strong>• وصيته:</strong> أوصى بنيه بتقوى الله وأن يعبدوه ولا يشركوا به شيئاً.</p>
-            `,
-
-            idris: `
-                <h2 style="color: var(--gold);">إدريس عليه السلام</h2>
-                <p><strong>• نسبه:</strong> إدريس بن يارد بن مهلائيل، وهو من نسل شيث بن آدم. أمه تسمى أشفا.</p>
-                <p><strong>• مولده:</strong> ولد في بابل بالعراق، في زمن انتشر فيه الفساد وعبادة الأصنام.</p>
-                <p><strong>• نشأته:</strong> نشأ في بيئة موحدة بالله، وتعلم من كتب آدم وشيث. كان كثير التفكر في خلق الله.</p>
-                <p><strong>• صفاته:</strong> كان صديقاً نبياً، رفيع القدر، كثير العلم والعبادة. كان حسن الخلق، جميل الصورة.</p>
-                <p><strong>• دعوته:</strong> دعا قومه إلى التوحيد والإيمان بالله، وكانوا من المفسدين في الأرض. دعاهم إلى ترك عبادة الأصنام.</p>
-                <p><strong>• مهنته:</strong> كان أول من خط بالقلم، وأول من خاط الثياب ولبس المخيط. كان يخيط الثياب البيض.</p>
-                <p><strong>• حكمته:</strong> كان أول من نظر في علم النجوم والحساب. كان حكيماً في أقواله وأفعاله.</p>
-                <p><strong>• هجرته:</strong> هاجر من بابل إلى مصر، ونشر فيها التوحيد. استقر في أرض مصر يدعو إلى الله.</p>
-                <p><strong>• رفعه:</strong> رفعه الله مكاناً علياً، قال تعالى: "وَرَفَعْنَاهُ مَكَانًا عَلِيًّا". دخل الجنة وهو حي على الصحيح.</p>
-                <p><strong>• وفاته:</strong> قبض الله روحه في السماء الرابعة، وقيل في السماء السادسة. توفي وله من العمر 365 سنة.</p>
-            `,
-
-            noah: `
-                <h2 style="color: var(--gold);">نوح عليه السلام (شيخ المرسلين)</h2>
-                <p><strong>• نسبه:</strong> نوح بن لامك بن متوشلخ بن إدريس، وهو من نسل آدم. يكنى بأبي البشر الثاني.</p>
-                <p><strong>• مولده:</strong> ولد بعد وفاة آدم ب 126 سنة. نشأ في قوم يعبدون الأصنام: وداً، سواعاً، يغوث، يعوق، نسراً.</p>
-                <p><strong>• شبابه:</strong> كان صالحاً في قومه، يأمر بالمعروف وينهى عن المنكر. اختاره الله نبياً ورسولاً.</p>
-                <p><strong>• دعوته:</strong> دعا قومه إلى التوحيد 950 سنة. دعاهم بالليل والنهار، سراً وجهاراً، بالترغيب والترهيب.</p>
-                <p><strong>• أساليب دعوته:</strong> كان يدعوهم في الأسواق والمجالس، يحذرهم من عذاب الله، ويبشرهم برحمته.</p>
-                <p><strong>• معجزاته:</strong> لم يؤت معجزات حسية كثيرة، لكن معجزته صبره الطويل على دعوة قومه.</p>
-                <p><strong>• من آمن به:</strong> آمن معه قليل من الضعفاء والمساكين، حوالي 80 رجلاً. لم يؤمن به الأغنياء ولا الكبراء.</p>
-                <p><strong>• تكذيبهم له:</strong> كذبه قومه وآذوه وضربوه حتى غشي عليه. كانوا يضعون أصابعهم في آذانهم ويستغشون ثيابهم.</p>
-                <p><strong>• بناء السفينة:</strong> أمره الله ببناء السفينة، فصنعها في الصحراء من خشب الساج. كان قومه يسخرون منه وهو يبنيها.</p>
-                <p><strong>• السفينة:</strong> كانت طولها 300 ذراع وعرضها 50 ذراعاً، وارتفاعها 30 ذراعاً. لها ثلاثة طوابق.</p>
-                <p><strong>• الطوفان:</strong> جاء أمر الله وفار التنور، وحمل في السفينة من كل زوجين اثنين. فتحت أبواب السماء بماء منهمر.</p>
-                <p><strong>• أهله:</strong> حمل معه أهله المؤمنين، وكان ابنه يام من الكافرين فغرق.</p>
-                <p><strong>• الغرق:</strong> أغرق الله الكافرين بالطوفان، وكان الماء قد غمر الجبال. لم يبق على الأرض كافر.</p>
-                <p><strong>• بعد الطوفان:</strong> استقرت السفينة على جبل الجودي. نزل هو ومن معه ليعمروا الأرض من جديد.</p>
-                <p><strong>• نسله:</strong> جميع البشر اليوم من نسل أبنائه الثلاثة: سام وحام ويافث. سام أبو العرب والعبرانيين.</p>
-                <p><strong>• مملكته:</strong> عاش بعد الطوفان 350 سنة، وكان ملكاً على الأرض كلها، وعمرها بالذرية الصالحة.</p>
-                <p><strong>• وفاته:</strong> توفي عن عمر 1050 سنة. دفن في المسجد الحرام وقيل في وادي السلام بالنجف.</p>
-                <p><strong>• وصيته:</strong> أوصى أبناءه بتقوى الله، وحذرهم من الشرك والكبر.</p>
-            `,
-
-            hud: `
-                <h2 style="color: var(--gold);">هود عليه السلام</h2>
-                <p><strong>• نسبه:</strong> هود بن عبد الله بن رباح بن الخلود بن عاد. من قبيلة عاد.</p>
-                <p><strong>• مولده:</strong> ولد في الأحقاف باليمن، في أرض ذات رمال وكثبان. نشأ في قوم عاد.</p>
-                <p><strong>• قومه:</strong> قوم عاد كانوا أقوياء البنيان، طوال القامة، أشداء، يسكنون الخيام ذات الأعمدة. كانوا يعبدون الأصنام الثلاثة: صموداً، وصدا، وصهيداً.</p>
-                <p><strong>• صفاته:</strong> كان حليماً كريماً، صبوراً على الأذى. لم يؤت قوة جسمانية كقومه لكنه كان قوي الإيمان.</p>
-                <p><strong>• دعوته:</strong> دعاهم إلى عبادة الله وحده وترك الأصنام. نهاهم عن الطغيان والتجبر. قال لهم: "يا قوم اعبدوا الله ما لكم من إله غيره".</p>
-                <p><strong>• معجزاته:</strong> لم يؤت معجزات حسية، كانت معجزته في بيانه وقوة حجته. كان يجادلهم بالتي هي أحسن.</p>
-                <p><strong>• موقف قومه:</strong> كذبوه واستكبروا وقالوا: "من أشد منا قوة". اتهموه بالسفاهة والكذب. قالوا: "إنا لنراك في سفاهة وإنا لنظنك من الكاذبين".</p>
-                <p><strong>• تحدي الله:</strong> تحداهم أن ينصروهم من عذاب الله. قالوا له: "فأتنا بما تعدنا إن كنت من الصادقين".</p>
-                <p><strong>• العقاب:</strong> أرسل الله عليهم ريحاً صرصراً عاتية دمرتهم بالكامل. الريح استمرت عليهم ثمانية أيام وسبع ليال.</p>
-                <p><strong>• صفة الريح:</strong> كانت ريحاً شديدة البرد، تحملهم كأنهم أعجاز نخل منقعر. تخلعهم من الأرض كأنهم نخل منقلع.</p>
-                <p><strong>• النجاة:</strong> نجى الله هوداً والذين آمنوا معه برحمته. كانوا في مكان منيع.</p>
-                <p><strong>• بعد العذاب:</strong> هاجر هود إلى مكة، وعاش فيها يعبد الله حتى وفاته. استقر مع المؤمنين في أرض آمنة.</p>
-                <p><strong>• وفاته:</strong> توفي في مكة، وقبره في الحجر وقيل في اليمن. دفن مع المؤمنين الذين معه.</p>
-            `,
-
-            salih: `
-                <h2 style="color: var(--gold);">صالح عليه السلام</h2>
-                <p><strong>• نسبه:</strong> صالح بن عبيد بن ماسح بن عبيد بن جابر بن ثمود. من قبيلة ثمود.</p>
-                <p><strong>• مولده:</strong> ولد في الحجر بين الحجاز وتبوك. نشأ في قوم ثمود.</p>
-                <p><strong>• قومه:</strong> ثمود قوم كانوا ينحتون الجبال بيوتاً. كانوا أقوياء، ماهرين في النحت والبناء. كانوا يعبدون الأصنام.</p>
-                <p><strong>• صفاته:</strong> كان حليماً صبوراً، لطيفاً مع قومه. كانوا يثقون به قبل النبوة.</p>
-                <p><strong>• دعوته:</strong> دعاهم إلى عبادة الله وحده. قال لهم: "يا قوم اعبدوا الله ما لكم من إله غيره". نهاهم عن الفساد في الأرض.</p>
-                <p><strong>• طلبهم المعجزة:</strong> طلبوا منه معجزة ليصدقوه. طلبوا أن يخرج لهم ناقة من صخرة معينة.</p>
-                <p><strong>• الناقة:</strong> دعا الله فأخرج لهم ناقة عظيمة من الصخرة. كانت الناقة معجزة عظيمة، تخرج من بطن الصخرة.</p>
-                <p><strong>• صفات الناقة:</strong> كانت لها شرب يوم ولكم شرب يوم معلوم. كانت تشرب ماء البئر كله في يومها، ثم تدر لبناً يكفيهم جميعاً.</p>
-                <p><strong>• تحذيره:</strong> أمرهم أن لا يمسوها بسوء، وأن يتركوها تأكل في أرض الله. حذرهم من عذاب الله إن مسوها.</p>
-                <p><strong>• عقر الناقة:</strong> عقرها قدار بن سالف وأتباعه. كان أشقى القوم. اتفقوا على قتلها ليشربوا ماءها.</p>
-                <p><strong>• العقاب:</strong> جاءتهم الصيحة فصاروا جميعاً هامدين في ديارهم. أهلكهم الله بصاعقة عظيمة.</p>
-                <p><strong>• صفة العذاب:</strong> جاءتهم صيحة عظيمة من السماء ورجفة من الأرض. أصبحوا في دارهم جاثمين.</p>
-                <p><strong>• النجاة:</strong> نجى الله صالحاً والذين آمنوا معه. خرجوا من القرية قبل العذاب.</p>
-                <p><strong>• بعد العذاب:</strong> ذهب صالح إلى مكة وعاش فيها. كان يحج ويعتمر حتى وفاته.</p>
-                <p><strong>• وفاته:</strong> توفي في مكة، وقبره عند الحجر وقيل في الشام. دفن مع المؤمنين.</p>
-            `,
-
-            ibrahim: `
-                <h2 style="color: var(--gold);">إبراهيم عليه السلام (خليل الله)</h2>
-                <p><strong>• نسبه:</strong> إبراهيم بن تارخ (آزر) بن ناحور بن ساروغ. هو أبو الأنبياء.</p>
-                <p><strong>• مولده:</strong> ولد في بابل بالعراق، في زمن النمرود الذي كان يدعي الربوبية. ولد في كهف خوفاً من قتل النمرود للأطفال.</p>
-                <p><strong>• نشأته:</strong> تربى في بيئة تعبد الأصنام. كان يبحث عن الله منذ صغره. تأمل في الكون ليعرف خالقه.</p>
-                <p><strong>• البحث عن الله:</strong> رأى كوكباً فقال هذا ربي، فلما أفل قال لا أحب الآفلين. رأى القمر فقال هذا ربي، فلما أفل قال لئن لم يهدني ربي لأكونن من القوم الضالين. رأى الشمس فقال هذا ربي هذا أكبر، فلما أفلت قال يا قوم إني بريء مما تشركون.</p>
-                <p><strong>• دعوته لأبيه:</strong> دعا أباه آزر إلى ترك عبادة الأصنام بلطف ولين. قال: "يا أبت لم تعبد ما لا يسمع ولا يبصر ولا يغني عنك شيئاً".</p>
-                <p><strong>• محاججته للنمرود:</strong> حاج النمرود في الله. قال إبراهيم: "ربي الذي يحيي ويميت". قال النمرود: "أنا أحيي وأميت". فأتى الله بالشمس من المشرق فأت بها من المغرب فبهت الذي كفر.</p>
-                <p><strong>• تحطيم الأصنام:</strong> كسر الأصنام التي كان يعبدها قومه. ترك كبيرهم لعلهم إليه يرجعون. علق الفأس في عنق كبيرهم.</p>
-                <p><strong>• محاكمته:</strong> استدعوه وسألوه: "أأنت فعلت هذا بآلهتنا يا إبراهيم؟" قال: "بل فعله كبيرهم هذا فاسألوهم إن كانوا ينطقون". فرجعوا إلى أنفسهم.</p>
-                <p><strong>• النار:</strong> قرروا حرقه بالنار. جمعوا حطباً كثيراً وأشعلوا ناراً عظيمة. ربطوه ووضعوه في المنجنيق.</p>
-                <p><strong>• معجزة النار:</strong> قال لله: "حسبنا الله ونعم الوكيل". قال الله: "يا نار كوني برداً وسلاماً على إبراهيم". فلم تحرقه النار.</p>
-                <p><strong>• هجرته:</strong> هاجر إلى الشام، ثم إلى مصر، ثم عاد إلى فلسطين. مع زوجته سارة ولوط ابن أخيه.</p>
-                <p><strong>• زوجاته:</strong> تزوج سارة ثم هاجر. سارة عاقر، وهاجر أنجبت إسماعيل.</p>
-                <p><strong>• هاجر وإسماعيل:</strong> ترك هاجر وابنها إسماعيل في وادي مكة بأمر الله. كان وادياً غير ذي زرع. فجر الله لهما زمزم.</p>
-                <p><strong>• بناء الكعبة:</strong> بنى الكعبة مع ابنه إسماعيل. رفع القواعد من البيت. كان يقول: "ربنا تقبل منا إنك أنت السميع العليم".</p>
-                <p><strong>• الذبيح:</strong> رأى في المنام أنه يذبح ابنه إسماعيل. أخبر ابنه فاستجاب لأمر الله. فلما أسلما وتله للجبين ناداه الله أن قد صدقت الرؤيا وفداه بذبح عظيم.</p>
-                <p><strong>• البشرى بإسحاق:</strong> بشرته الملائكة بإسحاق بعد أن طعن في السن. هو وزوجته سارة عجوز عاقر. فعجبت سارة وقالت: "يا ويلتى أألد وأنا عجوز وهذا بعلي شيخاً".</p>
-                <p><strong>• ضيافته للملائكة:</strong> جاءته الملائكة في صورة بشر، فصنع لهم عجلاً حنيذاً. فلما لم يأكلوا أنكرهم وأوجس منهم خيفة.</p>
-                <p><strong>• محادثته مع الله:</strong> سماه الله خليله. كان كثير المناجاة والدعاء. قال تعالى: "واتخذ الله إبراهيم خليلاً".</p>
-                <p><strong>• مملكته:</strong> كان له مال كثير ومواشٍ، وكان كريماً سخياً. كان يطعم الناس ويكرم الضيف.</p>
-                <p><strong>• أبناؤه:</strong> إسماعيل جد العرب، وإسحاق جد بني إسرائيل. ومن نسله الأنبياء كلهم.</p>
-                <p><strong>• وفاته:</strong> توفي في فلسطين عن عمر 175 سنة. دفن في الخليل في الحرم الإبراهيمي مع زوجته سارة.</p>
-                <p><strong>• وصيته:</strong> أوصى بنيه بالحنيفية السمحة. حجته أن يعبدوا الله مخلصين له الدين.</p>
-            `,
-
-            mohammad: `
-                <h2 style="color: var(--gold);">محمد بن عبد الله ﷺ (خاتم الأنبياء)</h2>
-                <p><strong>• نسبه الشريف:</strong> هو محمد بن عبد الله بن عبد المطلب بن هاشم بن عبد مناف بن قصي بن كلاب بن مرة بن كعب بن لؤي بن غالب بن فهر بن مالك بن النضر بن كنانة بن خزيمة بن مدركة بن إلياس بن مضر بن نزار بن معد بن عدنان. وعدنان من نسل إسماعيل بن إبراهيم.</p>
-                
-                <p><strong>• مولده:</strong> ولد يوم الاثنين 12 ربيع الأول عام الفيل (53 ق.هـ) بمكة. توفي أبوه عبد الله وهو في بطن أمه. ولد في شعب أبي طالب.</p>
-                
-                <p><strong>• طفولته:</strong> أرضعته حليمة السعدية في البادية. عاد لأمه آمنة وعمره 6 سنوات. توفيت أمه بالأبواء وهو في طريق عودته من المدينة. كفله جده عبد المطلب ثم عمه أبو طالب.</p>
-                
-                <p><strong>• صباه وشبابه:</strong> عمل في رعي الغنم، ثم في التجارة. عرف بالصادق الأمين. كان بعيداً عن عبادة الأصنام والأخلاق السيئة. حضر حلف الفضول وكان خير حلف.</p>
-                
-                <p><strong>• زواجه من خديجة:</strong> تزوج خديجة بنت خويلد وعمره 25 سنة، وهي 40 سنة. كانت أماً لأولاده كلهم إلا إبراهيم. أنجبت له القاسم وعبد الله وزينب ورقية وأم كلثوم وفاطمة.</p>
-                
-                <p><strong>• البعثة:</strong> كان يتعبد في غار حراء. نزل عليه الوحي وهو في الأربعين من عمره. أول ما نزل: "اقرأ باسم ربك الذي خلق".</p>
-                
-                <p><strong>• الدعوة السرية:</strong> دعا أقرباءه سراً ثلاث سنوات. أسلم معه خديجة وعلي وأبو بكر وزيد. كانوا يجتمعون في دار الأرقم.</p>
-                
-                <p><strong>• الدعوة الجهرية:</strong> صعد على الصفا ونادى: "يا معشر قريش". أنزل الله: "وأنذر عشيرتك الأقربين". بدأ قومه يؤذونه وأصحابه.</p>
-                
-                <p><strong>• أذى قريش:</strong> كانوا يستهزئون به ويسخرون. وضعوا سلا الجزور على ظهره وهو ساجد. عذبوا أصحابه: بلال، عمار، ياسر، سميّة.</p>
-                
-                <p><strong>• الهجرة إلى الحبشة:</strong> هاجر بعض الصح
+    window.onload = () => {
+        getDailyAya(); fetchPrayers(); fetchHadith(); loadStory(); renderAzkar();
+        document.getElementById('hijri-date').innerText = new Date().toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric'});
+    }
+</script>
+</body>
+</html>
