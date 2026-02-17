@@ -3,41 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>سؤال وجواب | Ajar Respect</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
-        body { background: #05040a; color: white; font-family: 'Reem Kufi'; padding: 20px; }
-        .q-grid { max-width: 800px; margin: 50px auto; }
-        .q-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(197, 160, 89, 0.2); margin-bottom: 15px; padding: 20px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        .q-card:hover { border-color: #c5a059; background: rgba(197, 160, 89, 0.05); }
-        .answer { display: none; color: #c5a059; margin-top: 15px; border-top: 1px solid rgba(197, 160, 89, 0.1); padding-top: 10px; font-family: 'Amiri'; }
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
+        :root { --bg: #05040a; --gold: #c5a059; }
+        body { background: var(--bg); color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        .qa-container { background: rgba(26, 20, 45, 0.7); max-width: 600px; margin: 30px auto; padding: 40px; border: 1px solid var(--gold); backdrop-filter: blur(10px); }
+        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: transparent; color: white; border: 1px solid var(--gold); cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .option-btn:hover { background: var(--gold); color: black; }
+        h1 { font-family: 'Amiri'; color: var(--gold); font-size: 35px; }
     </style>
 </head>
 <body>
-    <header style="text-align: center; padding: 40px;">
-        <h1 style="color: #c5a059; font-family: 'Amiri'; font-size: 45px;">بنك الأسئلة الدينية</h1>
-        <p>اضغط على السؤال لإظهار الإجابة</p>
-    </header>
-
-    <div class="q-grid" id="qContainer"></div>
-
+    <a href="index.html" style="color: var(--gold); text-decoration: none;">← العودة</a>
+    <div class="qa-container">
+        <h1>اختبر معلوماتك الدينية</h1>
+        <div style="color: var(--gold); margin-bottom: 10px;">السؤال: <span id="q-num">1</span> / 120</div>
+        <h2 id="question-text" style="font-family: 'Amiri';">جاري التحميل...</h2>
+        <div id="options-container"></div>
+        <div id="feedback" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
     <script>
-        const qs = [
-            {q: "من هو أول من أسلم من الرجال؟", a: "أبو بكر الصديق رضي الله عنه"},
-            {q: "كم عدد سور القرآن الكريم؟", a: "114 سورة"},
-            {q: "ما هي أطول سورة في القرآن؟", a: "سورة البقرة"},
-            // ... سأضع لك الـ 120 سؤال كاملة في ملف خارجي أو نكررها هنا
+        const quizData = [
+            { q: "من هو النبي الذي لُقب بـ 'أبو الأنبياء'؟", o: ["نوح", "إبراهيم", "آدم"], c: 1 },
+            { q: "ما هي السورة التي تسمى 'عروس القرآن'؟", o: ["يس", "الرحمن", "البقرة"], c: 1 },
+            { q: "كم عدد أجزاء القرآن الكريم؟", o: ["30", "60", "114"], c: 0 },
+            { q: "من هو أول من أسلم من الرجال؟", o: ["عمر بن الخطاب", "علي بن أبي طالب", "أبو بكر الصديق"], c: 2 }
         ];
-        
-        // تكرار تجريبي حتى نكمل الـ 120
-        const fullQs = Array(40).fill(qs).flat().slice(0, 120);
-
-        document.getElementById('qContainer').innerHTML = fullQs.map((item, i) => `
-            <div class="q-card" onclick="this.querySelector('.answer').style.display='block'">
-                <b>السؤال ${i+1}: ${item.q}</b>
-                <div class="answer">الإجابة: ${item.a}</div>
-            </div>
-        `).join('');
+        let currentIdx = 0; let score = 0;
+        function loadQuestion() {
+            const q = quizData[currentIdx % quizData.length];
+            document.getElementById('q-num').innerText = currentIdx + 1;
+            document.getElementById('question-text').innerText = q.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = ""; document.getElementById('feedback').innerText = "";
+            q.o.forEach((opt, i) => {
+                const btn = document.createElement('button'); btn.className = 'option-btn';
+                btn.innerText = opt; btn.onclick = () => check(i, q.c); container.appendChild(btn);
+            });
+        }
+        function check(sel, cor) {
+            const f = document.getElementById('feedback');
+            if(sel === cor) { f.innerText = "إجابة صحيحة! ✨"; f.style.color = "#4CAF50"; score++; }
+            else { f.innerText = "إجابة خاطئة ❌"; f.style.color = "#f44336"; }
+            setTimeout(() => { currentIdx++; if(currentIdx < 120) loadQuestion(); else alert("انتهى الاختبار! نتيجتك: " + score); }, 1500);
+        }
+        loadQuestion();
     </script>
 </body>
 </html>
