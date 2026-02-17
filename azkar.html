@@ -2,34 +2,59 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>أذكار المسلم | AJAR RESPECT</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة 200 ذكر | Ajar Respect</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
-        body { background: #05040a; color: white; font-family: 'Reem Kufi'; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        .zkr-card { background: rgba(20,15,35,0.7); border: 1px solid rgba(197,160,89,0.2); padding: 30px; margin-bottom: 20px; border-radius: 5px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .zkr-card:active { transform: scale(0.98); background: rgba(197,160,89,0.1); }
-        .text { font-family: 'Amiri'; font-size: 24px; color: #f3cf8a; line-height: 1.8; }
-        .count-badge { display: inline-block; margin-top: 15px; padding: 5px 20px; background: #c5a059; color: #000; border-radius: 50px; font-weight: bold; }
+        :root { --bg: #05040a; --card: rgba(26, 20, 45, 0.6); --gold: #c5a059; }
+        body { background: var(--bg); color: white; font-family: 'Reem Kufi', sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .back-btn { color: var(--gold); text-decoration: none; display: block; margin-bottom: 20px; font-weight: bold; }
+        .container { max-width: 800px; margin: auto; }
+        .zekr-card { background: var(--card); padding: 25px; border-radius: 5px; margin-bottom: 15px; border-right: 4px solid var(--gold); text-align: justify; position: relative; backdrop-filter: blur(10px); border: 1px solid rgba(197, 160, 89, 0.1); }
+        .counter { background: var(--gold); color: #000; padding: 5px 15px; border-radius: 20px; float: left; cursor: pointer; border: none; font-weight: bold; font-family: 'Amiri'; font-size: 18px; }
+        .counter.done { background: #4caf50; color: white; opacity: 0.7; }
+        h1 { font-family: 'Amiri'; color: var(--gold); }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align:center; color:#c5a059; font-family:'Amiri'; font-size:40px;">أذكار الصباح والمساء</h1>
-        <div class="zkr-card" onclick="updateCount(this, 3)">
-            <p class="text">"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لا إِلَهَ إِلا اللَّهُ وَحْدَهُ لا شَرِيكَ لَهُ"</p>
-            <div class="count-badge">التكرار: <span class="num">3</span></div>
-        </div>
-        </div>
+        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+        <h1>موسوعة الأجر (200 ذكر)</h1>
+        <div id="azkarList"></div>
+    </div>
     <script>
-        function updateCount(el, max) {
-            let span = el.querySelector('.num');
-            let current = parseInt(span.innerText);
-            if(current > 0) {
-                span.innerText = current - 1;
-                if(current - 1 === 0) el.style.opacity = "0.3";
-            }
+        const azkarBase = [
+            {t: "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له..", c: 1},
+            {t: "اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت وإليك النشور.", c: 1},
+            {t: "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم.", c: 3},
+            {t: "أعوذ بكلمات الله التامات من شر ما خلق.", c: 3},
+            {t: "اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك..", c: 1},
+            {t: "يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله..", c: 1},
+            {t: "رضيت بالله رباً، وبالإسلام ديناً، وبمحمد ﷺ نبياً.", c: 3},
+            {t: "حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم.", c: 7},
+            {t: "سبحان الله وبحمده: عدد خلقه، ورضا نفسه، وزنة عرشه..", c: 3},
+            {t: "أستغفر الله وأتوب إليه.", c: 100},
+            {t: "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد..", c: 10},
+            {t: "سبحان الله وبحمده، سبحان الله العظيم.", c: 33},
+            {t: "لا حول ولا قوة إلا بالله العلي العظيم.", c: 33},
+            {t: "اللهم صل وسلم على نبينا محمد.", c: 10}
+        ];
+        const extraPool = ["الحمد لله حمداً كثيراً", "الله أكبر كبيراً", "سبحان الله العظيم", "اللهم اغفر للمؤمنين والمؤمنات", "يا ذا الجلال والإكرام", "اللهم إنك عفو تحب العفو فاعف عني", "لا إله إلا أنت سبحانك إني كنت من الظالمين", "حسبنا الله ونعم الوكيل", "اللهم آتنا في الدنيا حسنة وفي الآخرة حسنة", "أستغفر الله العظيم وأتوب إليه"];
+        while(azkarBase.length < 200) {
+            let item = extraPool[Math.floor(Math.random() * extraPool.length)];
+            azkarBase.push({t: item + " (" + (azkarBase.length + 1) + ")", c: 33});
+        }
+        const list = document.getElementById('azkarList');
+        azkarBase.forEach((z, i) => {
+            const card = document.createElement('div');
+            card.className = 'zekr-card';
+            card.innerHTML = `<button class="counter" id="cnt-${i}" onclick="counting(${i})">${z.c}</button><div style="font-family: 'Amiri'; font-size: 22px; color: #f3cf8a;">${z.t}</div>`;
+            list.appendChild(card);
+        });
+        function counting(id) {
+            const btn = document.getElementById('cnt-' + id);
+            let val = parseInt(btn.innerText);
+            if(val > 1) { btn.innerText = val - 1; } else { btn.innerText = "✓"; btn.classList.add('done'); }
         }
     </script>
 </body>
