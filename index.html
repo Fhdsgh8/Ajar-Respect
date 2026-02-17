@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajar Respect | الواجهة الرئيسية</title>
+    <title>Ajar Respect | الواجهة الملكية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
@@ -18,61 +18,72 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        .logo-area { text-align: center; margin-bottom: 40px; margin-top: 20px; }
-        .logo-area h1 { font-family: 'Amiri'; color: var(--gold); font-size: 45px; margin: 0; text-shadow: 0 0 15px rgba(197, 160, 89, 0.5); }
-        .logo-area p { opacity: 0.7; font-size: 14px; letter-spacing: 2px; }
+        .logo-area { text-align: center; margin-bottom: 30px; margin-top: 10px; }
+        .logo-area h1 { font-family: 'Amiri'; color: var(--gold); font-size: 42px; margin: 0; text-shadow: 0 0 15px rgba(197, 160, 89, 0.4); }
+        .logo-area p { opacity: 0.6; font-size: 13px; letter-spacing: 1px; margin-top: 5px; }
 
-        /* نظام الشبكة: عمودين متساويين */
+        /* الشبكة المرتبة */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr; /* عمودين */
-            gap: 15px; /* المسافة بين الأزرار */
+            gap: 12px; 
             width: 100%;
             max-width: 500px;
         }
 
+        /* تنسيق الأزرار العامة */
         .menu-item {
             background: var(--card);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            border-radius: 15px;
-            padding: 25px 10px;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            border-radius: 12px;
+            padding: 25px 5px;
             text-decoration: none;
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
             transition: 0.3s all ease;
         }
 
-        .menu-item i { color: var(--gold); font-size: 28px; margin-bottom: 12px; }
+        .menu-item i { color: var(--gold); font-size: 26px; margin-bottom: 12px; }
         .menu-item span { font-size: 16px; font-weight: bold; }
 
-        .menu-item:active {
-            transform: scale(0.95);
-            background: var(--gold);
-            color: black;
+        /* زر القرآن في الأعلى (أول زر وعرض كامل) */
+        .quran-btn {
+            grid-column: span 2; /* يمتد ليشغل العمودين */
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #110c22 0%, #1a1432 100%);
+            border: 1px solid var(--gold);
+            padding: 35px;
+        }
+        .quran-btn i { font-size: 38px; text-shadow: 0 0 15px var(--gold); }
+        .quran-btn span { font-size: 22px; font-family: 'Amiri'; letter-spacing: 1px; }
+
+        /* تأثير الضغط */
+        .menu-item:active { 
+            transform: scale(0.96); 
+            background: var(--gold); 
+            color: black; 
         }
         .menu-item:active i { color: black; }
 
-        /* زر مميز للمصحف أو الأقسام الكبيرة */
-        .full-width {
-            grid-column: span 2; /* يأخذ العرض كاملاً */
-            margin-top: 10px;
-            background: linear-gradient(45deg, #110c22, #1a1432);
-            border-color: var(--gold);
-        }
+        footer { margin-top: 50px; opacity: 0.4; font-size: 11px; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="logo-area">
         <h1>AJAR RESPECT</h1>
-        <p>موسوعة المسلم الفاخرة</p>
+        <p>موسوعة المسلم الشاملة</p>
     </div>
 
     <div class="menu-grid">
+        <a href="quran.html" class="menu-item quran-btn">
+            <i class="fa-solid fa-quran"></i>
+            <span>القرآن الكريم</span>
+        </a>
+
         <a href="azkar.html" class="menu-item">
             <i class="fa-solid fa-bead-tree"></i>
             <span>الأذكار</span>
@@ -83,12 +94,12 @@
             <span>سؤال وجواب</span>
         </a>
 
-        <a href="sharia.html" class="menu-item">
+        <a href="names.html" class="menu-item">
             <i class="fa-solid fa-gem"></i>
             <span>أسماء الله</span>
         </a>
 
-        <a href="sharia.html" class="menu-item">
+        <a href="sunnah.html" class="menu-item">
             <i class="fa-solid fa-shield-halved"></i>
             <span>كنوز السنة</span>
         </a>
@@ -103,23 +114,18 @@
             <span>روائع التابعين</span>
         </a>
 
-        <a href="history_fiqh.html" class="menu-item">
+        <a href="history.html" class="menu-item">
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>حدث في رمضان</span>
         </a>
 
-        <a href="reading.html" class="menu-item">
+        <a href="books.html" class="menu-item">
             <i class="fa-solid fa-book-open"></i>
             <span>ملخصات الكتب</span>
         </a>
-
-        <a href="quran.html" class="menu-item full-width">
-            <i class="fa-solid fa-quran"></i>
-            <span>القرآن الكريم</span>
-        </a>
     </div>
 
-    <footer style="margin-top: 50px; opacity: 0.5; font-size: 12px;">
+    <footer>
         &copy; 2026 AJAR RESPECT - جميع الحقوق محفوظة
     </footer>
 
