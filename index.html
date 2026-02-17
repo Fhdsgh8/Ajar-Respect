@@ -348,7 +348,7 @@
         }
         .cal-day.ramadan-1 {
             background: rgba(212,175,55,0.3);
-            border-color: #D4AF37;
+            border: 2px solid #D4AF37;
         }
 
         /* مخطط القرآن */
@@ -479,6 +479,16 @@
         }
         .correct-icon { color: #2ecc71; }
         .wrong-icon { color: #e74c3c; }
+
+        /* المدخلات */
+        input, select {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #D4AF37;
+            color: white;
+            padding: 12px;
+            border-radius: 30px;
+            margin: 5px;
+        }
 
         /* responsive */
         @media (max-width: 768px) {
@@ -791,11 +801,9 @@
 
 <script>
     // ==================== المتغيرات العامة ====================
-    let currentPage = 'home-page';
     let userPoints = 0;
     let userLevel = 1;
     let completedChallenges = [];
-    let achievements = [];
     let sebhaCount = {
         today: 0,
         week: 0,
@@ -909,27 +917,108 @@
     
     // ==================== 30 إنجاز ====================
     const achievementsList = [
-        { id: 1, name: 'المسبحة الذهبية', desc: 'إكمال 1000 تسبيحة', condition: (s) => s.total >= 1000 },
-        { id: 2, name: 'القارئ المثابر', desc: 'قراءة 10 أجزاء', condition: (q) => q.filter(j => j).length >= 10 },
-        { id: 3, name: 'المتنافس', desc: 'الحصول على 1000 نقطة', condition: () => userPoints >= 1000 },
-        { id: 4, name: 'صديق القرآن', desc: 'ختم القرآن كاملاً', condition: (q) => q.filter(j => j).length >= 30 },
-        { id: 5, name: 'البطل', desc: 'إكمال 50 تحدي', condition: () => completedChallenges.length >= 50 },
-        { id: 6, name: 'الأسطورة', desc: 'إكمال 100 تحدي', condition: () => completedChallenges.length >= 100 },
-        { id: 7, name: 'المليونير', desc: 'الحصول على 5000 نقطة', condition: () => userPoints >= 5000 },
-        { id: 8, name: 'الذاكر', desc: '5000 تسبيحة', condition: (s) => s.total >= 5000 },
-        { id: 9, name: 'حافظ القرآن', desc: 'حفظ 5 أجزاء', condition: () => false },
-        { id: 10, name: 'الداعية', desc: 'دعوة 10 أشخاص', condition: () => false }
+        { id: 1, name: 'المسبحة الذهبية', desc: 'إكمال 1000 تسبيحة', earned: false },
+        { id: 2, name: 'القارئ المثابر', desc: 'قراءة 10 أجزاء', earned: false },
+        { id: 3, name: 'المتنافس', desc: 'الحصول على 1000 نقطة', earned: false },
+        { id: 4, name: 'صديق القرآن', desc: 'ختم القرآن كاملاً', earned: false },
+        { id: 5, name: 'البطل', desc: 'إكمال 50 تحدي', earned: false },
+        { id: 6, name: 'الأسطورة', desc: 'إكمال 100 تحدي', earned: false },
+        { id: 7, name: 'المليونير', desc: 'الحصول على 5000 نقطة', earned: false },
+        { id: 8, name: 'الذاكر', desc: '5000 تسبيحة', earned: false },
+        { id: 9, name: 'الصوام القوام', desc: 'صيام 20 يوماً', earned: false },
+        { id: 10, name: 'قارئ الفجر', desc: '30 صلاة فجر في المسجد', earned: false }
     ];
     
     // ==================== 200 سؤال للمسابقة ====================
     const quizQuestions = [];
     for (let i = 1; i <= 200; i++) {
+        const questions = [
+            { q: 'ما هو الركن الأول من أركان الإسلام؟', opts: ['الصلاة', 'الصوم', 'الشهادة', 'الزكاة'], correct: 2 },
+            { q: 'كم عدد أجزاء القرآن الكريم؟', opts: ['30 جزء', '25 جزء', '60 جزء', '20 جزء'], correct: 0 },
+            { q: 'ما هي السورة التي تسمى عروس القرآن؟', opts: ['يس', 'الرحمن', 'الملك', 'الواقعة'], correct: 1 },
+            { q: 'في أي شهر نزل القرآن؟', opts: ['رمضان', 'شعبان', 'رجب', 'محرم'], correct: 0 },
+            { q: 'من هو خاتم الأنبياء؟', opts: ['عيسى', 'موسى', 'محمد', 'إبراهيم'], correct: 2 },
+            { q: 'ما هي أعظم سورة في القرآن؟', opts: ['البقرة', 'آل عمران', 'الفاتحة', 'الإخلاص'], correct: 2 },
+            { q: 'كم مرة ذكرت الصلاة في القرآن؟', opts: ['50', '67', '100', '33'], correct: 1 },
+            { q: 'ما هي السورة التي تبدأ بـ "الم"؟', opts: ['البقرة', 'يس', 'ص', 'ق'], correct: 0 },
+            { q: 'من أول الأنبياء؟', opts: ['نوح', 'آدم', 'إبراهيم', 'موسى'], correct: 1 },
+            { q: 'ما هي السورة التي تعدل ثلث القرآن؟', opts: ['الفاتحة', 'يس', 'الملك', 'الإخلاص'], correct: 3 }
+        ];
+        const q = questions[i % questions.length];
         quizQuestions.push({
-            question: `السؤال ${i}: ما هو الركن الأول من أركان الإسلام؟`,
-            options: ['الصلاة', 'الصوم', 'الشهادة', 'الزكاة'],
-            correct: 2
+            question: q.q,
+            options: q.opts,
+            correct: q.correct
         });
     }
+    
+    // ==================== التواقيت ====================
+    let pTimes = {
+        Fajr: '04:30',
+        Dhuhr: '12:15',
+        Asr: '15:45',
+        Maghrib: '18:30',
+        Isha: '20:00'
+    };
+    
+    // تحديث عداد الصلاة
+    setInterval(() => {
+        const now = new Date();
+        const prayers = [
+            { name: 'الفجر', time: pTimes.Fajr },
+            { name: 'الظهر', time: pTimes.Dhuhr },
+            { name: 'العصر', time: pTimes.Asr },
+            { name: 'المغرب', time: pTimes.Maghrib },
+            { name: 'العشاء', time: pTimes.Isha }
+        ];
+        
+        let nextPrayer = null;
+        for (let p of prayers) {
+            const [h, m] = p.time.split(':');
+            const prayerTime = new Date();
+            prayerTime.setHours(parseInt(h), parseInt(m), 0);
+            
+            if (prayerTime > now) {
+                nextPrayer = p;
+                break;
+            }
+        }
+        
+        if (!nextPrayer) {
+            const [h, m] = prayers[0].time.split(':');
+            const fajr = new Date(now.getTime() + 86400000);
+            fajr.setHours(parseInt(h), parseInt(m), 0);
+            nextPrayer = { name: 'الفجر', time: fajr };
+        }
+        
+        const diff = nextPrayer.time - now;
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        
+        document.getElementById('next-prayer').innerText = `الصلاة القادمة: ${nextPrayer.name}`;
+        document.getElementById('prayer-timer').innerText = 
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+    
+    // تحديث عداد الإفطار
+    setInterval(() => {
+        const now = new Date();
+        const iftar = new Date();
+        iftar.setHours(18, 30, 0); // وقت المغرب
+        
+        if (now > iftar) {
+            iftar.setDate(iftar.getDate() + 1);
+        }
+        
+        const diff = iftar - now;
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        
+        document.getElementById('iftar-timer').innerText = 
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
     
     // ==================== وظائف الصفحات ====================
     function openPage(pageId) {
@@ -946,7 +1035,14 @@
         if (pageId === 'azkar-page') loadAzkar();
         if (pageId === 'hadith-page') fetchHadith();
         if (pageId === 'stories-page') showStory();
+        if (pageId === 'prayer-page') getPrayerTimes();
     }
+    
+    // ==================== التاريخ الهجري ====================
+    function updateHijriDate() {
+        document.getElementById('hijri-date').innerText = '1 رمضان 1445 هـ';
+    }
+    updateHijriDate();
     
     // ==================== المسبحة ====================
     function showSebhaTab(tab) {
@@ -974,7 +1070,6 @@
             document.getElementById('sebha-dhikr').innerText = dhikrs[Math.floor(Math.random() * dhikrs.length)];
         }
         
-        updateChallengeProgress(2, 1); // تحدي التسبيح
         saveData();
     }
     
@@ -988,18 +1083,6 @@
         document.getElementById('sebha-today').innerText = sebhaCount.today;
         document.getElementById('sebha-week').innerText = sebhaCount.week;
         document.getElementById('sebha-total').innerText = sebhaCount.total;
-        
-        const achievementsDiv = document.getElementById('sebha-achievements');
-        achievementsDiv.innerHTML = '';
-        achievementsList.slice(0, 5).forEach(a => {
-            const earned = a.condition(sebhaCount);
-            achievementsDiv.innerHTML += `
-                <div style="margin: 10px 0; padding: 10px; background: rgba(212,175,55,0.1); border-radius: 10px;">
-                    <i class="fas ${earned ? 'fa-check-circle' : 'fa-circle'}" style="color: ${earned ? '#2ecc71' : '#e74c3c'};"></i>
-                    ${a.name} - ${a.desc}
-                </div>
-            `;
-        });
     }
     
     // ==================== التحديات ====================
@@ -1061,10 +1144,6 @@
         }
     }
     
-    function updateChallengeProgress(challengeId, increment) {
-        // هذا للتحديات التدريجية
-    }
-    
     function loadLeaderboard() {
         const list = document.getElementById('leaderboard-list');
         const users = [
@@ -1084,7 +1163,7 @@
         users.forEach((u, i) => {
             list.innerHTML += `
                 <div class="leaderboard-item">
-                    <div class="rank rank-${i+1}">${i+1}</div>
+                    <div class="rank ${i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : ''}">${i+1}</div>
                     <div style="flex: 1;">${u.name} ${u.name === 'أنت' ? '(أنت)' : ''}</div>
                     <div style="color: #D4AF37;">${u.points} نقطة</div>
                     <div style="background: rgba(212,175,55,0.2); padding: 5px 10px; border-radius: 20px;">مستوى ${u.level}</div>
@@ -1097,17 +1176,19 @@
         const list = document.getElementById('achievements-list');
         list.innerHTML = '';
         
+        // تحديث الإنجازات
+        achievementsList[0].earned = sebhaCount.total >= 1000;
+        achievementsList[2].earned = userPoints >= 1000;
+        achievementsList[4].earned = completedChallenges.length >= 50;
+        achievementsList[5].earned = completedChallenges.length >= 100;
+        achievementsList[6].earned = userPoints >= 5000;
+        achievementsList[7].earned = sebhaCount.total >= 5000;
+        
         achievementsList.forEach(a => {
-            const earned = a.condition(sebhaCount) || (a.id === 3 && userPoints >= 1000) || 
-                          (a.id === 5 && completedChallenges.length >= 50) ||
-                          (a.id === 6 && completedChallenges.length >= 100) ||
-                          (a.id === 7 && userPoints >= 5000) ||
-                          (a.id === 8 && sebhaCount.total >= 5000);
-            
             list.innerHTML += `
-                <div class="info-card" style="border-right-color: ${earned ? '#2ecc71' : '#e74c3c'};">
+                <div class="info-card" style="border-right-color: ${a.earned ? '#2ecc71' : '#e74c3c'};">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <i class="fas ${earned ? 'fa-trophy' : 'fa-lock'}" style="color: ${earned ? '#D4AF37' : '#e74c3c'};"></i>
+                        <i class="fas ${a.earned ? 'fa-trophy' : 'fa-lock'}" style="color: ${a.earned ? '#D4AF37' : '#e74c3c'};"></i>
                         <div>
                             <h4>${a.name}</h4>
                             <p>${a.desc}</p>
@@ -1155,7 +1236,7 @@
         quranList.innerHTML = '';
         qariList.forEach((q, i) => {
             quranList.innerHTML += `
-                <div class="audio-item" onclick="playAudio('${q.surah}', '${q.name}')">
+                <div class="audio-item" onclick="playAudio('سورة ${q.surah}', '${q.name}')">
                     <div class="audio-icon"><i class="fas fa-play"></i></div>
                     <div>
                         <div style="font-weight: bold;">سورة ${q.surah}</div>
@@ -1263,7 +1344,7 @@
             
             if (timeLeft <= 0) {
                 clearInterval(quizTimerInterval);
-                answerQuestion(-1); // لم يجب
+                answerQuestion(-1);
             }
         }, 1000);
     }
@@ -1278,7 +1359,7 @@
             question: q.question,
             userAnswer: selectedIndex === -1 ? 'لم يجب' : q.options[selectedIndex],
             correctAnswer: q.options[q.correct],
-            isCorrect: selectedIndex === q.correct
+            isCorrect: isCorrect
         });
         
         if (isCorrect) {
@@ -1286,7 +1367,7 @@
         }
         
         currentQuizIndex++;
-        setTimeout(() => loadQuizQuestion(), 500);
+        setTimeout(() => loadQuizQuestion(), 300);
     }
     
     function showQuizResults() {
@@ -1350,30 +1431,71 @@
         document.getElementById('compass-arrow').style.transform = `translate(-50%, -100%) rotate(${qibla}deg)`;
         
         let direction = '';
-        if (qibla >= 0 && qibla < 45) direction = 'الشرق';
-        else if (qibla >= 45 && qibla < 135) direction = 'الجنوب الشرقي';
-        else if (qibla >= 135 && qibla < 225) direction = 'الجنوب الغربي';
-        else if (qibla >= 225 && qibla < 315) direction = 'الشمال الغربي';
-        else direction = 'الشمال الشرقي';
+        if (qibla >= 337.5 || qibla < 22.5) direction = 'الشمال';
+        else if (qibla >= 22.5 && qibla < 67.5) direction = 'الشمال الشرقي';
+        else if (qibla >= 67.5 && qibla < 112.5) direction = 'الشرق';
+        else if (qibla >= 112.5 && qibla < 157.5) direction = 'الجنوب الشرقي';
+        else if (qibla >= 157.5 && qibla < 202.5) direction = 'الجنوب';
+        else if (qibla >= 202.5 && qibla < 247.5) direction = 'الجنوب الغربي';
+        else if (qibla >= 247.5 && qibla < 292.5) direction = 'الغرب';
+        else if (qibla >= 292.5 && qibla < 337.5) direction = 'الشمال الغربي';
         
         document.getElementById('qibla-direction').innerHTML = `اتجاه القبلة: <strong>${direction}</strong> (${qibla.toFixed(2)}°)`;
     }
     
+    // ==================== مواقيت الصلاة ====================
+    async function getPrayerTimes() {
+        const city = document.getElementById('city').value || 'Mecca';
+        const country = document.getElementById('country').value || 'Saudi Arabia';
+        
+        document.getElementById('prayer-times').innerHTML = '<p>جاري التحميل...</p>';
+        
+        try {
+            const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=4`);
+            const data = await response.json();
+            
+            if (data.code === 200) {
+                pTimes = data.data.timings;
+                document.getElementById('prayer-times').innerHTML = `
+                    <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(212,175,55,0.3);">
+                        <span>الفجر</span> <span style="color: #D4AF37;">${pTimes.Fajr}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(212,175,55,0.3);">
+                        <span>الظهر</span> <span style="color: #D4AF37;">${pTimes.Dhuhr}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(212,175,55,0.3);">
+                        <span>العصر</span> <span style="color: #D4AF37;">${pTimes.Asr}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(212,175,55,0.3);">
+                        <span>المغرب</span> <span style="color: #D4AF37;">${pTimes.Maghrib}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px;">
+                        <span>العشاء</span> <span style="color: #D4AF37;">${pTimes.Isha}</span>
+                    </div>
+                `;
+            } else {
+                document.getElementById('prayer-times').innerHTML = '<p>حدث خطأ في تحميل المواقيت</p>';
+            }
+        } catch (error) {
+            document.getElementById('prayer-times').innerHTML = '<p>حدث خطأ في تحميل المواقيت</p>';
+        }
+    }
+    
     // ==================== تقويم رمضان ====================
     function updateRamadanData() {
-        const today = new Date().getDate();
+        // تقويم رمضان (30 يوم)
         const calendar = document.getElementById('ramadan-calendar');
         calendar.innerHTML = '';
         
         for (let i = 1; i <= 30; i++) {
             calendar.innerHTML += `
-                <div class="cal-day ${i === 1 ? 'ramadan-1' : ''} ${i === today ? 'today' : ''}">
+                <div class="cal-day ${i === 1 ? 'ramadan-1' : ''}">
                     ${i}<br><small>رمضان</small>
                 </div>
             `;
         }
         
-        // وصفات الطعام (30 وصفة)
+        // 30 وصفة مختلفة
         const recipes = [
             'شوربة العدس بالخضار',
             'سمبوسك بالجبنة والزيتون',
@@ -1390,4 +1512,180 @@
             'برياني لحم',
             'صيادية سمك',
             'ملوخية بالأرانب',
-            'فاصوليا بيضاء
+            'فاصوليا بيضاء باللحم',
+            'بامية باللحم',
+            'محشي كوسا',
+            'محشي باذنجان',
+            'دجاج محمر مع الأرز',
+            'كفتة بالطحينة',
+            'شاورما دجاج',
+            'مسخن فلسطيني',
+            'مصقعة',
+            'مجدرة',
+            'حمص بزيت',
+            'متبل',
+            'بابا غنوج',
+            'ورق دوالي',
+            'كبة مقلية'
+        ];
+        
+        const today = new Date().getDate() % 30;
+        document.getElementById('recipe-of-day').innerText = recipes[today];
+        
+        // 30 دعاء مختلف
+        const duas = [
+            'اللهم لك صمت وعلى رزقك أفطرت',
+            'ذهب الظمأ وابتلت العروق وثبت الأجر إن شاء الله',
+            'اللهم إني أسألك برحمتك التي وسعت كل شيء أن تغفر لي',
+            'الحمد لله الذي أعانني فصمت ورزقني فأفطرت',
+            'اللهم تقبل صيامنا وقيامنا',
+            'اللهم اجعلنا من عتقائك من النار',
+            'اللهم بلغنا ليلة القدر',
+            'اللهم اجعل صيامنا صيام الصائمين',
+            'اللهم تقبل دعائنا',
+            'اللهم اغفر لنا ذنوبنا'
+        ];
+        document.getElementById('dua-of-day').innerText = duas[today % duas.length];
+    }
+    
+    // ==================== مخطط ختم القرآن ====================
+    let quranProgress = {
+        pages: 0,
+        juz: Array(30).fill(false)
+    };
+    
+    function loadQuranProgress() {
+        const saved = localStorage.getItem('quranProgress');
+        if (saved) {
+            quranProgress = JSON.parse(saved);
+        }
+        
+        updateQuranDisplay();
+    }
+    
+    function updateQuranDisplay() {
+        const completedJuz = quranProgress.juz.filter(j => j).length;
+        quranProgress.pages = completedJuz * 20;
+        const percent = ((completedJuz / 30) * 100).toFixed(1);
+        
+        document.getElementById('completed-pages').innerText = quranProgress.pages;
+        document.getElementById('completed-juz').innerText = `${completedJuz}/30`;
+        document.getElementById('completion-percent').innerText = `${percent}%`;
+        
+        const grid = document.getElementById('juz-grid');
+        grid.innerHTML = '';
+        for (let i = 1; i <= 30; i++) {
+            grid.innerHTML += `
+                <div class="juz-box ${quranProgress.juz[i-1] ? 'completed' : ''}" onclick="toggleJuz(${i})">
+                    ${i}
+                </div>
+            `;
+        }
+    }
+    
+    function toggleJuz(num) {
+        quranProgress.juz[num-1] = !quranProgress.juz[num-1];
+        updateQuranDisplay();
+        saveQuranProgress();
+    }
+    
+    function resetQuranProgress() {
+        if (confirm('هل أنت متأكد من إعادة تعيين التقدم؟')) {
+            quranProgress.juz = Array(30).fill(false);
+            updateQuranDisplay();
+            saveQuranProgress();
+        }
+    }
+    
+    function saveQuranProgress() {
+        localStorage.setItem('quranProgress', JSON.stringify(quranProgress));
+    }
+    
+    // ==================== الأذكار ====================
+    function loadAzkar() {
+        const list = document.getElementById('azkar-list');
+        list.innerHTML = '';
+        
+        const azkar = [
+            'سبحان الله وبحمده',
+            'سبحان الله العظيم',
+            'أستغفر الله',
+            'لا إله إلا الله',
+            'الله أكبر',
+            'الحمد لله',
+            'لا حول ولا قوة إلا بالله'
+        ];
+        
+        for (let i = 1; i <= 20; i++) {
+            list.innerHTML += `
+                <div class="info-card" style="display: flex; justify-content: space-between;">
+                    <span>ذكر ${i}: ${azkar[i % azkar.length]}</span>
+                    <button class="btn" onclick="this.innerText = Math.max(0, parseInt(this.innerText)-1)" style="padding: 5px 20px;">33</button>
+                </div>
+            `;
+        }
+    }
+    
+    // ==================== الأحاديث ====================
+    function fetchHadith() {
+        const hadiths = [
+            '"إنما الأعمال بالنيات"',
+            '"خيركم من تعلم القرآن وعلمه"',
+            '"المسلم من سلم المسلمون من لسانه ويده"',
+            '"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه"',
+            '"تبسمك في وجه أخيك صدقة"',
+            '"الراحمون يرحمهم الرحمن"',
+            '"الدال على الخير كفاعله"',
+            '"من نفس عن مؤمن كربة نفس الله عنه كربة"'
+        ];
+        
+        document.getElementById('hadith-text').innerText = hadiths[Math.floor(Math.random() * hadiths.length)];
+    }
+    
+    // ==================== القصص ====================
+    function showStory() {
+        const select = document.getElementById('story-select');
+        const content = document.getElementById('story-content');
+        
+        const stories = {
+            adam: 'قصة آدم عليه السلام: خلقه الله من طين، ونفخ فيه من روحه، وأسجد له الملائكة، وعلمه الأسماء كلها...',
+            noah: 'قصة نوح عليه السلام: أول الرسل، دعا قومه 950 سنة، فكذبوه، فأمره الله ببناء السفينة...',
+            ibrahim: 'قصة إبراهيم عليه السلام: خليل الله، حطم الأصنام، ألقي في النار فكانت برداً وسلاماً...',
+            moussa: 'قصة موسى عليه السلام: كليم الله، أرسل لفرعون، شق له البحر، أنزلت عليه التوراة...',
+            mohammad: 'قصة محمد ﷺ: خاتم الأنبياء، ولد في مكة، نزل عليه القرآن، هاجر إلى المدينة...',
+            yousuf: 'قصة يوسف عليه السلام: ابن يعقوب، رأى رؤيا، ألقي في البئر، باعوه في مصر، أصبح عزيز مصر...',
+            ayoub: 'قصة أيوب عليه السلام: ابتلاه الله بفقد المال والأهل والولد، فصبر فآتاه الله خيراً منها...'
+        };
+        
+        content.innerText = stories[select.value];
+    }
+    
+    // ==================== حفظ البيانات ====================
+    function saveData() {
+        const data = {
+            userPoints,
+            completedChallenges,
+            sebhaCount
+        };
+        localStorage.setItem('appData', JSON.stringify(data));
+    }
+    
+    function loadData() {
+        const saved = localStorage.getItem('appData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            userPoints = data.userPoints || 0;
+            completedChallenges = data.completedChallenges || [];
+            sebhaCount = data.sebhaCount || { today: 0, week: 0, total: 0 };
+        }
+    }
+    
+    // تحميل البيانات عند البدء
+    loadData();
+    loadQuranProgress();
+    getPrayerTimes();
+    fetchHadith();
+    updateRamadanData();
+</script>
+</body>
+</html>
