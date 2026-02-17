@@ -5,33 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>القرآن الكريم بالكامل | Ajar Respect</title>
     <style>
-        /* ضبط الخلفية لمنع أي بياض كما في الصور السابقة */
+        /* ضبط الخلفية لتكون متناسقة مع الواجهة الرمضانية */
         body, html { 
-            background-color: #0f0a1e; 
+            background-color: #05040a; 
             margin: 0; 
             padding: 0; 
             height: 100%; 
             overflow: hidden; 
             font-family: 'Segoe UI', Tahoma, sans-serif;
         }
+        
+        /* تعديل الهيدر ليصبح باللون الذهبي والأسود الفخم كما طلبت */
         .header-nav {
-            background: #1a142d;
+            background: #0a0a14;
             padding: 15px;
             text-align: center;
-            border-bottom: 2px solid #a37cf0;
+            border-bottom: 2px solid #c5a059; /* تغيير البنفسجي لذهبي */
         }
+        
         .header-nav a {
-            color: #a37cf0;
+            color: #c5a059; /* تغيير لون الخط لذهبي */
             text-decoration: none;
             font-weight: bold;
             font-size: 18px;
+            transition: 0.3s;
         }
-        /* ضبط الإطار ليظهر المحتوى العربي بوضوح */
+
+        .header-nav a:hover {
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+        }
+
+        /* ضبط الإطار */
         iframe {
             width: 100%;
             height: calc(100vh - 60px);
             border: none;
-            background: #0f0a1e;
+            background: #05040a;
         }
     </style>
 </head>
