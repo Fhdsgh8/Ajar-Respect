@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الرقائق | AJAR RESPECT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
+        
+        :root { --bg: #05040a; --gold: #c5a059; --card: rgba(25, 20, 45, 0.9); }
+
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0; padding: 20px;
+        }
+
+        .header { text-align: center; padding: 40px 0; }
+        .header h1 { font-family: 'Amiri'; color: var(--gold); font-size: 40px; margin: 0; }
+        .back-btn { position: fixed; top: 20px; right: 20px; color: var(--gold); text-decoration: none; z-index: 100; }
+
+        .search-container { max-width: 600px; margin: 0 auto 30px; }
+        #searchBar { 
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold); 
+            background: rgba(255,255,255,0.05); color: white; text-align: center;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .book-card {
+            background: var(--card);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .book-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.2); }
+
+        .book-title { color: var(--gold); font-family: 'Amiri'; font-size: 24px; margin-bottom: 10px; display: block; }
+        .book-author { font-size: 13px; opacity: 0.6; margin-bottom: 15px; display: block; }
+        .book-summary { font-size: 15px; line-height: 1.7; color: #ddd; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* تمدد النص عند النقر */
+        .book-card.active .book-summary { -webkit-line-clamp: unset; }
+
+        @media (max-width: 600px) { .books-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-right fa-xl"></i></a>
+
+    <div class="header">
+        <h1>📚 ملخصات كتب الرقائق</h1>
+        <p>خلاصة الفكر الإيماني في بطاقات موجزة</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="ابحث عن كتاب أو مؤلف..." onkeyup="filterBooks()">
+    </div>
+
+    <div class="books-grid" id="booksList">
+        </div>
+
+    <script>
+        const books = [
+            {t: "الداء والدواء", a: "ابن القيم الجوزية", s: "كتاب شامل في تزكية النفس، يركز على أن المعصية هي سبب كل بلاء، ويشرح فضل الدعاء وأهمية الصبر واليقين، وكيف يعالج العبد قلبه بالقرآن."},
+            {t: "صيد الخاطر", a: "ابن الجوزي", s: "تأملات فكرية عميقة في السلوك والأخلاق، يتميز بعرض التجارب الشخصية للمؤلف وتقديم نصائح واقعية في التعامل مع الدنيا والناس."},
+            {t: "مدارج السالكين", a: "ابن القيم الجوزية", s: "شرح لمنازل (إياك نعبد وإياك نستعين)، يعد أعمق ما كُتب في علم السلوك وتزكية القلوب والمقامات الإيمانية."},
+            {t: "الاستقامة", a: "ابن تيمية", s: "يرسخ مفهوم الاستقامه على شرع الله في الظاهر والباطن، ويفند الانحرافات التي تقع في السلوك والعبادات."},
+            {t: "رياض الصالحين", a: "الإمام النووي", s: "جماع أحاديث النبي ﷺ في الأخلاق والآداب، مرتبة بطريقة تسهل على المسلم تطبيق السنة في حياته اليومية."},
+            {t: "زاد المعاد", a: "ابن القيم الجوزية", s: "ليس مجرد سيرة، بل هو منهج كامل في هدي النبي ﷺ في عباداته، ومعاملاته، وطبه، وحياته كلها."},
+            {t: "حلية الأولياء", a: "أبو نعيم الأصفهاني", s: "موسوعة تحكي سير الزهاد والعباد من الصحابة والتابعين، لترقيق القلوب عبر الاقتداء بسلف الأمة."},
+            {t: "تنبيه الغافلين", a: "أبو الليث السمرقندي", s: "كتاب يعتمد على الوعظ والتذكير بالآخرة، الجنة، والنار، ويحث على التوبة والرجوع إلى الله قبل فوات الأوان."},
+            {t: "لطائف المعارف", a: "ابن رجب الحنبلي", s: "يركز على وظائف شهور السنة والعبادات الموسمية، وهو رفيق مثالي للمسلم في شهر رمضان."},
+            {t: "الفوائد", a: "ابن القيم الجوزية", s: "خواطر ودرر منثورة حول التوحيد، المعرفة بالله، وأسرار القرآن، كأنها نصائح مبرقة للقلب مباشرة."},
+            {t: "إحياء علوم الدين", a: "الإمام الغزالي", s: "كتاب ضخم يجمع بين الفقه والرقائق، يحلل أمراض القلوب وكيفية علاجها، ويربط العبادة بروحها ومقاصدها."},
+            {t: "الرسالة القشيرية", a: "أبو القاسم القشيري", s: "من كلاسيكيات السلوك الإسلامي، تعرض سير الصالحين وتعرف المصطلحات الإيمانية بأسلوب أدبي رفيع."},
+            {t: "جامع العلوم والحكم", a: "ابن رجب الحنبلي", s: "شرح لأحاديث الأربعين النووية، ويعد من أفضل الكتب التي تجمع بين العلم الشرعي والتربية الروحية."},
+            {t: "الوابل الصيب", a: "ابن القيم الجوزية", s: "يركز بشكل أساسي على فضل الذكر وأثره في حياة المسلم، ويشرح كيف يطرد الذكر الشيطان ويجلب الطمأنينة."},
+            {t: "التذكرة", a: "الإمام القرطبي", s: "كتاب مفصل في أحوال الموتى وأمور الآخرة، يهدف لتزهيد العبد في الدنيا وترغيبه في العمل للدار الباقية."},
+            {t: "طريق الهجرتين", a: "ابن القيم الجوزية", s: "يشرح مفهوم الهجرة إلى الله (بالتوحيد) والهجرة إلى الرسول ﷺ (بالاتباع)، وهو دليل عملي للسائرين إلى الله."},
+            {t: "مختصر منهاج القاصدين", a: "ابن قدامة المقدسي", s: "تهذيب لكتاب الإحياء، يركز على الجوانب التربوية والعبادية بأسلوب ميسر وبعيد عن التعقيد."},
+            {t: "الحكم العطائية", a: "ابن عطاء الله السكندري", s: "حكم قصيرة بليغة في التوحيد والتربية، تهدف إلى تخليص القلب من التعلق بالأغيار والاعتماد على العزيز الغفار."},
+            {t: "التبصرة", a: "ابن الجوزي", s: "كتاب وعظي بامتياز، يحتوي على خطب وقصص ومواعظ تحرك القلوب القاسية وتحث على البكاء من خشية الله."},
+            {t: "بحر الدموع", a: "ابن الجوزي", s: "كتاب يركز على الندم على الذنوب والاشتياق للقاء الله، بأسلوب أدبي باكي ومؤثر جداً."}
+        ];
+
+        const container = document.getElementById('booksList');
+
+        function displayBooks(data) {
+            container.innerHTML = "";
+            data.forEach(b => {
+                container.innerHTML += `
+                    <div class="book-card" onclick="this.classList.toggle('active')">
+                        <span class="book-title">${b.t}</span>
+                        <span class="book-author">تأليف: ${b.a}</span>
+                        <p class="book-summary">${b.s}</p>
+                        <i class="fa-solid fa-chevron-down" style="color:var(--gold); font-size:12px; margin-top:10px;"></i>
+                    </div>
+                `;
+            });
+        }
+
+        function filterBooks() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = books.filter(b => b.t.toLowerCase().includes(query) || b.a.toLowerCase().includes(query));
+            displayBooks(filtered);
+        }
+
+        displayBooks(books);
+    </script>
+</body>
+</html>
