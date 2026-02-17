@@ -2,33 +2,54 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <title>المسبحة الملكية | Ajar Respect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { background: #0f0a1e; color: white; text-align: center; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .counter { font-size: 100px; color: #a37cf0; margin: 20px; }
-        .circle { width: 200px; height: 200px; border-radius: 50%; border: 5px solid #a37cf0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.1s; box-shadow: 0 0 20px #a37cf0; }
-        .circle:active { transform: scale(0.95); background: rgba(163, 124, 240, 0.2); }
-        .reset { margin-top: 30px; background: none; border: 1px solid white; color: white; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
+        :root { --gold: #c5a059; --bg: #05040a; }
+        body { background: var(--bg); color: white; font-family: 'Reem Kufi', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        .tasbih-container { text-align: center; position: relative; }
+        .counter-circle {
+            width: 280px; height: 280px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.1);
+            background: rgba(20, 15, 35, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .counter-circle:active { transform: scale(0.95); box-shadow: 0 0 50px var(--gold); }
+        #count { font-size: 80px; font-family: 'Amiri', serif; color: var(--gold); margin: 0; }
+        .btn-reset { margin-top: 30px; background: none; border: 1px solid var(--gold); color: var(--gold); padding: 10px 30px; cursor: pointer; border-radius: 50px; font-family: 'Reem Kufi'; }
+        .back-btn { position: absolute; top: 20px; right: 20px; color: var(--gold); text-decoration: none; }
     </style>
 </head>
 <body>
-    <a href="index.html" style="color: #a37cf0; text-decoration: none;">← العودة</a>
-    <h1>المسبحة الذكية</h1>
-    <div class="counter" id="num">0</div>
-    <div class="circle" onclick="count()">اضغط</div>
-    <button class="reset" onclick="reset()">تصفير العداد</button>
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-right"></i> عودة</a>
+    <div class="tasbih-container">
+        <h2 style="color: var(--gold); margin-bottom: 40px;">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</h2>
+        <div class="counter-circle" onclick="add()">
+            <span id="count">0</span>
+            <small style="opacity: 0.6;">اضغط للتسبيح</small>
+        </div>
+        <button class="btn-reset" onclick="reset()">تصفير العداد</button>
+    </div>
 
     <script>
-        let n = localStorage.getItem('tsbih') || 0;
-        document.getElementById('num').innerText = n;
-        function count() {
-            n++;
-            document.getElementById('num').innerText = n;
-            localStorage.setItem('tsbih', n);
+        let c = localStorage.getItem('t_count') || 0;
+        document.getElementById('count').innerText = c;
+        function add() {
+            c++;
+            document.getElementById('count').innerText = c;
+            localStorage.setItem('t_count', c);
+            if('vibrate' in navigator) navigator.vibrate(50);
         }
         function reset() {
-            n = 0;
-            document.getElementById('num').innerText = n;
-            localStorage.setItem('tsbih', n);
+            c = 0;
+            document.getElementById('count').innerText = c;
+            localStorage.setItem('t_count', 0);
         }
     </script>
 </body>
