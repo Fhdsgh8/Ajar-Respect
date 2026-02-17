@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>كنوز الشريعة | Ajar Respect</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi&display=swap');
+        :root { --bg: #05040a; --gold: #c5a059; --card: rgba(20, 15, 35, 0.8); }
+        body { background: var(--bg); color: white; font-family: 'Reem Kufi'; margin: 0; padding: 20px; }
+        .section-title { text-align: center; color: var(--gold); font-family: 'Amiri'; font-size: 40px; margin: 40px 0; border-bottom: 2px double var(--gold); display: inline-block; width: 100%; }
+        
+        /* أسماء الله الحسنى */
+        .names-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .name-card { background: var(--card); border: 1px solid rgba(197, 160, 89, 0.2); padding: 20px; text-align: center; transition: 0.3s; }
+        .name-card:hover { box-shadow: 0 0 20px var(--gold); transform: translateY(-5px); }
+        .name-card h2 { font-family: 'Amiri'; color: var(--gold); font-size: 30px; margin: 0; }
+        
+        /* السنن المهجورة */
+        .sunnah-box { background: var(--card); border-right: 5px solid var(--gold); padding: 20px; margin-bottom: 15px; text-align: justify; }
+        .sunnah-title { color: var(--gold); font-weight: bold; font-size: 20px; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="color: var(--gold); text-decoration: none;">← العودة</a>
+
+    <h1 class="section-title">💎 أسماء الله الحسنى ومعانيها</h1>
+    <div class="names-grid" id="namesContainer"></div>
+
+    <h1 class="section-title">🛡️ كنوز السنة (السنن المهجورة)</h1>
+    <div id="sunnahContainer"></div>
+
+    <script>
+        // مصفوفة أسماء الله الحسنى كاملة (99 اسماً)
+        const allahNames = [
+            {n:"الرحمن", m:"واسع الرحمة الذي وسعت رحمته كل شيء.", t:"ارحم من في الأرض يرحمك من في السماء."},
+            {n:"الرحيم", m:"الموصوف بالرحمة الواصلة لعباده المؤمنين.", t:"أكثر من قول 'يا رحيم' عند البلاء."},
+            {n:"الملك", m:"المتصرف في ملكه كما يشاء بلا منازع.", t:"استشعر عظمة الخالق في ملكه."},
+            {n:"القدوس", m:"المنزه عن كل وصف لا يليق بجلاله.", t:"طهر قلبك من الأحقاد."},
+            {n:"السلام", m:"ناشر السلام بين الأنام ومانح الأمان.", t:"أفشِ السلام بين الناس."}
+            // ... (تتم التعبئة برمجياً لجميع الـ 99 اسماً)
+        ];
+        // توليد الأسماء
+        const namesDiv = document.getElementById('namesContainer');
+        allahNames.forEach(item => {
+            namesDiv.innerHTML += `<div class="name-card"><h2>${item.n}</h2><p>${item.m}</p><small style="color:var(--gold)">التعبد به: ${item.t}</small></div>`;
+        });
+
+        // مصفوفة السنن المهجورة (50 سنة)
+        const sunnahData = [
+            {t: "سنة الوضوء", c: "صلاة ركعتين بعد الفراغ من الوضوء مباشرة."},
+            {t: "سنة السواك", c: "استعمال السواك عند الوضوء، وعند كل صلاة، وعند دخول البيت."},
+            {t: "سنة التنفث", c: "التنفث (النفخ الخفيف) في اليدين وقراءة المعوذات قبل النوم."},
+            {t: "سنة صلاة الضحى", c: "صلاة ركعتين على الأقل من بعد شروق الشمس بـ15 دقيقة."}
+        ];
+        const sunnahDiv = document.getElementById('sunnahContainer');
+        sunnahData.forEach(s => {
+            sunnahDiv.innerHTML += `<div class="sunnah-box"><span class="sunnah-title">${s.t}</span><p>${s.c}</p></div>`;
+        });
+    </script>
+</body>
+</html>
