@@ -6,179 +6,88 @@
     <title>القرآن الكريم | AJAR RESPECT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi&display=swap');
+        
+        :root { --bg: #05040a; --gold: #c5a059; }
 
-        :root {
-            --gold: #c5a059;
-            --bg: #05040a;
-            --purple-dark: #1b1435;
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; /* لمنع التمرير المزدوج */
         }
 
-        body {
-            background-color: var(--bg);
-            color: #ffffff;
-            font-family: 'Amiri', serif;
-            margin: 0;
-            line-height: 2.5;
-        }
-
-        /* هيدر الصفحة */
-        header {
-            background: linear-gradient(to bottom, var(--purple-dark), var(--bg));
-            padding: 60px 20px;
-            text-align: center;
+        .quran-header {
+            background: rgba(17, 12, 34, 0.95);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid var(--gold);
-        }
-
-        .title {
-            font-size: 50px;
-            color: var(--gold);
-            margin: 0;
-            text-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
-        }
-
-        /* نظام عرض السور */
-        .quran-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-        }
-
-        .surah-header {
-            text-align: center;
-            border-bottom: 2px double var(--gold);
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-        }
-
-        .bismillah {
-            font-size: 35px;
-            color: var(--gold);
-            display: block;
-            margin: 20px 0;
-        }
-
-        /* تنسيق الآيات */
-        .aya {
-            font-size: 28px;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline;
-            padding: 2px 5px;
-            border-radius: 5px;
-        }
-
-        .aya:hover {
-            background: rgba(197, 160, 89, 0.1);
-            color: var(--gold);
-        }
-
-        .aya-num {
-            font-family: 'Reem Kufi', sans-serif;
-            color: var(--gold);
-            font-size: 18px;
-            margin: 0 5px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            padding: 2px 8px;
-        }
-
-        /* نافذة التفسير (Popup) */
-        .tafseer-box {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            width: 100%;
-            background: var(--purple-dark);
-            border-top: 3px solid var(--gold);
-            padding: 30px;
-            transition: 0.5s;
-            z-index: 1000;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-        }
-
-        .tafseer-box.active {
-            bottom: 0;
-        }
-
-        .tafseer-content {
-            max-width: 800px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .close-tafseer {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            color: var(--gold);
-            cursor: pointer;
-            font-size: 25px;
-        }
-
-        /* زر العودة للرئيسية */
-        .back-home {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            color: var(--gold);
-            text-decoration: none;
-            font-family: 'Reem Kufi', sans-serif;
-            font-size: 16px;
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
+
+        .quran-header h1 { font-family: 'Amiri'; color: var(--gold); margin: 0; font-size: 24px; }
+        .back-btn { color: var(--gold); text-decoration: none; font-size: 18px; }
+
+        /* حاوية عرض المصحف */
+        .quran-frame-container {
+            width: 100%;
+            height: calc(100vh - 70px); /* طرح طول الهيدر */
+            background: #fff; /* خلفية بيضاء لورق المصحف */
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 70px; left: 0; right: 0; bottom: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .loader {
+            border: 4px solid #1a1432;
+            border-top: 4px solid var(--gold);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
+    <div class="quran-header">
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-right"></i> عودة</a>
+        <h1>القرآن الكريم</h1>
+        <div style="width: 30px;"></div> </div>
 
-    <header>
-        <h1 class="title">القرآن الكريم</h1>
-        <p style="color: #aaa; font-family: 'Reem Kufi';">تلاوة وتدبر بآيات الله العظيمة</p>
-    </header>
-
-    <div class="quran-container">
-        <div class="surah-header">
-            <h2 style="color: var(--gold);">سورة الفاتحة</h2>
-            <span class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
-        </div>
-
-        <div class="quran-text" id="quranContent">
-            <span class="aya" onclick="showTafseer('الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', 'الشكر لله وحده خالق الخلق ومالك أمرهم.')">
-                الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ <span class="aya-num">١</span>
-            </span>
-            <span class="aya" onclick="showTafseer('الرَّحْمَنِ الرَّحِيمِ', 'أي: ذو الرحمة الواسعة التي شملت جميع الخلائق.')">
-                الرَّحْمَنِ الرَّحِيمِ <span class="aya-num">٢</span>
-            </span>
-            <span class="aya" onclick="showTafseer('مَالِكِ يَوْمِ الدِّينِ', 'وهو سبحانه وحده مالك يوم الجزاء والحساب.')">
-                مَالِكِ يَوْمِ الدِّينِ <span class="aya-num">٣</span>
-            </span>
-            </div>
+    <div class="loading-overlay" id="loader">
+        <div class="loader"></div>
+        <p style="margin-top: 15px; color: var(--gold);">جاري فتح المصحف الشريف...</p>
     </div>
 
-    <div class="tafseer-box" id="tafseerBox">
-        <span class="close-tafseer" onclick="hideTafseer()">&times;</span>
-        <div class="tafseer-content">
-            <h3 id="ayaText" style="color: var(--gold); margin-bottom: 15px;"></h3>
-            <p id="tafseerText" style="font-size: 20px; line-height: 1.8;"></p>
-        </div>
+    <div class="quran-frame-container">
+        <iframe 
+            src="https://quran.ksu.edu.sa/m.php" 
+            onload="document.getElementById('loader').style.display='none';">
+        </iframe>
     </div>
-
-    <script>
-        function showTafseer(aya, tafseer) {
-            document.getElementById('ayaText').innerText = aya;
-            document.getElementById('tafseerText').innerText = tafseer;
-            document.getElementById('tafseerBox').classList.add('active');
-        }
-
-        function hideTafseer() {
-            document.getElementById('tafseerBox').classList.remove('active');
-        }
-    </script>
 
 </body>
 </html>
