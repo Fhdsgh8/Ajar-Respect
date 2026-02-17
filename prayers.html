@@ -7,75 +7,65 @@
     <style>
         :root { --bg: #0f0a1e; --card: #1a142d; --accent: #a37cf0; }
         
-        /* تعديل لجعل الخلفية تملأ الشاشة بالكامل */
+        /* جعل الخلفية تمتد لملأ كامل الشاشة */
         body { 
             background: var(--bg); 
             color: white; 
             font-family: 'Segoe UI', Tahoma; 
             margin: 0; 
-            padding: 0; /* إزالة البادينج الخارجي */
+            padding: 0; 
             min-height: 100vh;
-        }
-
-        /* تصميم الهيدر العلوي ليكون بعرض الشاشة */
-        .top-nav {
-            background: #161129;
-            padding: 15px 20px;
             display: flex;
-            align-items: center;
-            border-bottom: 2px solid var(--accent);
-            margin-bottom: 20px;
+            flex-direction: column;
         }
 
-        .top-nav a {
+        /* تنسيق زر العودة العلوي */
+        .back-nav {
+            padding: 20px;
+            text-align: right;
+        }
+        .back-nav a {
             color: var(--accent);
             text-decoration: none;
             font-size: 16px;
-            display: flex;
-            align-items: center;
         }
 
-        .top-nav span {
-            flex-grow: 1;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-right: -40px; /* لموازنة النص في المنتصف */
-        }
-
-        /* تعديل الحاوية لتكون بعرض الشاشة على الجوال */
+        /* تعديل الحاوية لتمتد بعرض الشاشة وطولها */
         .container { 
-            width: 100%;
-            max-width: 600px; /* حد أقصى للعرض لضمان المظهر الجيد */
-            margin: auto; 
+            flex-grow: 1; /* تمتد لتأخذ باقي مساحة الشاشة */
+            width: 100%; 
+            margin: 0; 
             background: var(--card); 
             padding: 25px; 
             box-sizing: border-box;
-            border-radius: 0; /* إلغاء الحواف الدائرية لتناسب ملء الشاشة */
+            border: none; /* إزالة الحدود لتندمج مع الشاشة */
+            box-shadow: none;
+            border-radius: 0; /* إزالة الانحناءات لتملأ الزوايا */
         }
 
-        select, input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid var(--accent); background: #0f0a1e; color: white; font-size: 16px; box-sizing: border-box; }
+        h1 { text-align: center; margin-bottom: 30px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid var(--accent); background: #0f0a1e; color: white; font-size: 16px; box-sizing: border-box; }
         button { width: 100%; padding: 15px; background: var(--accent); border: none; color: white; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .prayer-row { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #332a4d; font-size: 1.2em; }
+        .prayer-row { display: flex; justify-content: space-between; padding: 20px 15px; border-bottom: 1px solid #332a4d; font-size: 1.2em; }
         .prayer-row:last-child { border-bottom: none; }
         .prayer-name { color: var(--accent); }
-        .status { margin-top: 15px; font-size: 0.9em; color: #888; text-align: center; }
-        h1 { display: none; } /* إخفاء العنوان الداخلي لاستخدام هيدر التنقل */
+        .status { margin-top: 20px; font-size: 0.9em; color: #888; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="top-nav">
+    <div class="back-nav">
         <a href="index.html">← العودة للرئيسية</a>
-        <span>Ajar Respect - مواقيت الصلاة</span>
     </div>
     
     <div class="container">
+        <h1>🕌 مواقيت الصلاة</h1>
+        
         <input type="text" id="countryInput" placeholder="اكتب الدولة (مثلاً: Saudi Arabia)" value="Saudi Arabia">
         <input type="text" id="cityInput" placeholder="اكتب المدينة (مثلاً: Riyadh)" value="Riyadh">
         
-        <button onclick="getPrayers()">تحديث المواقيت</button>
+        <button onclick="getPrayers()">عرض الأوقات</button>
 
-        <div id="results" style="margin-top: 20px; display: none;">
+        <div id="results" style="margin-top: 20px;">
             <div class="prayer-row"><span class="prayer-name">الفجر</span><span id="fajr">-</span></div>
             <div class="prayer-row"><span class="prayer-name">الظهر</span><span id="dhuhr">-</span></div>
             <div class="prayer-row"><span class="prayer-name">العصر</span><span id="asr">-</span></div>
@@ -110,8 +100,6 @@
                     document.getElementById('asr').innerText = t.Asr;
                     document.getElementById('maghrib').innerText = t.Maghrib;
                     document.getElementById('isha').innerText = t.Isha;
-                    
-                    document.getElementById('results').style.display = 'block';
                     status.innerText = `مواقيت الصلاة لمدينة ${city} اليوم`;
                 } else {
                     status.innerText = "تعذر العثور على المدينة، يرجى التأكد من الكتابة بالإنجليزية";
