@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل البطولات | حدث في رمضان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
+        
+        :root { --bg: #05040a; --gold: #c5a059; --card: rgba(20, 15, 35, 0.8); }
+
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0; padding: 20px;
+            line-height: 1.6;
+        }
+
+        .header { text-align: center; padding: 50px 0; border-bottom: 1px double var(--gold); }
+        .header h1 { font-family: 'Amiri'; color: var(--gold); font-size: 40px; margin: 0; }
+        
+        .timeline { max-width: 800px; margin: 40px auto; position: relative; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; margin-left: -1px; opacity: 0.3; }
+
+        .event-item {
+            background: var(--card);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            transition: 0.3s;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .event-item:hover { border-color: var(--gold); transform: scale(1.02); box-shadow: 0 0 20px rgba(197, 160, 89, 0.1); }
+
+        .date-badge {
+            background: var(--gold);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .event-title { font-family: 'Amiri'; color: var(--gold); font-size: 24px; display: block; margin-bottom: 10px; }
+        .event-desc { color: #ccc; font-size: 16px; text-align: justify; }
+
+        .back-btn { position: fixed; top: 20px; right: 20px; color: var(--gold); text-decoration: none; z-index: 1000; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) { .timeline::after { left: 20px; } .event-item { margin-right: 40px; text-align: right; } }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-circle-arrow-right fa-2xl"></i></a>
+
+    <div class="header">
+        <h1>📜 حدث في رمضان</h1>
+        <p>موسوعة الفتوحات والبطولات عبر العصور</p>
+    </div>
+
+    <div class="timeline" id="historyTimeline">
+        </div>
+
+    <script>
+        const historyData = [
+            {day: "1 رمضان", title: "نزول الصحف على إبراهيم", desc: "في مثل هذا اليوم نزلت صحف إبراهيم عليه السلام، وهو أول ما نزل من الكتب السماوية في شهر رمضان."},
+            {day: "2 رمضان", title: "فتح الأندلس", desc: "بدأ القائد طارق بن زياد في مثل هذا اليوم بعبور البحر لفتح الأندلس عام 92هـ، وهي الخطوة التي غيرت تاريخ أوروبا."},
+            {day: "4 رمضان", title: "فتح مدينة أنطاكية", desc: "نجح المسلمون بقيادة الظاهر بيبرس في استرداد مدينة أنطاكية من الصليبيين عام 666هـ، وكانت من أهم معاقلهم."},
+            {day: "6 رمضان", title: "فتح بلاد السند", desc: "انتصر القائد محمد بن القاسم على جيوش الهند في نهار رمضان عام 92هـ، ليدخل الإسلام إلى شبه القارة الهندية."},
+            {day: "8 رمضان", title: "غزوة تبوك", desc: "بدأ التحرك لغزوة تبوك في العام التاسع للهجرة، وهي آخر غزوات النبي ﷺ التي واجه فيها الروم."},
+            {day: "10 رمضان", title: "وفاة السيدة خديجة", desc: "رحلت 'أم المؤمنين' خديجة بنت خويلد رضي الله عنها في العام العاشر من البعثة، وهو العام الذي سمي بعام الحزن."},
+            {day: "12 رمضان", title: "دخول ابن تومرت المغرب", desc: "بدأ تأسيس دولة الموحدين في المغرب العربي في مثل هذا اليوم، والتي وحدت شمال إفريقيا والأندلس."},
+            {day: "13 رمضان", title: "وصول عمر بن الخطاب للقدس", desc: "وصل الفاروق عمر بن الخطاب إلى مدينة القدس في نهار رمضان لتسلم مفاتيحها وكتب العهدة العمرية الشهيرة."},
+            {day: "15 رمضان", title: "مولد الحسن بن علي", desc: "ولد سبط رسول الله ﷺ وسيد شباب أهل الجنة الحسن بن علي رضي الله عنه في السنة الثالثة للهجرة."},
+            {day: "17 رمضان", title: "غزوة بدر الكبرى", desc: "يوم الفرقان، أعظم انتصار في تاريخ الإسلام، حيث نصر الله الفئة القليلة على كفار قريش في العام الثاني للهجرة."},
+            {day: "19 رمضان", title: "فتح مكة", desc: "في العام الثامن للهجرة، دخل النبي ﷺ مكة فاتحاً ومنتصراً، وحطم الأصنام وطهر الكعبة بغير قتال يذكر."},
+            {day: "21 رمضان", title: "استشهاد علي بن أبي طالب", desc: "رحيل رابع الخلفاء الراشدين الإمام علي بن أبي طالب متأثراً بطعنة الغدر التي أصيب بها في الكوفة عام 40هـ."},
+            {day: "23 رمضان", title: "هزيمة الساسانيين", desc: "انتصر المسلمون على الإمبراطورية الساسانية في معركة 'بويب' العنيفة، مما مهد الطريق لفتح بلاد الفرس."},
+            {day: "25 رمضان", title: "معركة عين جالوت", desc: "أعظم نصر عسكري في العصر الوسيط، حيث أوقف سيف الدين قطز والظاهر بيبرس زحف المغول الذين دمروا بغداد."},
+            {day: "27 رمضان", title: "فتح حصن بابليون", desc: "نجح عمرو بن العاص في فتح حصن بابليون القوي بمصر، مما مهد الطريق لفتح الإسكندرية والقاهرة."},
+            {day: "30 رمضان", title: "إتمام الفتح الإسلامي لمصر", desc: "في مثل هذا اليوم أعلن المسلمون سيطرتهم الكاملة على ربوع مصر وتحويلها لولاية إسلامية في عهد عمر بن الخطاب."}
+        ];
+
+        const timeline = document.getElementById('historyTimeline');
+        historyData.forEach((h, index) => {
+            timeline.innerHTML += `
+                <div class="event-item" style="animation-delay: ${index * 0.1}s">
+                    <span class="date-badge">${h.day}</span>
+                    <span class="event-title">${h.title}</span>
+                    <p class="event-desc">${h.desc}</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
