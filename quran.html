@@ -3,93 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القرآن الكريم | AJAR RESPECT</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>القرآن الكريم بالكامل | Ajar Respect</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi&display=swap');
-
-        /* ضبط الخلفية الملكية السوداء */
+        /* ضبط الخلفية لمنع أي بياض كما في الصور السابقة */
         body, html { 
-            background-color: #05040a; 
+            background-color: #0f0a1e; 
             margin: 0; 
             padding: 0; 
             height: 100%; 
             overflow: hidden; 
-            font-family: 'Reem Kufi', sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
         }
-
-        /* الهيدر الذهبي المتناسق مع الواجهة الجديدة */
         .header-nav {
-            background: #0a0a14;
+            background: #1a142d;
             padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #c5a059;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-align: center;
+            border-bottom: 2px solid #a37cf0;
         }
-
         .header-nav a {
-            color: #c5a059;
+            color: #a37cf0;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 18px;
         }
-
-        .header-nav h1 {
-            color: #c5a059;
-            margin: 0;
-            font-size: 20px;
-            font-family: 'Amiri';
-        }
-
-        /* ضبط الإطار ليأخذ كامل الشاشة */
+        /* ضبط الإطار ليظهر المحتوى العربي بوضوح */
         iframe {
             width: 100%;
             height: calc(100vh - 60px);
             border: none;
-            background: #ffffff; /* المصحف يحتاج خلفية فاتحة للقراءة بوضوح داخل الإطار */
+            background: #0f0a1e;
         }
-
-        .loader-overlay {
-            position: absolute;
-            top: 60px; left: 0; right: 0; bottom: 0;
-            background: #05040a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .loader {
-            border: 3px solid #1a1a2e;
-            border-top: 3px solid #c5a059;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-
     <div class="header-nav">
-        <a href="index.html"><i class="fa-solid fa-arrow-right"></i> العودة</a>
-        <h1>المصحف الشريف</h1>
-        <div style="width: 50px;"></div> </div>
-
-    <div class="loader-overlay" id="loading">
-        <div class="loader"></div>
+        <a href="index.html">← العودة للرئيسية - Ajar Respect</a>
     </div>
 
-    <iframe 
-        src="https://quran.com/ar" 
-        title="القرآن الكريم" 
-        onload="document.getElementById('loading').style.display='none';">
-    </iframe>
-
+    <iframe src="https://quran.com/ar" title="القرآن الكريم بالعربية"></iframe>
 </body>
 </html>
