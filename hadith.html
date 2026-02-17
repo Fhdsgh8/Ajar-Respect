@@ -2,21 +2,34 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>الأحاديث الشريفة | AJAR RESPECT</title>
+    <title>📜 السنة النبوية | Ajar Respect</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
-        body { background: #05040a; color: #ccc; font-family: 'serif'; padding: 40px; text-align: center; }
-        .hadith-box { max-width: 800px; margin: auto; padding: 40px; border: 1px solid #c5a059; position: relative; background: rgba(10,10,10,0.5); }
-        .hadith-box::after { content: '📜'; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 40px; background: #05040a; padding: 0 10px; }
-        h2 { font-family: 'Amiri'; color: #f3cf8a; font-size: 30px; }
-        .narrator { color: #c5a059; font-style: italic; }
+        body { background: #05040a; color: white; text-align: center; font-family: 'Amiri', serif; padding: 20px; }
+        .hadith-card { background: rgba(26, 20, 45, 0.6); border: 1px solid #c5a059; padding: 40px; border-radius: 0; margin: 40px auto; max-width: 800px; line-height: 2; font-size: 26px; color: #f3cf8a; backdrop-filter: blur(10px); }
+        button { background: #c5a059; color: #000; border: none; padding: 12px 40px; cursor: pointer; font-size: 18px; font-family: sans-serif; font-weight: bold; margin-top: 20px; }
+        .info { color: #c5a059; font-size: 16px; margin-top: 20px; font-family: sans-serif; }
     </style>
 </head>
 <body>
-    <div class="hadith-box">
-        <p class="narrator">عن أبي هريرة رضي الله عنه قال:</p>
-        <h2>"مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ"</h2>
-        <p style="font-size: 14px; opacity: 0.6;">رواه البخاري ومسلم</p>
+    <a href="index.html" style="color: white; text-decoration: none;">← العودة للرئيسية</a>
+    <h1 style="color: #c5a059; font-size: 45px;">الأحاديث الشريفة</h1>
+    <div class="hadith-card">
+        <p id="h-text">جاري جلب حديث من صحيح البخاري...</p>
+        <div id="h-info" class="info"></div>
     </div>
+    <button onclick="fetchHadith()">حديث آخر</button>
+    <script>
+        function fetchHadith() {
+            document.getElementById('h-text').innerText = "جاري التحميل...";
+            const rand = Math.floor(Math.random() * 300) + 1;
+            fetch(`https://api.hadith.gading.dev/books/bukhari/${rand}`)
+            .then(res => res.json()).then(data => {
+                document.getElementById('h-text').innerText = data.data.contents.arab;
+                document.getElementById('h-info').innerText = "المصدر: صحيح البخاري - رقم الحديث: " + data.data.contents.number;
+            });
+        }
+        fetchHadith();
+    </script>
 </body>
 </html>
