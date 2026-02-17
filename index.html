@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJAR RESPECT | المنصة الملكية الرمضانية</title>
+    <title>AJAR RESPECT | الإصدار الملكي الفاخر</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        /* 1. استيراد خطوط فخمة جداً */
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap');
+        /* الخطوط العربية الفاخرة */
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap');
 
-        /* 2. المتغيرات اللونية (الذهب الملكي والأسود العميق) */
         :root {
-            --gold-primary: #c5a059;
-            --gold-light: #f3cf8a;
-            --gold-dark: #8c6d31;
-            --bg-ultra-dark: #05040a;
-            --card-glass: rgba(15, 12, 28, 0.85);
-            --transition-speed: 0.5s;
+            --gold-glow: #c5a059;
+            --gold-bright: #f3cf8a;
+            --deep-space: #05040a;
+            --accent-purple: #1b1435;
         }
 
-        /* 3. تنسيق الصفحة العام */
         body {
-            background-color: var(--bg-ultra-dark);
+            background-color: var(--deep-space);
             color: #ffffff;
             font-family: 'Reem Kufi', sans-serif;
             margin: 0;
@@ -32,289 +28,221 @@
             min-height: 100vh;
         }
 
-        /* 4. الخلفية المتحركة (سماء رمضانية سحرية) */
-        .royal-background {
+        /* خلفية السماء الرمضانية المتحركة */
+        .cosmic-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #251b4d 0%, #05040a 80%);
+            background: radial-gradient(circle at 50% -10%, var(--accent-purple) 0%, var(--deep-space) 100%);
             z-index: -1;
         }
 
-        /* تأثير النجوم المتلألئة */
-        .stars-overlay {
+        .stars {
             position: absolute;
             width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
-            animation: twinkle 150s linear infinite;
+            opacity: 0.4;
+            animation: moveStars 200s linear infinite;
         }
 
-        @keyframes twinkle {
+        @keyframes moveStars {
             from { background-position: 0 0; }
             to { background-position: 1000px 1000px; }
         }
 
-        /* 5. الهيدر (تاج الموقع) */
+        /* هيدر الموقع الفخم */
         header {
-            padding: 100px 20px 60px;
+            padding: 90px 20px 50px;
             text-align: center;
             position: relative;
         }
 
-        /* الهلال المتوهج خلف اللوجو */
-        header::before {
-            content: '\f186'; /* أيقونة القمر */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 40px; left: 50%;
-            transform: translateX(-50%);
-            font-size: 150px;
-            color: var(--gold-primary);
-            opacity: 0.05;
-            filter: blur(5px);
-            animation: moonGlow 6s ease-in-out infinite;
-        }
-
-        @keyframes moonGlow {
-            0%, 100% { opacity: 0.05; transform: translateX(-50%) scale(1); }
-            50% { opacity: 0.15; transform: translateX(-50%) scale(1.1); }
-        }
-
-        .main-title {
+        .main-logo {
             font-family: 'Amiri', serif;
-            font-size: clamp(60px, 12vw, 110px);
+            font-size: clamp(55px, 12vw, 100px);
             margin: 0;
-            background: linear-gradient(to bottom, var(--gold-light), var(--gold-primary), var(--gold-dark));
+            background: linear-gradient(to bottom, var(--gold-bright), var(--gold-glow));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));
-            letter-spacing: 8px;
-            position: relative;
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.4));
+            letter-spacing: 6px;
         }
 
-        .sub-title {
+        .ramadan-tag {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 24px;
-            color: var(--gold-primary);
-            letter-spacing: 15px;
-            margin-top: -15px;
-            opacity: 0.8;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 22px;
+            color: var(--gold-glow);
+            letter-spacing: 12px;
+            margin-top: -10px;
+            opacity: 0.9;
         }
 
-        /* 6. شبكة البطاقات الملكية */
+        /* شبكة البطاقات الملكية */
         .royal-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 35px;
-            padding: 40px 10%;
-            max-width: 1400px;
-            margin: 0 auto 120px;
+            gap: 30px;
+            padding: 40px 8%;
+            max-width: 1300px;
+            margin: 0 auto 100px;
         }
 
-        .royal-card {
-            background: var(--card-glass);
-            border: 1px solid rgba(197, 160, 89, 0.15);
-            padding: 50px 30px;
-            border-radius: 0; /* زوايا حادة للفخامة الأندلسية */
-            position: relative;
+        .card {
+            background: rgba(20, 15, 35, 0.6);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 45px 25px;
             text-decoration: none;
             color: #fff;
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
-        /* زخرفة ذهبية في زوايا البطاقة */
-        .royal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 40px; height: 40px;
-            border-top: 2px solid var(--gold-primary);
-            border-right: 2px solid var(--gold-primary);
-            opacity: 0.3;
-            transition: 0.5s;
+        /* الزخرفة الذهبية عند الهوفر */
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: var(--gold-glow);
+            background: rgba(30, 25, 50, 0.85);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 15px rgba(197, 160, 89, 0.1);
         }
 
-        /* تأثير البريق عند المرور */
-        .royal-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: var(--gold-light);
-            background: rgba(25, 20, 45, 0.95);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(197, 160, 89, 0.2);
-        }
-
-        .royal-card:hover::before {
-            width: 100%; height: 100%;
-            opacity: 1;
-        }
-
-        .royal-card i {
-            font-size: 50px;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .card i {
+            font-size: 45px;
             margin-bottom: 25px;
-            filter: drop-shadow(0 0 5px rgba(197, 160, 89, 0.5));
+            color: var(--gold-bright);
+            filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.5));
         }
 
-        .royal-card h2 {
+        .card h2 {
             font-family: 'Amiri', serif;
-            font-size: 28px;
+            font-size: 26px;
             margin: 10px 0;
-            color: var(--gold-light);
+            color: var(--gold-bright);
         }
 
-        .royal-card p {
-            font-size: 15px;
-            color: #999;
-            line-height: 1.8;
-            margin: 0;
+        .card p {
+            font-size: 14px;
+            color: #bbb;
             text-align: center;
+            line-height: 1.7;
         }
 
-        /* 7. شريط الإحصائيات (المنصة السفلية) */
-        .royal-footer {
+        /* حالة الخادم (تصميم صغير وبدون مربعات) */
+        .server-status {
             position: fixed;
-            bottom: 0; width: 100%;
-            background: rgba(5, 4, 10, 0.95);
-            border-top: 1px solid var(--gold-dark);
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            gap: 50px;
+            bottom: 25px;
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gold-glow);
+            letter-spacing: 1px;
             z-index: 100;
-            backdrop-filter: blur(10px);
         }
 
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 8px;
+            box-shadow: 0 0 10px #2ecc71;
+            animation: blink 2s infinite;
         }
 
-        .stat-label {
-            font-size: 12px;
-            color: var(--gold-primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        @keyframes blink {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
         }
 
-        .stat-value {
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 10px var(--gold-primary);
-        }
-
-        /* تأثير الفوانيس الجانبية */
+        /* فوانيس جانبية متحركة */
         .lantern {
             position: fixed;
-            top: -20px;
-            font-size: 40px;
-            color: var(--gold-primary);
-            opacity: 0.3;
-            animation: swing 4s ease-in-out infinite;
-            z-index: 5;
+            top: -10px;
+            font-size: 35px;
+            color: var(--gold-glow);
+            opacity: 0.2;
+            animation: swing 5s ease-in-out infinite;
         }
-        .lantern-r { right: 5%; }
-        .lantern-l { left: 5%; }
+        .l-right { right: 30px; }
+        .l-left { left: 30px; }
 
         @keyframes swing {
-            0%, 100% { transform: rotate(-8deg); transform-origin: top; }
-            50% { transform: rotate(8deg); transform-origin: top; }
-        }
-
-        /* تحسين العرض على الجوال */
-        @media (max-width: 768px) {
-            .royal-grid { padding: 20px 5%; }
-            .main-title { font-size: 50px; }
-            .royal-footer { gap: 20px; flex-direction: column; padding: 10px 0; }
+            0%, 100% { transform: rotate(-10deg); transform-origin: top; }
+            50% { transform: rotate(10deg); transform-origin: top; }
         }
     </style>
 </head>
 <body>
 
-    <div class="royal-background">
-        <div class="stars-overlay"></div>
+    <div class="cosmic-bg">
+        <div class="stars"></div>
     </div>
 
-    <i class="fa-solid fa-mosque lantern lantern-r"></i>
-    <i class="fa-solid fa-mosque lantern lantern-l"></i>
+    <i class="fa-solid fa-fan lantern l-right"></i>
+    <i class="fa-solid fa-fan lantern l-left"></i>
 
     <header>
-        <h1 class="main-title">AJAR RESPECT</h1>
-        <div class="sub-title">رمضان كريم</div>
+        <h1 class="main-logo">AJAR RESPECT</h1>
+        <div class="ramadan-tag">رمضان كريم</div>
     </header>
 
     <main class="royal-grid">
-        <a href="quran.html" class="royal-card">
-            <i class="fa-solid fa-book-quran"></i>
+        <a href="quran.html" class="card">
+            <i class="fa-solid fa-book-open"></i>
             <h2>الختمة والتفسير</h2>
-            <p>مصحف المدينة المنورة مع التفسير الميسر لكل آية</p>
+            <p>القرآن الكريم كاملاً مع تفسير ميسر لكل آية</p>
         </a>
 
-        <a href="azkar.html" class="royal-card">
+        <a href="azkar.html" class="card">
             <i class="fa-solid fa-kaaba"></i>
-            <h2>الأذكار اليومية</h2>
-            <p>حصنك الإيماني من أذكار الصباح والمساء والنوم</p>
+            <h2>الأذكار الإسلامية</h2>
+            <p>حصن المسلم اليومي بأجمل الخطوط</p>
         </a>
 
-        <a href="hadith.html" class="royal-card">
+        <a href="hadith.html" class="card">
             <i class="fa-solid fa-scroll"></i>
-            <h2>السنة النبوية</h2>
-            <p>أصح الأحاديث الشريفة من البخاري ومسلم</p>
+            <h2>الأحاديث الشريفة</h2>
+            <p>جواهر نبوية من صحيح البخاري ومسلم</p>
         </a>
 
-        <a href="stories.html" class="royal-card">
-            <i class="fa-solid fa-star-and-crescent"></i>
+        <a href="stories.html" class="card">
+            <i class="fa-solid fa-mosque"></i>
             <h2>قصص الأنبياء</h2>
-            <p>رحلة إيمانية في قصص الأنبياء والرسل عليهم السلام</p>
+            <p>سير الأنبياء والرسل بأسلوب قصصي فخم</p>
         </a>
 
-        <a href="prayers.html" class="royal-card">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <h2>مواقيت الصلاة</h2>
-            <p>مواعيد الأذان والإمساك والإفطار بدقة متناهية</p>
+        <a href="prayers.html" class="card">
+            <i class="fa-solid fa-clock"></i>
+            <h2>أوقات الصلاة</h2>
+            <p>مواقيت دقيقة جداً لكل بقاع الأرض</p>
         </a>
 
-        <a href="tasbih.html" class="royal-card">
-            <i class="fa-solid fa-dharmachakra"></i>
+        <a href="tasbih.html" class="card">
+            <i class="fa-solid fa-fingerprint"></i>
             <h2>المسبحة الذكية</h2>
-            <p>عداد تسبيح تفاعلي يحفظ أذكارك في السحاب</p>
+            <p>عداد تسبيح رقمي انسيابي وفخم</p>
         </a>
 
-        <a href="qa.html" class="royal-card">
-            <i class="fa-solid fa-clipboard-question"></i>
+        <a href="qa.html" class="card">
+            <i class="fa-solid fa-lightbulb"></i>
             <h2>سؤال وجواب</h2>
-            <p>اختبر حصيلتك الدينية في بنك الأسئلة الشامل</p>
+            <p>اختبر معلوماتك الدينية في بنك الأسئلة</p>
         </a>
 
-        <a href="community.html" class="royal-card">
-            <i class="fa-solid fa-users-viewfinder"></i>
-            <h2>مجتمع أجر</h2>
-            <p>موسوعة زاد المسلم وخواطر أهل الخير</p>
+        <a href="community.html" class="card">
+            <i class="fa-solid fa-book-medical"></i>
+            <h2>معلومات دينية</h2>
+            <p>أكثر من 150 معلومة وحكمة تهم كل مسلم</p>
         </a>
     </main>
 
-    <footer class="royal-footer">
-        <div class="stat-item">
-            <span class="stat-label">زوار اليوم</span>
-            <span class="stat-value">1,402</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">إجمالي التسبيحات</span>
-            <span class="stat-value">45,902</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">خادم الموقع</span>
-            <span class="stat-value" style="color: #2ecc71; font-size: 14px;">● نشط الآن</span>
-        </div>
-    </footer>
+    <div class="server-status">
+        خادم الموقع: <span style="color: #fff; font-weight: bold;">نشط الآن</span> <span class="status-dot"></span>
+    </div>
 
 </body>
 </html>
