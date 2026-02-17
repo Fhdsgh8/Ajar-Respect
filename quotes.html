@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>روائع التابعين | Ajar Respect</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&display=swap');
+        body { background: #05040a; color: white; font-family: 'Amiri', serif; text-align: center; padding: 50px 20px; }
+        .quote-wrapper { max-width: 800px; margin: auto; }
+        .card { background: rgba(197, 160, 89, 0.05); border: 1px solid #c5a059; padding: 40px; margin-bottom: 30px; position: relative; transition: 0.5s; opacity: 0; transform: translateY(20px); }
+        .card.show { opacity: 1; transform: translateY(0); }
+        .author { color: #c5a059; display: block; margin-top: 20px; font-size: 22px; }
+        .text { font-size: 28px; line-height: 1.8; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1 style="color:#c5a059; font-size:50px; margin-bottom:50px;">🕯️ من مشكاة السلف</h1>
+    <div class="quote-wrapper" id="qBox"></div>
+
+    <script>
+        const quotes = [
+            {t: "إنما الدنيا حلم، والآخرة يقظة، والموت متوسط بينهما، ونحن أضغاث أحلام.", a: "الحسن البصري"},
+            {t: "لو طهرت قلوبكم ما شبعتم من كلام ربكم.", a: "عثمان بن عفان (ورواه عنه التابعون)"},
+            {t: "ما رأيت يقيناً لا شك فيه أشبه بشك لا يقين فيه من الموت.", a: "عمر بن عبد العزيز"},
+            {t: "ليس الشأن أن تُحب، إنما الشأن أن تُحَب (بفتح الحاء).", a: "مجاهد بن جبر"},
+            {t: "إذا لم تقدر على قيام الليل ولا صيام النهار، فاعلم أنك محروم قد كبلتك خطاياك.", a: "الفضيل بن عياض"},
+            {t: "العمل بغير إخلاص كالمسافر يملأ جرابه رملاً يثقله ولا ينفعه.", a: "ابن القيم (نقلًا عن حكم السلف)"},
+            {t: "القلوب آنية الله في أرضه، فأحبها إليه أرقها وأصلبها وأصفاها.", a: "ابن المسيب"},
+            {t: "من أراد أن يعلم ما له عند الله، فلينظر ما لله عنده.", a: "مالك بن دينار"}
+        ];
+
+        const qBox = document.getElementById('qBox');
+        quotes.forEach((q, i) => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `<p class="text">"${q.t}"</p><span class="author">— ${q.a}</span>`;
+            qBox.appendChild(div);
+            setTimeout(() => div.classList.add('show'), i * 300);
+        });
+    </script>
+</body>
+</html>
