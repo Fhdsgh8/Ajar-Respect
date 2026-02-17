@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كنوز السنة | Ajar Respect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
+        
+        :root { --bg: #05040a; --gold: #c5a059; --card: rgba(20, 15, 35, 0.9); }
+
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0; padding: 20px;
+        }
+
+        .header { text-align: center; padding: 40px 0; border-bottom: 1px double var(--gold); margin-bottom: 30px; }
+        .header h1 { font-family: 'Amiri'; color: var(--gold); font-size: 40px; margin: 0; }
+        .back-link { color: var(--gold); text-decoration: none; position: absolute; top: 20px; right: 20px; font-size: 18px; }
+
+        .sunnah-container {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sunnah-card {
+            background: var(--card);
+            border-right: 5px solid var(--gold);
+            padding: 25px;
+            border-radius: 0 15px 15px 0;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .sunnah-card:hover {
+            background: rgba(197, 160, 89, 0.05);
+            transform: scale(1.01);
+        }
+
+        .category {
+            color: var(--gold);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .title {
+            font-family: 'Amiri';
+            font-size: 26px;
+            color: #fff;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .description {
+            line-height: 1.8;
+            color: #ccc;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .hadith-box {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--gold);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .hadith-box i { margin-left: 10px; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> عودة</a>
+
+    <div class="header">
+        <h1>🛡️ كنوز السنة النبوية</h1>
+        <p>إحياء السنن المنسية في حياة المسلم اليومية</p>
+    </div>
+
+    <div class="sunnah-container" id="sunnahList">
+        </div>
+
+    <script>
+        const sunnahData = [
+            {cat: "سنن الاستيقاظ", t: "مسح أثر النوم عن الوجه", d: "عند الاستيقاظ، يمسح المسلم وجهه بيده لإزالة أثر النوم والكسل.", h: "كان رسول الله ﷺ إذا استيقظ من منامه جلس يمسح النوم عن وجهه بيده."},
+            {cat: "سنن الوضوء", t: "السواك عند الوضوء", d: "استخدام السواك قبل البدء بالوضوء أو معه لتطهير الفم.", h: "قال ﷺ: لولا أن أشق على أمتي لأمرتهم بالسواك مع كل وضوء."},
+            {cat: "سنن اللباس", t: "البدء باليمين عند اللبس", d: "تقديم اليد اليمنى والرجل اليمنى عند ارتداء الثياب أو الحذاء.", h: "كان ﷺ يعجبه التيمن في تنعله، وترجله، وطهوره، وفي شأنه كله."},
+            {cat: "سنن الدخول والخروج", t: "ذكر دخول المنزل", d: "قول (بسم الله ولجنا، وبسم الله خرجنا، وعلى ربنا توكلنا) ثم السلام على الأهل.", h: "قال ﷺ: إذا دخل الرجل بيته فذكر الله عند دخوله.. قال الشيطان: لا مبيت لكم ولا عشاء."},
+            {cat: "سنن الطعام", t: "لعق الأصابع بعد الأكل", d: "سنة مهجورة وهي لعق الأصابع قبل مسحها أو غسلها.", h: "أمر ﷺ بلعق الأصابع والصحفة، وقال: إنكم لا تدرون في أيه البركة."},
+            {cat: "سنن الصلاة", t: "الصلاة إلى سترة", d: "اتخاذ شيء أمام المصلي (جدار، كرسي) ليمنع المرور بين يديه.", h: "قال ﷺ: إذا صلى أحدكم فليصل إلى سترة وليدنُ منها."},
+            {cat: "سنن مهجورة", t: "صلاة ركعتين عند العودة من السفر", d: "كان النبي ﷺ إذا قدم من سفر بدأ بالمسجد فصلى فيه ركعتين.", h: "حديث كعب بن مالك: كان ﷺ لا يقدم من سفر إلا نهاراً في ضحى، فبدأ بالمسجد فصلى فيه ركعتين."},
+            {cat: "سنن النوم", t: "نفض الفراش قبل النوم", d: "نفض الفراش بداخلة الإزار أو طرف الثوب ثلاث مرات.", h: "قال ﷺ: إذا أوى أحدكم إلى فراشه فلينفض فراشه بداخلة إزاره، فإنه لا يدري ما خلفه عليه."},
+            {cat: "سنن التعامل", t: "طلاقة الوجه عند اللقاء", d: "مقابلة الناس بوجه مستبشر ومبتسم.", h: "قال ﷺ: لا تحقرن من المعروف شيئاً، ولو أن تلقى أخاك بوجه طلق."},
+            {cat: "سنن العبادة", t: "صلاة الضحى", d: "صلاة ركعتين إلى ثمان ركعات بعد شروق الشمس بـ15 دقيقة.", h: "قال ﷺ: يصبح على كل سلامى من أحدكم صدقة.. ويجزئ من ذلك ركعتان يركعهما من الضحى."},
+            {cat: "سنن العبادة", t: "سجدة الشكر", d: "السجود فور سماع خبر سار أو اندفاع بلاء.", h: "كان النبي ﷺ إذا أتاه أمر يسر به خر ساجداً شكراً لله."},
+            {cat: "سنن الذكر", t: "التسبيح عند الهبوط والتكبير عند الصعود", d: "قول (الله أكبر) عند صعود المرتفعات و (سبحان الله) عند الهبوط.", h: "عن جابر: كنا إذا صعدنا كبرنا، وإذا نزلنا سبحنا."},
+            {cat: "سنن المرض", t: "وضع اليد على موضع الألم والدعاء", d: "تضع يدك على المكان الذي يؤلمك وتقول بسم الله (3) وأعوذ بعزة الله وقدرته.. (7).", h: "حديث عثمان بن أبي العاص عندما شكى وجعاً لرسول الله ﷺ فأمره بذلك."},
+            {cat: "سنن النوم", t: "الوضوء قبل النوم", d: "النوم على طهارة كاملة.", h: "قال ﷺ: إذا أتيت مضجعك فتوضأ وضوءك للصلاة."},
+            {cat: "سنن مهجورة", t: "ركعتي التوبة", d: "صلاة ركعتين بعد ارتكاب ذنب بنية التوبة والاستغفار.", h: "قال ﷺ: ما من عبد يذنب ذنباً فيحسن الطهور، ثم يقوم فيصلي ركعتين، ثم يستغفر الله إلا غفر الله له."}
+        ];
+
+        const container = document.getElementById('sunnahList');
+        sunnahData.forEach(s => {
+            container.innerHTML += `
+                <div class="sunnah-card">
+                    <span class="category">${s.cat}</span>
+                    <span class="title">${s.t}</span>
+                    <p class="description">${s.d}</p>
+                    <div class="hadith-box">
+                        <i class="fa-solid fa-quote-right"></i>
+                        ${s.h}
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
