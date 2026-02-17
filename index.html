@@ -3,118 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajar Respect | الواجهة الرئيسية</title>
+    <title>Ajar Respect | الموسوعة الرمضانية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
-        :root { --gold: #c5a059; --glass: rgba(255, 255, 255, 0.05); }
-        body { margin: 0; background: #05040a; color: white; font-family: 'Reem Kufi', sans-serif; overflow-x: hidden; }
+        :root { --gold: #c5a059; --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(197, 160, 89, 0.2); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: radial-gradient(circle at top, #1a1a2e, #05040a); color: white; font-family: 'Reem Kufi', sans-serif; min-height: 100vh; overflow-x: hidden; }
         #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
-        .wrapper { max-width: 500px; margin: auto; padding: 20px; text-align: center; }
+        .wrapper { width: 100%; max-width: 500px; margin: auto; padding: 40px 20px; text-align: center; }
         
-        /* قسم عداد الصلاة والتاريخ الهجري */
-        .prayer-timer {
+        /* شريط المعلومات العلوي */
+        .top-info-bar {
             background: linear-gradient(135deg, rgba(197, 160, 89, 0.1), transparent);
-            border: 1px solid var(--gold);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
+            border: 1px solid var(--gold); border-radius: 20px; padding: 15px; margin-bottom: 25px; backdrop-filter: blur(5px);
         }
-        .prayer-timer h2 { margin: 0; font-size: 18px; color: var(--gold); }
-        .prayer-timer #timer { font-size: 24px; font-weight: bold; margin: 5px 0; }
-        .prayer-timer #hijriDate { font-size: 14px; opacity: 0.8; }
+        .prayer-next { font-size: 16px; color: var(--gold); margin: 0; }
+        .countdown { font-size: 28px; font-weight: bold; margin: 5px 0; font-family: sans-serif; }
+        .hijri-date { font-size: 14px; opacity: 0.8; border-top: 1px solid rgba(197, 160, 89, 0.2); padding-top: 5px; margin-top: 5px; }
+
+        .ramadan-header { margin-bottom: 30px; }
+        .ramadan-header i { color: var(--gold); font-size: 55px; filter: drop-shadow(0 0 15px var(--gold)); }
+        .ramadan-header h1 { font-family: 'Amiri'; font-size: 48px; margin: 10px 0 0; background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .main-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .menu-card {
-            background: var(--glass);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            border-radius: 20px;
-            padding: 20px;
-            text-decoration: none;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: 0.3s;
-        }
-        .menu-card:active { transform: scale(0.95); border-color: var(--gold); }
-        .menu-card i { font-size: 28px; margin-bottom: 10px; color: var(--gold); }
-        .full-width { grid-column: span 2; }
-        
-        .quran-btn { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold); padding: 30px; }
-        .quran-btn i { font-size: 40px; }
+        .menu-card { background: var(--glass); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px 10px; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: 0.4s; }
+        .menu-card i { font-size: 28px; margin-bottom: 12px; color: var(--gold); }
+        .menu-card span { font-weight: 700; font-size: 15px; }
+        .quran-btn { grid-column: span 2; padding: 35px; background: linear-gradient(135deg, rgba(197, 160, 89, 0.15), transparent); border: 1px solid var(--gold); }
+        .quran-btn span { font-family: 'Amiri'; font-size: 24px; }
+        .khatm-btn { grid-column: span 2; background: rgba(197, 160, 89, 0.05); border: 1px dashed var(--gold); margin-bottom: 5px; }
+        .menu-card:active { transform: translateY(-5px); border-color: var(--gold); }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <div class="wrapper">
-        <header style="margin-bottom:30px;">
-            <h1 style="font-family:'Amiri'; font-size:40px; color:var(--gold); margin:0;">AJAR RESPECT</h1>
+        <header class="ramadan-header">
+            <i class="fa-solid fa-moon"></i>
+            <h1>AJAR RESPECT</h1>
+            <p style="color: var(--gold); font-size: 14px; margin-top: 5px;">موسوعة رمضان الإيمانية 2026</p>
         </header>
 
-        <div class="prayer-timer">
-            <h2>الصلاة القادمة: <span id="prayerName">الظهر</span></h2>
-            <div id="timer">00:00:00</div>
-            <div id="hijriDate">جاري تحميل التاريخ الهجري...</div>
+        <div class="top-info-bar">
+            <p class="prayer-next">الصلاة القادمة: <span id="p-name">جاري التحديد...</span></p>
+            <div class="countdown" id="p-timer">00:00:00</div>
+            <div class="hijri-date" id="hijri-display"></div>
         </div>
 
         <nav class="main-menu">
-            <a href="quran.html" class="menu-card full-width quran-btn">
-                <i class="fa-solid fa-quran"></i>
-                <span style="font-size:22px; font-family:'Amiri';">القرآن الكريم</span>
-            </a>
-
-            <a href="khatm.html" class="menu-card full-width" style="border-style: dashed;">
-                <i class="fa-solid fa-book-open-reader"></i>
-                <span>طرق ختم القرآن في رمضان</span>
-            </a>
-
-            <a href="prayers.html" class="menu-card">
-                <i class="fa-solid fa-mosque"></i>
-                <span>أوقات الصلاة</span>
-            </a>
-            <a href="azkar.html" class="menu-card">
-                <i class="fa-solid fa-bead-tree"></i>
-                <span>الأذكار</span>
-            </a>
-            <a href="community.html" class="menu-card">
-                <i class="fa-solid fa-box-open"></i>
-                <span>زاد المسلم</span>
-            </a>
-            <a href="books.html" class="menu-card">
-                <i class="fa-solid fa-book"></i>
-                <span>ملخصات الكتب</span>
-            </a>
+            <a href="quran.html" class="menu-card quran-btn"><i class="fa-solid fa-quran"></i><span>القرآن الكريم</span></a>
+            <a href="khatm.html" class="menu-card khatm-btn"><i class="fa-solid fa-book-open-reader"></i><span>طريقة ختم القرآن في رمضان</span></a>
+            
+            <a href="prayers.html" class="menu-card"><i class="fa-solid fa-mosque"></i><span>أوقات الصلاة</span></a>
+            <a href="tasbih.html" class="menu-card"><i class="fa-solid fa-fingerprint"></i><span>السبحة الإلكترونية</span></a>
+            <a href="azkar.html" class="menu-card"><i class="fa-solid fa-bead-tree"></i><span>الأذكار</span></a>
+            <a href="community.html" class="menu-card"><i class="fa-solid fa-box-open"></i><span>زاد المسلم</span></a>
+            <a href="names.html" class="menu-card"><i class="fa-solid fa-gem"></i><span>أسماء الله</span></a>
+            <a href="sunnah.html" class="menu-card"><i class="fa-solid fa-shield-halved"></i><span>كنوز السنة</span></a>
+            <a href="fiqh.html" class="menu-card"><i class="fa-solid fa-scale-balanced"></i><span>فقه الصائم</span></a>
+            <a href="qa.html" class="menu-card"><i class="fa-solid fa-clipboard-question"></i><span>سؤال وجواب</span></a>
+            <a href="quotes.html" class="menu-card"><i class="fa-solid fa-scroll"></i><span>روائع التابعين</span></a>
+            <a href="history.html" class="menu-card"><i class="fa-solid fa-calendar-day"></i><span>حدث في رمضان</span></a>
+            <a href="books.html" class="menu-card quran-btn" style="margin-top:10px;"><i class="fa-solid fa-book-quran"></i><span>ملخصات الكتب</span></a>
         </nav>
     </div>
 
     <script>
-        // كود بسيط لعرض التاريخ الهجري (تجريبي)
-        const date = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(new Date());
-        document.getElementById('hijriDate').innerText = date;
+        // 1. تحديث التاريخ الهجري تلقائياً كل يوم
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('hijri-display').innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', options).format(new Date());
 
-        // عداد وهمي للصلاة القادمة (يمكن ربطه بـ API لاحقاً)
-        function startTimer() {
-            let seconds = 3600; // مثال: ساعة واحدة
-            setInterval(() => {
-                let h = Math.floor(seconds / 3600);
-                let m = Math.floor((seconds % 3600) / 60);
-                let s = seconds % 60;
-                document.getElementById('timer').innerText = 
-                    (h<10?'0':'')+h + ":" + (m<10?'0':'')+m + ":" + (s<10?'0':'')+s;
-                if(seconds > 0) seconds--;
-            }, 1000);
+        // 2. نظام أوقات الصلاة التلقائي (تقريبي)
+        const prayers = [
+            { name: "الفجر", time: "05:00" }, { name: "الظهر", time: "12:20" },
+            { name: "العصر", time: "15:45" }, { name: "المغرب", time: "18:15" }, { name: "العشاء", time: "19:45" }
+        ];
+
+        function updatePrayer() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            let nextPrayer = prayers[0];
+            let found = false;
+
+            for (let p of prayers) {
+                let [h, m] = p.time.split(':').map(Number);
+                if ((h * 60 + m) > currentTime) {
+                    nextPrayer = p;
+                    found = true;
+                    break;
+                }
+            }
+
+            document.getElementById('p-name').innerText = nextPrayer.name;
+            
+            // حساب الوقت المتبقي
+            let [ph, pm] = nextPrayer.time.split(':').map(Number);
+            let pDate = new Date();
+            pDate.setHours(ph, pm, 0);
+            if (!found) pDate.setDate(pDate.getDate() + 1); // لو الصلاة القادمة هي فجر اليوم التالي
+
+            let diff = pDate - now;
+            let hours = Math.floor(diff / 3600000);
+            let mins = Math.floor((diff % 3600000) / 60000);
+            let secs = Math.floor((diff % 60000) / 1000);
+            document.getElementById('p-timer').innerText = 
+                `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
         }
-        startTimer();
+
+        setInterval(updatePrayer, 1000);
+        updatePrayer();
 
         particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 50 },
-                "color": { "value": "#c5a059" },
-                "size": { "value": 2 },
-                "move": { "enable": true, "speed": 1, "direction": "bottom" }
-            }
+            "particles": { "number": { "value": 60 }, "color": { "value": "#c5a059" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 0.5, "direction": "bottom" }}
         });
     </script>
 </body>
