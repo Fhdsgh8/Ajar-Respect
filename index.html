@@ -3,251 +3,932 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أجر ريسبكت | Ajar Respect</title>
+    <title>أجر ريسبكت | Ajar Respect - رمضان</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0b071a; --card: rgba(26, 20, 45, 0.95); --accent: #a37cf0; --gold: #D4AF37; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; background-image: radial-gradient(circle at top right, #1e1042, transparent); }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f35 50%, #2a1e3a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* تأثير الزخرفة الرمضانية الخلفية */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 90% 70%, rgba(163, 124, 240, 0.05) 0%, transparent 40%),
+                repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.02) 0px, rgba(212, 175, 55, 0.02) 2px, transparent 2px, transparent 10px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* فوانيس رمضان المتحركة */
+        .lantern {
+            position: fixed;
+            font-size: 2rem;
+            color: rgba(212, 175, 55, 0.2);
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .lantern1 { top: 50px; left: 20px; animation-delay: 0s; }
+        .lantern2 { bottom: 50px; right: 20px; animation-delay: 2s; }
+        .lantern3 { top: 30%; right: 5%; animation-delay: 4s; }
+        .lantern4 { bottom: 20%; left: 3%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-20px) rotate(5deg); opacity: 0.3; }
+        }
+
+        /* النجوم المتلألئة */
+        .star {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 10px #D4AF37; }
+        }
+
+        :root {
+            --primary: #D4AF37;
+            --primary-dark: #b88d2b;
+            --secondary: #a37cf0;
+            --bg-glass: rgba(20, 15, 40, 0.7);
+            --bg-glass-heavy: rgba(15, 10, 35, 0.9);
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            --shadow-gold: 0 5px 20px rgba(212, 175, 55, 0.3);
+            --border-glow: 1px solid rgba(212, 175, 55, 0.3);
+            --border-glow-strong: 1px solid rgba(212, 175, 55, 0.6);
+        }
+
         /* نظام التنقل */
-        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page {
+            display: none;
+            padding: 20px;
+            animation: pageFade 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        /* الهيدر */
-        header { text-align: center; padding: 30px; }
-        .logo { font-size: 3rem; color: var(--gold); font-family: 'Amiri'; font-weight: 900; text-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .page.active {
+            display: block;
+        }
 
-        /* صندوق الحالة العلوي */
-        .status-box { background: var(--card); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 25px; max-width: 600px; margin: 0 auto 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #p-timer { font-size: 3.5rem; font-weight: 900; color: var(--gold); display: block; }
+        @keyframes pageFade {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* الهيدر المطور */
+        header {
+            text-align: center;
+            padding: 30px 20px 40px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-family: 'Amiri', serif;
+            font-weight: 900;
+            background: linear-gradient(135deg, #D4AF37, #f5e6b0, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            margin-bottom: 10px;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.8)); }
+        }
+
+        .logo-sub {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        /* صندوق الحالة المطور */
+        .status-box {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: var(--border-glow);
+            border-radius: 50px;
+            padding: 30px;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            text-align: center;
+            box-shadow: var(--shadow), var(--shadow-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #prayer-label {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        #p-timer {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 30px var(--primary);
+            line-height: 1;
+            font-family: 'Cairo', sans-serif;
+            position: relative;
+        }
+
+        #hijri-date {
+            font-family: 'Amiri', serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: var(--border-glow);
+        }
 
         /* الشبكة الرئيسية */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; max-width: 1000px; margin: 0 auto; }
-        .card { background: var(--card); border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .card:hover { transform: translateY(-7px); border-color: var(--gold); background: rgba(163, 124, 240, 0.1); }
-        .card i { font-size: 2.2rem; margin-bottom: 12px; display: block; color: var(--gold); }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px;
+        }
 
-        /* زر إحسان الخاص */
-        .ehsan-card { background: linear-gradient(135deg, #1d976c, #93f9b9) !important; color: #000 !important; font-weight: bold; border: none !important; }
-        .ehsan-card i { color: #000 !important; }
+        .card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 30px 15px;
+            text-align: center;
+            cursor: pointer;
+            border: var(--border-glow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
 
-        /* المواقيت والمدخلات */
-        .input-group { margin: 20px 0; }
-        input { width: 45%; padding: 12px; border-radius: 12px; border: 1px solid var(--gold); background: #0b071a; color: white; margin: 5px; text-align: center; font-family: 'Cairo'; }
-        .btn-action { background: var(--gold); color: #000; border: none; padding: 12px 30px; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.95); }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
 
-        /* المسبحة */
-        .sebha-btn { width: 220px; height: 220px; border-radius: 50%; border: 12px solid var(--gold); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 900; cursor: pointer; background: radial-gradient(circle, #1a142d, #0b071a); box-shadow: 0 0 30px rgba(212,175,55,0.1); }
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
 
-        /* القائمة والمعلومات */
-        .info-card { background: var(--card); padding: 20px; border-radius: 15px; border-right: 5px solid var(--gold); margin-bottom: 15px; line-height: 1.8; text-align: right; }
-        .back-btn { background: var(--gold); color: #000; border: none; padding: 10px 25px; border-radius: 12px; cursor: pointer; margin-bottom: 25px; font-weight: bold; }
+        .card:hover::before {
+            left: 100%;
+        }
 
-        /* التحديات الصارمة */
-        .opt-btn { display: block; width: 100%; padding: 18px; margin: 10px 0; background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--accent); border-radius: 15px; cursor: pointer; font-size: 1.1rem; text-align: center; }
-        .opt-btn.correct { background: #2ecc71 !important; border-color: #fff; }
-        .opt-btn.wrong { background: #e74c3c !important; border-color: #fff; }
-        .disabled { pointer-events: none; opacity: 0.7; }
+        .card i {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .ehsan-card {
+            background: linear-gradient(135deg, #1d976c, #2ecc71);
+            border: none !important;
+        }
+
+        .ehsan-card i {
+            color: #fff !important;
+        }
+
+        /* الأزرار */
+        .back-btn {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--primary);
+            border: var(--border-glow);
+            padding: 15px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: transparent;
+            transform: translateX(-5px);
+        }
+
+        .btn-action {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-action:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* المدخلات */
+        input {
+            width: 45%;
+            padding: 15px;
+            border-radius: 40px;
+            border: var(--border-glow);
+            background: var(--bg-glass-heavy);
+            color: white;
+            margin: 5px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* المسبحة المطورة */
+        .sebha-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #sebha-txt {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-family: 'Amiri', serif;
+            margin-bottom: 20px;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; text-shadow: 0 0 30px var(--primary); }
+        }
+
+        .sebha-btn {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: 900;
+            cursor: pointer;
+            background: radial-gradient(circle at 30% 30%, #2a1e3a, #0a0f1e);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+            transition: all 0.1s ease;
+            position: relative;
+        }
+
+        .sebha-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 70px rgba(212, 175, 55, 0.6);
+        }
+
+        .sebha-btn::after {
+            content: '🕌';
+            position: absolute;
+            top: -20px;
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        .reset-btn {
+            background: none;
+            border: var(--border-glow);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* بطاقات المعلومات */
+        .info-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 30px;
+            border-right: 5px solid var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: right;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* تحديثات المواقيت */
+        #times-list div {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: var(--border-glow);
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+
+        #times-list div:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* تحسين أزرار الاختيار */
+        .opt-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin: 10px 0;
+            background: var(--bg-glass);
+            color: white;
+            border: var(--border-glow);
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .opt-btn:hover:not(.disabled) {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        .opt-btn.correct {
+            background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
+            border-color: #fff;
+            animation: pulse 0.5s;
+        }
+
+        .opt-btn.wrong {
+            background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+            border-color: #fff;
+            animation: shake 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* تحسين الاختيار */
+        #s-select {
+            width: 100%;
+            padding: 15px;
+            background: var(--bg-glass);
+            color: white;
+            border-radius: 40px;
+            border: var(--border-glow);
+            margin-bottom: 20px;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+        }
+
+        #s-select option {
+            background: #1a1f35;
+        }
+
+        /* تحسين الأذكار */
+        #azkar-list .info-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #azkar-list button {
+            background: var(--primary);
+            border: none;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #azkar-list button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* تحسين iframe */
+        iframe {
+            width: 100%;
+            height: 85vh;
+            border-radius: 30px;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow), var(--shadow-gold);
+        }
+
+        /* رسالة التحميل */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* تنسيقات متجاوبة */
+        @media (max-width: 768px) {
+            .logo { font-size: 3rem; }
+            #p-timer { font-size: 3.5rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .card { padding: 20px 10px; }
+            .card i { font-size: 2rem; }
+            .sebha-btn { width: 220px; height: 220px; font-size: 4rem; }
+        }
     </style>
 </head>
 <body>
 
-<div id="home-page" class="page active">
-    <header><h1 class="logo">أجر ريسبكت</h1></header>
+    <!-- عناصر الزخرفة الرمضانية -->
+    <div class="lantern lantern1">🏮</div>
+    <div class="lantern lantern2">🏮</div>
+    <div class="lantern lantern3">🏮</div>
+    <div class="lantern lantern4">🏮</div>
     
-    <div class="status-box">
-        <div id="prayer-label" style="color:var(--gold); font-weight:bold;">جاري تحميل المواقيت...</div>
-        <span id="p-timer">00:00:00</span>
-        <div id="hijri-date" style="margin-top:10px; font-family:'Amiri'; opacity:0.8"></div>
-    </div>
+    <!-- النجوم -->
+    <div class="star" style="top: 10%; left: 5%;"></div>
+    <div class="star" style="top: 20%; right: 15%;"></div>
+    <div class="star" style="bottom: 30%; left: 10%;"></div>
+    <div class="star" style="bottom: 40%; right: 5%;"></div>
+    <div class="star" style="top: 50%; left: 20%;"></div>
+    <div class="star" style="top: 80%; right: 25%;"></div>
 
-    <div class="grid">
-        <div class="card" onclick="openPage('quran-page')"><i class="fas fa-book-quran"></i><h3>القرآن</h3></div>
-        <div class="card" onclick="openPage('sebha-page')"><i class="fas fa-fingerprint"></i><h3>المسبحة</h3></div>
-        <div class="card" onclick="openPage('times-page')"><i class="fas fa-clock"></i><h3>المواقيت</h3></div>
-        <div class="card" onclick="openPage('zad-page')"><i class="fas fa-lightbulb"></i><h3>زاد المسلم</h3></div>
-        <div class="card" onclick="openPage('azkar-page')"><i class="fas fa-hands-praying"></i><h3>الأذكار</h3></div>
-        <div class="card" onclick="openPage('quiz-page')"><i class="fas fa-trophy"></i><h3>التحديات</h3></div>
-        <div class="card" onclick="openPage('hadith-page')"><i class="fas fa-scroll"></i><h3>الأحاديث</h3></div>
-        <div class="card" onclick="openPage('stories-page')"><i class="fas fa-mosque"></i><h3>القصص</h3></div>
-        <div class="card ehsan-card" onclick="window.open('https://ehsan.sa/', '_blank')"><i class="fas fa-heart-pulse"></i><h3>منصة إحسان</h3></div>
-    </div>
-</div>
-
-<div id="times-page" class="page">
-    <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <div class="status-box" style="max-width: 550px;">
-        <h2 style="margin-bottom:15px; color:var(--gold)">🕌 مواقيت الصلاة</h2>
-        <div class="input-group">
-            <input type="text" id="cityIn" placeholder="المدينة (مثلاً: Riyadh)">
-            <input type="text" id="countryIn" placeholder="الدولة (مثلاً: Saudi Arabia)">
-            <button class="btn-action" onclick="getPrayerTimes()">عرض الأوقات وتحديث العد</button>
+    <!-- الصفحة الرئيسية -->
+    <div id="home-page" class="page active">
+        <header>
+            <h1 class="logo">أجر ريسبكت</h1>
+            <div class="logo-sub">رمضان 1445 هـ</div>
+        </header>
+        
+        <div class="status-box">
+            <div id="prayer-label">الصلاة القادمة: جاري التحميل...</div>
+            <span id="p-timer">00:00:00</span>
+            <div id="hijri-date"></div>
         </div>
-        <div id="times-list" style="margin-top:20px;"></div>
+
+        <div class="grid">
+            <div class="card" onclick="openPage('quran-page')"><i class="fas fa-book-quran"></i><h3>القرآن</h3></div>
+            <div class="card" onclick="openPage('sebha-page')"><i class="fas fa-fingerprint"></i><h3>المسبحة</h3></div>
+            <div class="card" onclick="openPage('times-page')"><i class="fas fa-clock"></i><h3>المواقيت</h3></div>
+            <div class="card" onclick="openPage('zad-page')"><i class="fas fa-lightbulb"></i><h3>زاد المسلم</h3></div>
+            <div class="card" onclick="openPage('azkar-page')"><i class="fas fa-hands-praying"></i><h3>الأذكار</h3></div>
+            <div class="card" onclick="openPage('quiz-page')"><i class="fas fa-trophy"></i><h3>التحديات</h3></div>
+            <div class="card" onclick="openPage('hadith-page')"><i class="fas fa-scroll"></i><h3>الأحاديث</h3></div>
+            <div class="card" onclick="openPage('stories-page')"><i class="fas fa-mosque"></i><h3>القصص</h3></div>
+            <div class="card ehsan-card" onclick="window.open('https://ehsan.sa/', '_blank')"><i class="fas fa-heart-pulse"></i><h3>منصة إحسان</h3></div>
+        </div>
     </div>
-</div>
 
-<div id="quran-page" class="page">
-    <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <iframe src="https://quran.com/ar" style="width:100%; height:85vh; border-radius:25px; border:6px solid var(--card);"></iframe>
-</div>
-
-<div id="sebha-page" class="page">
-    <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <div style="text-align:center">
-        <h2 id="sebha-txt" style="color:var(--gold); font-size:2rem; font-family:'Amiri'">سبحان الله</h2>
-        <div class="sebha-btn" onclick="sebhaClick()">0</div>
-        <button onclick="sebhaReset()" style="background:none; border:1px solid #fff; color:#fff; padding:10px 30px; border-radius:15px;">تصفير العداد</button>
+    <!-- صفحة المواقيت -->
+    <div id="times-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div class="status-box">
+            <h2 style="margin-bottom: 20px; color: var(--primary); font-size: 2rem;">🕌 مواقيت الصلاة</h2>
+            <div class="input-group">
+                <input type="text" id="cityIn" placeholder="المدينة (مثلاً: Riyadh)" value="Riyadh">
+                <input type="text" id="countryIn" placeholder="الدولة (مثلاً: Saudi Arabia)" value="Saudi Arabia">
+                <button class="btn-action" onclick="getPrayerTimes()">
+                    <i class="fas fa-search"></i> عرض الأوقات وتحديث العد
+                </button>
+            </div>
+            <div id="times-list" style="margin-top: 25px;"></div>
+        </div>
     </div>
-</div>
 
-<div id="zad-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div id="zad-list"></div></div>
-<div id="azkar-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div id="azkar-list"></div></div>
-<div id="quiz-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div class="status-box" style="max-width:600px;"><h2 id="q-text" style="margin-bottom:20px;"></h2><div id="q-opts"></div></div></div>
-<div id="hadith-page" class="page"><button class="back-btn" onclick="openPage('home-page')">← عودة</button><div class="status-box" style="max-width:800px;"><p id="h-txt" style="line-height:2.2; font-family:'Amiri'; font-size:1.3rem;"></p><button onclick="fetchHadith()" class="btn-action">حديث آخر</button></div></div>
-<div id="stories-page" class="page">
-    <button class="back-btn" onclick="openPage('home-page')">← عودة</button>
-    <select id="s-select" onchange="showStory()" style="width:100%; padding:15px; background:var(--card); color:white; border-radius:12px; border:1px solid var(--gold); margin-bottom:20px;">
-        <option value="adam">آدم عليه السلام</option>
-        <option value="noah">نوح عليه السلام</option>
-        <option value="ibrahim">إبراهيم عليه السلام</option>
-        <option value="moussa">موسى عليه السلام</option>
-        <option value="mohammad">محمد ﷺ</option>
-    </select>
-    <div id="s-content" class="info-card" style="font-family:'Amiri'; font-size:1.2rem;"></div>
-</div>
+    <!-- صفحة القرآن -->
+    <div id="quran-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <iframe src="https://quran.com/ar" title="القرآن الكريم"></iframe>
+    </div>
 
-<script>
-    function openPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id === 'zad-page') renderZad();
-        if(id === 'azkar-page') renderAzkar();
-        if(id === 'quiz-page') loadQuiz();
-        if(id === 'hadith-page') fetchHadith();
-    }
+    <!-- صفحة المسبحة -->
+    <div id="sebha-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div class="sebha-container">
+            <h2 id="sebha-txt">سبحان الله</h2>
+            <div class="sebha-btn" onclick="sebhaClick()">0</div>
+            <button class="reset-btn" onclick="sebhaReset()">
+                <i class="fas fa-redo-alt"></i> تصفير العداد
+            </button>
+        </div>
+    </div>
 
-    // المسبحة
-    let sCount = 0;
-    const sLabels = ["سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله"];
-    function sebhaClick() { 
-        sCount++; document.querySelector('.sebha-btn').innerText = sCount; 
-        if(sCount % 33 === 0) {
-            navigator.vibrate(100);
-            document.getElementById('sebha-txt').innerText = sLabels[Math.floor(Math.random()*sLabels.length)];
+    <!-- صفحة زاد المسلم -->
+    <div id="zad-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div id="zad-list"></div>
+    </div>
+
+    <!-- صفحة الأذكار -->
+    <div id="azkar-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div id="azkar-list"></div>
+    </div>
+
+    <!-- صفحة التحديات -->
+    <div id="quiz-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div class="status-box">
+            <h2 id="q-text" style="margin-bottom: 25px;"></h2>
+            <div id="q-opts"></div>
+        </div>
+    </div>
+
+    <!-- صفحة الأحاديث -->
+    <div id="hadith-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <div class="status-box">
+            <p id="h-txt" style="line-height: 2.2; font-family: 'Amiri', serif; font-size: 1.4rem;"></p>
+            <button onclick="fetchHadith()" class="btn-action">
+                <i class="fas fa-random"></i> حديث آخر
+            </button>
+        </div>
+    </div>
+
+    <!-- صفحة القصص -->
+    <div id="stories-page" class="page">
+        <button class="back-btn" onclick="openPage('home-page')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <select id="s-select" onchange="showStory()">
+            <option value="adam">آدم عليه السلام</option>
+            <option value="noah">نوح عليه السلام</option>
+            <option value="ibrahim">إبراهيم عليه السلام</option>
+            <option value="moussa">موسى عليه السلام</option>
+            <option value="mohammad">محمد ﷺ</option>
+        </select>
+        <div id="s-content" class="info-card" style="font-family: 'Amiri', serif; font-size: 1.3rem;"></div>
+    </div>
+
+    <script>
+        // فتح الصفحات
+        function openPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // تحميل المحتوى حسب الصفحة
+            if (id === 'zad-page') renderZad();
+            if (id === 'azkar-page') renderAzkar();
+            if (id === 'quiz-page') loadQuiz();
+            if (id === 'hadith-page') fetchHadith();
+            
+            // تمرير لأعلى الصفحة
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    }
-    function sebhaReset() { sCount = 0; document.querySelector('.sebha-btn').innerText = 0; }
 
-    // مواقيت الصلاة (بالمدن والدول)
-    let pTimes = {};
-    async function getPrayerTimes() {
-        const city = document.getElementById('cityIn').value || 'Riyadh';
-        const country = document.getElementById('countryIn').value || 'Saudi Arabia';
-        try {
-            const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=4`);
-            const d = await res.json();
-            if(d.code === 200) {
-                pTimes = d.data.timings;
-                const list = document.getElementById('times-list'); list.innerHTML = "";
-                const map = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
-                for(let k in map) {
-                    list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #333; font-size:1.2rem;"><span>${map[k]}</span><span style="color:var(--gold)">${pTimes[k]}</span></div>`;
+        // المسبحة المحسنة
+        let sCount = 0;
+        const sLabels = ["سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله", "أستغفر الله", "اللهم صل على محمد"];
+        
+        function sebhaClick() { 
+            sCount++; 
+            document.querySelector('.sebha-btn').innerText = sCount; 
+            
+            // اهتزاز إذا كان متاحاً
+            if (sCount % 33 === 0) {
+                if (navigator.vibrate) navigator.vibrate(100);
+                
+                // تغيير النص مع تأثير
+                const newText = sLabels[Math.floor(Math.random() * sLabels.length)];
+                document.getElementById('sebha-txt').style.animation = 'none';
+                setTimeout(() => {
+                    document.getElementById('sebha-txt').innerText = newText;
+                    document.getElementById('sebha-txt').style.animation = 'fadeInOut 2s ease-in-out';
+                }, 10);
+            }
+        }
+        
+        function sebhaReset() { 
+            sCount = 0; 
+            document.querySelector('.sebha-btn').innerText = 0;
+            document.getElementById('sebha-txt').innerText = sLabels[0];
+        }
+
+        // مواقيت الصلاة
+        let pTimes = {};
+        
+        async function getPrayerTimes() {
+            const city = document.getElementById('cityIn').value || 'Riyadh';
+            const country = document.getElementById('countryIn').value || 'Saudi Arabia';
+            
+            document.getElementById('times-list').innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> جاري تحميل المواقيت...</div>';
+            
+            try {
+                const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=4`);
+                const d = await res.json();
+                
+                if (d.code === 200) {
+                    pTimes = d.data.timings;
+                    const list = document.getElementById('times-list');
+                    list.innerHTML = "";
+                    
+                    const map = {Fajr: "الفجر", Dhuhr: "الظهر", Asr: "العصر", Maghrib: "المغرب", Isha: "العشاء"};
+                    
+                    for (let k in map) {
+                        list.innerHTML += `
+                            <div>
+                                <span>${map[k]}</span>
+                                <span style="color: var(--primary); font-weight: bold;">${pTimes[k]}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    document.getElementById('prayer-label').innerHTML = `مواقيت الصلاة في ${city}`;
+                } else {
+                    alert("يرجى كتابة اسم المدينة والدولة بالإنجليزية بشكل صحيح");
                 }
-                document.getElementById('prayer-label').innerText = `مواقيت الصلاة في ${city}`;
-            } else { alert("يرجى كتابة اسم المدينة والدولة بالإنجليزية بشكل صحيح"); }
-        } catch(e) { console.log("Error fetching times"); }
-    }
-
-    function updateTimer() {
-        if(!pTimes.Fajr) return;
-        const now = new Date();
-        const map = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
-        let next = null;
-        for(let k in map) {
-            let [h, m] = pTimes[k].split(':');
-            let t = new Date(); t.setHours(h, m, 0);
-            if(t > now) { next = {n: map[k], t: t}; break; }
+            } catch (e) {
+                document.getElementById('times-list').innerHTML = '<div class="info-card">حدث خطأ في جلب المواقيت</div>';
+            }
         }
-        if(!next) { 
-            let [h, m] = pTimes.Fajr.split(':');
-            next = {n:"الفجر", t: new Date(now.getTime()+86400000)}; next.t.setHours(h,m,0);
+
+        // تحديث العداد
+        function updateTimer() {
+            if (!pTimes.Fajr) {
+                document.getElementById('p-timer').innerText = '--:--:--';
+                return;
+            }
+            
+            const now = new Date();
+            const map = {Fajr: "الفجر", Dhuhr: "الظهر", Asr: "العصر", Maghrib: "المغرب", Isha: "العشاء"};
+            let next = null;
+            
+            for (let k in map) {
+                let [h, m] = pTimes[k].split(':');
+                let t = new Date();
+                t.setHours(parseInt(h), parseInt(m), 0);
+                
+                if (t > now) {
+                    next = {name: map[k], time: t};
+                    break;
+                }
+            }
+            
+            if (!next) {
+                let [h, m] = pTimes.Fajr.split(':');
+                next = {name: "الفجر", time: new Date(now.getTime() + 86400000)};
+                next.time.setHours(parseInt(h), parseInt(m), 0);
+            }
+            
+            const diff = next.time - now;
+            const hh = Math.floor(diff / 3600000);
+            const mm = Math.floor((diff % 3600000) / 60000);
+            const ss = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('p-timer').innerText = `${hh.toString().padStart(2, '0')}:${mm.toString().padStart(2, '0')}:${ss.toString().padStart(2, '0')}`;
+            document.getElementById('prayer-label').innerHTML = `الصلاة القادمة: ${next.name}`;
         }
-        const diff = next.t - now;
-        const hh = Math.floor(diff/3600000); const mm = Math.floor((diff%3600000)/60000); const ss = Math.floor((diff%60000)/1000);
-        document.getElementById('p-timer').innerText = `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}:${ss.toString().padStart(2,'0')}`;
-        document.getElementById('prayer-label').innerText = "الصلاة القادمة: " + next.n;
-    }
-    setInterval(updateTimer, 1000);
+        
+        setInterval(updateTimer, 1000);
 
-    // زاد المسلم (150)
-    function renderZad() {
-        const c = document.getElementById('zad-list'); c.innerHTML = "";
-        for(let i=1; i<=150; i++) {
-            c.innerHTML += `<div class="info-card"><h3>معلومة #${i}</h3><p>أحب الأعمال إلى الله أدومها وإن قل.</p></div>`;
+        // زاد المسلم
+        function renderZad() {
+            const c = document.getElementById('zad-list');
+            c.innerHTML = "";
+            
+            const facts = [
+                "أحب الأعمال إلى الله أدومها وإن قل.",
+                "الدنيا سجن المؤمن وجنة الكافر.",
+                "تفكر ساعة خير من قيام ليلة.",
+                "الحياء لا يأتي إلا بخير.",
+                "تبسمك في وجه أخيك صدقة.",
+                "الكلمة الطيبة صدقة.",
+                "إماطة الأذى عن الطريق صدقة.",
+                "صلاة الجماعة أفضل من صلاة الفرد بسبع وعشرين درجة.",
+                "من صام رمضان إيماناً واحتساباً غفر له ما تقدم من ذنبه.",
+                "من قام ليلة القدر إيماناً واحتساباً غفر له ما تقدم من ذنبه."
+            ];
+            
+            for (let i = 1; i <= 50; i++) {
+                c.innerHTML += `
+                    <div class="info-card">
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">💡 معلومة #${i}</h3>
+                        <p>${facts[i % facts.length]}</p>
+                    </div>
+                `;
+            }
         }
-    }
 
-    // الأذكار (200)
-    function renderAzkar() {
-        const c = document.getElementById('azkar-list'); c.innerHTML = "";
-        for(let i=1; i<=200; i++) {
-            c.innerHTML += `<div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <span>ذكر #${i}: لا إله إلا الله وحده لا شريك له</span>
-                <button onclick="this.innerText-- > 1 ? null : this.innerText='✓'" style="background:var(--gold); border:none; padding:8px 20px; border-radius:20px; font-weight:bold; cursor:pointer;">33</button>
-            </div>`;
+        // الأذكار
+        function renderAzkar() {
+            const c = document.getElementById('azkar-list');
+            c.innerHTML = "";
+            
+            for (let i = 1; i <= 50; i++) {
+                c.innerHTML += `
+                    <div class="info-card">
+                        <span>🕋 ذكر #${i}: سبحان الله وبحمده سبحان الله العظيم</span>
+                        <button onclick="this.innerText = Math.max(0, parseInt(this.innerText)-1)">33</button>
+                    </div>
+                `;
+            }
         }
-    }
 
-    // التحديات الصارمة
-    let qIdx = 0;
-    const quizD = [
-        {q:"من هو خاتم الأنبياء والمرسلين؟", o:["عيسى عليه السلام","موسى عليه السلام","محمد ﷺ"], c:2},
-        {q:"كم عدد أجزاء القرآن الكريم؟", o:["30 جزء","25 جزء","60 جزء"], c:0},
-        {q:"ما هو الركن الثاني من أركان الإسلام؟", o:["الصوم","الصلاة","الزكاة"], c:1}
-    ];
-    function loadQuiz() {
-        const q = quizD[qIdx]; document.getElementById('q-text').innerText = q.q;
-        const opts = document.getElementById('q-opts'); opts.innerHTML = "";
-        q.o.forEach((o, i) => {
-            const b = document.createElement('button'); b.className="opt-btn"; b.innerText = o;
-            b.onclick = () => {
-                document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.add('disabled'));
-                if(i===q.c) b.classList.add('correct'); else b.classList.add('wrong');
-                setTimeout(() => { qIdx = (qIdx+1)%quizD.length; loadQuiz(); }, 1200);
-            };
-            opts.appendChild(b);
-        });
-    }
+        // التحديات
+        let qIdx = 0;
+        const quizD = [
+            {q: "من هو خاتم الأنبياء والمرسلين؟", o: ["عيسى عليه السلام", "موسى عليه السلام", "محمد ﷺ"], c: 2},
+            {q: "كم عدد أجزاء القرآن الكريم؟", o: ["30 جزء", "25 جزء", "60 جزء"], c: 0},
+            {q: "ما هو الركن الثاني من أركان الإسلام؟", o: ["الصوم", "الصلاة", "الزكاة"], c: 1},
+            {q: "في أي شهر نزل القرآن؟", o: ["رمضان", "محرم", "شعبان"], c: 0},
+            {q: "ما هي السورة التي تسمى عروس القرآن؟", o: ["الرحمن", "يس", "الدخان"], c: 0}
+        ];
+        
+        function loadQuiz() {
+            const q = quizD[qIdx];
+            document.getElementById('q-text').innerText = q.q;
+            const opts = document.getElementById('q-opts');
+            opts.innerHTML = "";
+            
+            q.o.forEach((o, i) => {
+                const b = document.createElement('button');
+                b.className = "opt-btn";
+                b.innerText = o;
+                
+                b.onclick = () => {
+                    document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.add('disabled'));
+                    
+                    if (i === q.c) {
+                        b.classList.add('correct');
+                    } else {
+                        b.classList.add('wrong');
+                    }
+                    
+                    setTimeout(() => {
+                        qIdx = (qIdx + 1) % quizD.length;
+                        loadQuiz();
+                    }, 1500);
+                };
+                
+                opts.appendChild(b);
+            });
+        }
 
-    // أحاديث (صحيح البخاري)
-    async function fetchHadith() {
-        document.getElementById('h-txt').innerText = "جاري جلب حديث شريف...";
-        try {
-            const r = await fetch('https://api.hadith.gading.dev/books/bukhari/' + (Math.floor(Math.random()*100)+1));
-            const d = await r.json();
-            document.getElementById('h-txt').innerText = d.data.contents.arab;
-        } catch(e) { document.getElementById('h-txt').innerText = "أستغفر الله العظيم وأتوب إليه (حدث خطأ في جلب الحديث)."; }
-    }
+        // الأحاديث
+        async function fetchHadith() {
+            document.getElementById('h-txt').innerHTML = '<div class="loading"><i class="fas fa-spinner"></i> جاري جلب حديث شريف...</div>';
+            
+            try {
+                const r = await fetch('https://api.hadith.gading.dev/books/bukhari/' + (Math.floor(Math.random() * 100) + 1));
+                const d = await r.json();
+                document.getElementById('h-txt').innerHTML = `"${d.data.contents.arab}"`;
+            } catch (e) {
+                document.getElementById('h-txt').innerHTML = 'قال رسول الله ﷺ: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى"';
+            }
+        }
 
-    // القصص
-    const stories = {
-        adam: "خلق الله آدم من طين ونفخ فيه من روحه وعلمه الأسماء كلها...",
-        noah: "بنى نوح عليه السلام السفينة لينجو المؤمنون من الطوفان العظيم...",
-        ibrahim: "خليل الله إبراهيم الذي حطم الأصنام وألقي في النار فكانت برداً وسلاماً...",
-        moussa: "كليم الله موسى الذي شق له الله البحر ليهرب من بطش فرعون...",
-        mohammad: "سيد الخلق وخاتم المرسلين، ولد في مكة المكرمة ونزل عليه الوحي في غار حراء..."
-    };
-    function showStory() { document.getElementById('s-content').innerText = stories[document.getElementById('s-select').value]; }
+        // القصص
+        const stories = {
+            adam: "✨ **قصة آدم عليه السلام**\n\nخلق الله آدم من طين، ونفخ فيه من روحه، وأسجد له الملائكة. علمه الأسماء كلها، ثم أسكنه الجنة مع زوجته حواء. لكن الشيطان وسوس لهما فأكلا من الشجرة المحرمة، فأنزلهما الله إلى الأرض. تاب آدم فتاب الله عليه، وكان أول الأنبياء وأبو البشر.",
+            
+            noah: "✨ **قصة نوح عليه السلام**\n\nأول الرسل، لبث في قومه 950 سنة يدعوهم لعبادة الله، فكذبوه واستهزؤوا به. أمره الله ببناء السفينة، وحمل فيها من كل زوجين اثنين، وأهله المؤمنين. أغرق الله الكافرين بالطوفان، ونجا نوح والمؤمنون. قال تعالى: (إنا لما طغى الماء حملناكم في الجارية).",
+            
+            ibrahim: "✨ **قصة إبراهيم عليه السلام**\n\nخليل الله، دعا قومه لعبادة الله وترك الأصنام. حطم الأصنام بيده، فألقوه في النار فكانت برداً وسلاماً. أمره الله بذبح ابنه إسماعيل، ففداه بذبح عظيم. بنى الكعبة مع ابنه إسماعيل، ودعا الناس للحج. قال تعالى: (واتخذوا من مقام إبراهيم مصلى).",
+            
+            moussa: "✨ **قصة موسى عليه السلام**\n\nكليم الله، أرسله لفرعون وقومه. آتاه الله معجزات عظيمة: العصا تتحول ثعباناً، واليد البيضاء. أمره الله ببني إسرائيل بالخروج من مصر، فطارده فرعون بجنده. شق الله البحر لموسى، فنجا وأغرق فرعون. قال تعالى: (فأوحينا إلى موسى أن اضرب بعصاك البحر فانفلق).",
+            
+            mohammad: "✨ **قصة محمد ﷺ**\n\nخاتم الأنبياء والمرسلين، ولد في مكة المكرمة عام الفيل. بعثه الله رحمة للعالمين، نزل عليه القرآن في غار حراء. هاجر إلى المدينة المنورة، وبنى المسجد النبوي. غزا الغزوات لنشر الإسلام، وحج حجة الوداع. قال تعالى: (وما أرسلناك إلا رحمة للعالمين)."
+        };
+        
+        function showStory() {
+            const storyKey = document.getElementById('s-select').value;
+            document.getElementById('s-content').innerHTML = stories[storyKey];
+        }
 
-    window.onload = () => {
-        getPrayerTimes(); showStory();
-        document.getElementById('hijri-date').innerText = new Date().toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric'});
-    }
-</script>
+        // التهيئة عند التحميل
+        window.onload = () => {
+            getPrayerTimes();
+            showStory();
+            
+            // التاريخ الهجري
+            try {
+                document.getElementById('hijri-date').innerText = new Date().toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) + ' هـ';
+            } catch (e) {
+                document.getElementById('hijri-date').innerText = 'رمضان 1445 هـ';
+            }
+        }
+    </script>
 </body>
 </html>
