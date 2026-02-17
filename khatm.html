@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الختم | AJAR RESPECT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Reem+Kufi:wght@400;700&display=swap');
+        
+        :root { --bg: #05040a; --gold: #c5a059; --glass: rgba(197, 160, 89, 0.05); }
+
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Reem Kufi', sans-serif; 
+            margin: 0; padding: 20px;
+            line-height: 1.6;
+        }
+
+        .header { text-align: center; padding: 40px 0; border-bottom: 1px double var(--gold); margin-bottom: 30px; }
+        .header h1 { font-family: 'Amiri'; color: var(--gold); font-size: 35px; margin: 0; }
+        
+        .back-btn { position: fixed; top: 20px; right: 20px; color: var(--gold); text-decoration: none; z-index: 1000; font-size: 18px; }
+
+        .grid-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .plan-card {
+            background: var(--glass);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            transition: 0.4s;
+            overflow: hidden;
+        }
+
+        .plan-card:hover { border-color: var(--gold); transform: translateY(-5px); background: rgba(197, 160, 89, 0.1); }
+
+        .plan-card i { font-size: 30px; color: var(--gold); margin-bottom: 15px; }
+        .plan-title { font-family: 'Amiri'; font-size: 22px; color: var(--gold); display: block; margin-bottom: 10px; }
+        .plan-desc { font-size: 15px; color: #ccc; }
+        
+        .badge {
+            position: absolute; top: 15px; left: 15px;
+            background: var(--gold); color: black;
+            padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: bold;
+        }
+
+        @media (max-width: 600px) { .grid-plans { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-circle-arrow-right"></i> عودة</a>
+
+    <div class="header">
+        <h1>📜 15 طريقة لختم القرآن</h1>
+        <p>اختر ما يناسب وقتك وهمتك في شهر الخير</p>
+    </div>
+
+    <div class="grid-plans">
+        <div class="plan-card">
+            <span class="badge">ختمة 1</span>
+            <i class="fa-solid fa-star"></i>
+            <span class="plan-title">طريقة الصلوات الخمس</span>
+            <p class="plan-desc">قراءة 4 صفحات (وجهين) بعد كل صلاة مكتوبة فقط.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ختمة 1</span>
+            <i class="fa-solid fa-sun"></i>
+            <span class="plan-title">طريقة الفجر والليل</span>
+            <p class="plan-desc">قراءة 10 صفحات بعد الفجر و10 صفحات قبل السحور.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ختمتان</span>
+            <i class="fa-solid fa-bolt"></i>
+            <span class="plan-title">الختم المضاعف</span>
+            <p class="plan-desc">قراءة 8 صفحات (4 أوجه) بعد كل صلاة مكتوبة.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ختمتان</span>
+            <i class="fa-solid fa-moon"></i>
+            <span class="plan-title">طريقة الأجزاء اليومية</span>
+            <p class="plan-desc">قراءة جزء كامل بعد صلاة الفجر وجزء كامل بعد التراويح.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">3 ختمات</span>
+            <i class="fa-solid fa-gem"></i>
+            <span class="plan-title">طريقة العشريات</span>
+            <p class="plan-desc">قراءة جزء ونصف قبل الإفطار وجزء ونصف بعد التراويح يومياً.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">3 ختمات</span>
+            <i class="fa-solid fa-fire-flame-curved"></i>
+            <span class="plan-title">طريقة الـ 12 صفحة</span>
+            <p class="plan-desc">قراءة 12 صفحة بعد كل صلاة من الصلوات الخمس.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">مرنة</span>
+            <i class="fa-solid fa-clock"></i>
+            <span class="plan-title">طريقة الساعة الواحدة</span>
+            <p class="plan-desc">تخصيص ساعة كاملة قبل المغرب للتدبر والقراءة بتركيز عالي.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ختمة 1</span>
+            <i class="fa-solid fa-hourglass-start"></i>
+            <span class="plan-title">طريقة الـ 20 دقيقة</span>
+            <p class="plan-desc">قراءة جزء كامل دفعة واحدة في أي وقت فراغ خلال اليوم.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">للموظفين</span>
+            <i class="fa-solid fa-briefcase"></i>
+            <span class="plan-title">طريقة وقت الاستراحة</span>
+            <p class="plan-desc">تقسيم الجزء إلى 3 أقسام: الفجر، استراحة العمل، المساء.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">مكثفة</span>
+            <i class="fa-solid fa-scroll"></i>
+            <span class="plan-title">ختمة العشر الأواخر</span>
+            <p class="plan-desc">تخصيص ختمة كاملة تبدأ من ليلة 21 بمعدل 3 أجزاء يومياً.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">تفاعلية</span>
+            <i class="fa-solid fa-users-rays"></i>
+            <span class="plan-title">ختمة الجماعة</span>
+            <p class="plan-desc">القراءة مع أهل البيت أو الأصدقاء (كل شخص يقرأ وجهاً بالتناوب).</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ذهبية</span>
+            <i class="fa-solid fa-crown"></i>
+            <span class="plan-title">طريقة ختم السلف</span>
+            <p class="plan-desc">ختمة كل 3 أيام (قراءة 10 أجزاء يومياً) لمن تفرغ تماماً للقرآن.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">تدبر</span>
+            <i class="fa-solid fa-eye"></i>
+            <span class="plan-title">ختمة التفسير</span>
+            <p class="plan-desc">قراءة نصف جزء يومياً مع قراءة تفسيره الميسر (ختمة تدبرية).</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">يسيرة</span>
+            <i class="fa-solid fa-leaf"></i>
+            <span class="plan-title">طريقة تقسيم السور</span>
+            <p class="plan-desc">توزيع قراءة السور الطويلة على مدار اليوم والسور القصيرة ليلاً.</p>
+        </div>
+        <div class="plan-card">
+            <span class="badge">ختمة 1</span>
+            <i class="fa-solid fa-mosque"></i>
+            <span class="plan-title">طريقة المسجد</span>
+            <p class="plan-desc">الذهاب للمسجد قبل كل صلاة بـ 15 دقيقة وقراءة صفحتين قبلها وصفحتين بعدها.</p>
+        </div>
+    </div>
+
+    <footer style="text-align:center; margin-top:50px; opacity:0.5;">
+        &copy; 2026 AJAR RESPECT - تقبل الله طاعتكم
+    </footer>
+</body>
+</html>
